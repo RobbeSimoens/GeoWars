@@ -10,21 +10,36 @@ import com.spaceraider.managers.GameStateManager;
 public class PlayState extends GameState {
 
     private Player player;
+    private float timeAux;
 
     public PlayState(GameStateManager gsm) throws InterruptedException {
         super(gsm);
+
     }
 
     @Override
     public void init() throws InterruptedException {
         player = new Player();
+
+
     }
 
     @Override
     public void update(float dt) {
         handleInput();
         player.update(dt);
+        if(timeAux> 0.4f){
+            player.shoot();
+            timeAux = 0; // laat alles automatich shieten
+        }else{
+            timeAux +=dt;
+        }
+
+
     }
+
+
+
 
     @Override
     public void draw() {
@@ -39,8 +54,6 @@ public class PlayState extends GameState {
         player.setUp(GameKeys.isDown(GameKeys.UP));
         player.setDown(GameKeys.isDown(GameKeys.DOWN));
         player.setSpace(GameKeys.isPressed(GameKeys.SPACE));
-        player.setLeftMouse(GameKeys.isPressed(GameKeys.LEFT_MOUSE));
-
     }
 
     @Override
