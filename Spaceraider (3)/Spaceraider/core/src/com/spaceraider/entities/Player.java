@@ -10,6 +10,9 @@ import com.spaceraider.game.Spaceraider;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Kevin on 9/11/2016.
@@ -89,26 +92,23 @@ public class Player extends SpaceObject{
         }
 
 
-        System.out.println(x + ";" + y);
+        // System.out.println(x + ";" + y);
         //System.out.println(Gdx.input.getX()+ ";"+ Gdx.input.getY());
         /*Met graden de rotatie naar links of rechts gaan bepalen*/
         if(left){
-            radians += rotationSpeed * dt;
+            x = x - 10;
         }else if(right){
-            radians -= rotationSpeed * dt;
+            x = x + 10;
         }
         /*Acceleration, boost your speed*/
         if(up){
-            dx += MathUtils.cos(radians) * acceleration * dt;
-            dy += MathUtils.sin(radians) * acceleration * dt;
+           y = y + 10;
         }
         if(down){
-            dx -= MathUtils.cos(radians) * acceleration * dt;
-            dy -= MathUtils.sin(radians) * acceleration * dt;
+            y = y - 10;
         }
         if(space){
             bullets.add(new Bullet(x,y,Gdx.input.getX(),Gdx.input.getY(), this));
-            enemies.add(new StandardEnemy(this)); // TODO ; make me spawn in time units !!!
         }
         /*This is for slowing down over time*/
         float vec = (float) Math.sqrt(dx*dx+dy*dy);
@@ -147,4 +147,6 @@ public class Player extends SpaceObject{
     public float getY(){
         return y;
     }
+
+
 }
