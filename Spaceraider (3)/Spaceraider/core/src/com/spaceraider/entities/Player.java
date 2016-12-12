@@ -54,7 +54,12 @@ public class Player extends SpaceObject{
     }
 
 
+    public void rotate(){
+        float angle = (float) Math.atan2( Gdx.input.getY() - y, Gdx.input.getX() - x);
+        angle = (float) Math.toDegrees(angle);
 
+        playerSprite.setRotation(angle );
+    }
     public void setLeft(boolean b ){
         left = b;
     }
@@ -76,6 +81,7 @@ public class Player extends SpaceObject{
     public void setLeftMouse(boolean b) {leftMouse = b;}
 
     public void update(float dt){
+
             for (int i = 0; i < bullets.size(); i++) {
 
                 Bullet bullet = bullets.get(i);
@@ -99,20 +105,18 @@ public class Player extends SpaceObject{
         //System.out.println(Gdx.input.getX()+ ";"+ Gdx.input.getY());
         /*Met graden de rotatie naar links of rechts gaan bepalen*/
         if(left){
-            radians += rotationSpeed * dt;
+            x = x - 10;
         }else if(right){
-            radians -= rotationSpeed * dt;
+            x = x + 10;
         }
         /*Acceleration, boost your speed*/
         if(up){
-            dx += MathUtils.cos(radians) * acceleration * dt;
-            dy += MathUtils.sin(radians) * acceleration * dt;
+            y = y + 10;
         }
         if(down){
-            dx -= MathUtils.cos(radians) * acceleration * dt;
-            dy -= MathUtils.sin(radians) * acceleration * dt;
+            y = y - 10;
         }
-        if(leftMouse){
+        if(space){
             bullets.add(new Bullet(x,y,Gdx.input.getX(),Gdx.input.getY(), this));
             enemies.add(new StandardEnemy(this)); // TODO ; make me spawn in time units !!!
         }
@@ -133,7 +137,7 @@ public class Player extends SpaceObject{
         batch.begin();
         playerSprite.draw(batch);
         playerSprite.setPosition(x,y);
-        playerSprite.setRotation(radians);
+        rotate();
         batch.end();
         /*Wrap it all around the screen, maw je kan door het scherm vliegen en er langs de andere kant terug uit komen :)*/
         wrap();
