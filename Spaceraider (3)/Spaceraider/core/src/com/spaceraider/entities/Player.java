@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.physics.bullet.collision.GdxCollisionObjectBridge;
 import com.spaceraider.entities.enemies.StandardEnemy;
 import com.spaceraider.game.Spaceraider;
 
@@ -72,7 +73,19 @@ public class Player extends SpaceObject{
 
     public void setSpace(boolean b){space = b; }
 
+    public void rotate(){
+
+
+        float angle = (float) Math.atan2( Gdx.input.getX() - x, Gdx.input.getY() - y);
+
+        angle = (float) Math.toDegrees(angle);
+
+        playerSprite.setRotation(angle + 180 );
+
+    }
+
     public void update(float dt){
+        rotate();
             for (int i = 0; i < bullets.size(); i++) {
 
                 Bullet bullet = bullets.get(i);
