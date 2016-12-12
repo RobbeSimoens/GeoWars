@@ -33,6 +33,10 @@ public class GameInputProcessor extends InputAdapter {
         if(k == Input.Keys.SHIFT_LEFT || k == Input.Keys.SHIFT_RIGHT){
             GameKeys.setKey(GameKeys.SHIFT, true);
         }
+        if(k== Input.Buttons.LEFT){
+            GameKeys.setKey(GameKeys.LEFT_MOUSE,true);
+        }
+
         return true;
     }
 
@@ -61,7 +65,12 @@ public class GameInputProcessor extends InputAdapter {
         if(k == Input.Keys.SHIFT_LEFT || k == Input.Keys.SHIFT_RIGHT){
             GameKeys.setKey(GameKeys.SHIFT, false);
         }
+        if(k== Input.Buttons.LEFT){
+
+            GameKeys.setKey(GameKeys.LEFT_MOUSE,false);
+        }
         return true;
     }
+    
 
 }

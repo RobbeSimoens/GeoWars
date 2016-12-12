@@ -36,7 +36,7 @@ public class StandardEnemy extends SpaceObject implements Enemy {
         y = getRandom(1080);
 
         batch = new SpriteBatch();
-        texture = new Texture("core/assets/enemy.png");
+        texture = new Texture("core/assets/rsz_enemy.png");
         initialize();
 
     }

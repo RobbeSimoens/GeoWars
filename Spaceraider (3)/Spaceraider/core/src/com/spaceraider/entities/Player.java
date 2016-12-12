@@ -21,6 +21,10 @@ public class Player extends SpaceObject{
     private boolean up;
     private boolean down;
     private boolean space;
+
+
+
+    private boolean leftMouse;
     private List<Bullet> bullets;
     private float maxSpeed;
     private float acceleration;
@@ -28,7 +32,7 @@ public class Player extends SpaceObject{
     private List<StandardEnemy> enemies; // TODO ; fix to interface !!!!!
 
     SpriteBatch batch = new SpriteBatch();
-    Texture img = new Texture("core/assets/playership.png");
+    Texture img = new Texture("core/assets/rsz_playership.png");
     Sprite playerSprite = new Sprite(img);
     //Bullet bullet = new Bullet(x,y, Gdx.input.getX(),Gdx.input.getY());
     //Bullet bullet = new Bullet(900,500, 900,500);
@@ -69,6 +73,8 @@ public class Player extends SpaceObject{
 
     public void setSpace(boolean b){space = b; }
 
+    public void setLeftMouse(boolean b) {leftMouse = b;}
+
     public void update(float dt){
             for (int i = 0; i < bullets.size(); i++) {
 
@@ -106,7 +112,7 @@ public class Player extends SpaceObject{
             dx -= MathUtils.cos(radians) * acceleration * dt;
             dy -= MathUtils.sin(radians) * acceleration * dt;
         }
-        if(space){
+        if(leftMouse){
             bullets.add(new Bullet(x,y,Gdx.input.getX(),Gdx.input.getY(), this));
             enemies.add(new StandardEnemy(this)); // TODO ; make me spawn in time units !!!
         }
@@ -138,6 +144,7 @@ public class Player extends SpaceObject{
         bullets.remove(bullet);
         System.out.println(bullets);
     }
+
 
 
     public float getX(){
