@@ -18,7 +18,6 @@ public class PlayState extends GameState {
     public void init() throws InterruptedException {
 
         player = new Player();
-        player.spawn();
     }
 
     @Override

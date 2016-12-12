@@ -147,8 +147,4 @@ public class Player extends SpaceObject{
     public float getY(){
         return y;
     }
-
-    public void spawn() {
-        
-    }
 }

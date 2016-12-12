@@ -1,6 +1,9 @@
 package GUI;
 
 import Database.Database;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.spaceraider.game.Spaceraider;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,11 +32,22 @@ public class StartPanel extends BackGroundPanel {
 
     private void actionListener() {
         buttonLogin.addActionListener(e -> {
-            LoginPanel loginPanel = new LoginPanel(frame,database);
+
+            //echte code
+          /*  LoginPanel loginPanel = new LoginPanel(frame,database);
             frame.getContentPane().removeAll();
             frame.getContentPane().invalidate();
             frame.getContentPane().add(loginPanel);
             frame.getContentPane().revalidate();
+            */
+          //test
+            frame.dispose();
+            LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+            config.title = "Space Raider";
+            config.width = 1920;
+            config.height = 1080;
+            config.resizable = false;
+            new LwjglApplication(new Spaceraider(), config);
         });
 
         buttonRegister.addActionListener(e -> {
