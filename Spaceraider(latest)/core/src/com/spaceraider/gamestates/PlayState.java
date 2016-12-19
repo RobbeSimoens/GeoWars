@@ -27,12 +27,8 @@ public class PlayState extends GameState {
     public void update(float dt) {
         handleInput();
         player.update(dt);
-        if(timeAux> 0.4f){
-            player.shoot();
-            timeAux = 0; // laat alles automatich shieten
-        }else{
-            timeAux +=dt;
-        }
+        player.shoot(dt);
+
 
 
     }
