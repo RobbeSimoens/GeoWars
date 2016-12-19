@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.spaceraider.entities.enemies.*;
 import com.spaceraider.game.Spaceraider;
 
@@ -23,13 +24,16 @@ public class Player extends SpaceObject{
     private float timeAux;
     private int speed;
     private Random rand;
+    private int spawntimer;
+    private int spawnCounter;
+    private Rectangle rect;
 
     private List<Bullet> bullets;
-    private List<Enemy> enemies; // TODO ; fix to interface !!!!!
+    private List<Enemy> enemies;
 
     SpriteBatch batch = new SpriteBatch();
-    Texture img = new Texture("core/assets/rsz_playership.png");
-    Sprite playerSprite = new Sprite(img);
+    Texture texture = new Texture("core/assets/rsz_playership.png");
+    Sprite playerSprite = new Sprite(texture);
 
     public Player() throws InterruptedException {
         rand = new Random();
@@ -40,7 +44,10 @@ public class Player extends SpaceObject{
         batch.begin();
         playerSprite.setPosition(x,y);
         batch.end();
+        rect = new Rectangle(x,y,texture.getWidth(),texture.getHeight());
         speed = 5;
+        spawntimer = 3;
+        spawnCounter = 0;
     }
 
 
@@ -63,6 +70,8 @@ public class Player extends SpaceObject{
 
 
     public void update(float dt){
+
+        checkCollision();
             for (int i = 0; i < bullets.size(); i++) {
 
                 Bullet bullet = bullets.get(i);
@@ -80,19 +89,16 @@ public class Player extends SpaceObject{
             enemy.update(dt);
             enemy.render(batch);
         }
-
-
-            if (timeAux >= 2) { // SPAWNING
+            if (timeAux > spawntimer) { // SPAWNING
                 spawn();
                 timeAux = 0;
             } else {
-                System.out.println(timeAux);
                 timeAux += dt;
 
         }
 
         if(left){
-            x = x - speed; // TODO :ADJUST SPEED
+            x = x - speed;
         }else if(right){
             x = x + speed ;
         }
@@ -105,10 +111,20 @@ public class Player extends SpaceObject{
         batch.begin();
         playerSprite.draw(batch);
         playerSprite.setPosition(x,y);
-        playerSprite.setRotation(radians);
         batch.end();
         /*Wrap it all around the screen, maw je kan door het scherm vliegen en er langs de andere kant terug uit komen :)*/
         wrap();
+    }
+
+    private void checkCollision() {
+        if(enemies.size() > 0) {
+            for (int i = 0; i < enemies.size(); i++) {
+                if (rect.overlaps(enemies.get(i).getRectangle())) {
+                    System.out.println("WE ARE HIT !!!!");
+
+                }
+            }
+        }
     }
 
     public void removeBullet(Bullet bullet){
@@ -141,6 +157,19 @@ public class Player extends SpaceObject{
             enemies.add(new PowerupEnemy(this));
         }
 
+        // TODO : fix this method --> adjustSpawnTimer();
+
+    }
+    public void adjustSpawnTimer(){
+        spawnCounter ++;
+        if(spawnCounter > 10)
+        {
+            if (spawntimer > 0.5)
+            {
+                spawntimer = (int) (spawntimer - 0.5);
+            }
+
+        }
     }
 
 
@@ -151,5 +180,17 @@ public class Player extends SpaceObject{
 
     public float getY(){
         return y;
+    }
+
+    public List<Enemy> getEnemies(){
+        return enemies;
+    }
+
+    public void removeEnemy(Enemy enemy) {
+        enemies.remove(enemy);
+    }
+
+    public void reduceHitpoints(Enemy enemy) {
+        enemy.reduceHitpoints();
     }
 }

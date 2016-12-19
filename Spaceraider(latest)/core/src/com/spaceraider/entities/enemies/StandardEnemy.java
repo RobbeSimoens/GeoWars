@@ -2,6 +2,7 @@ package com.spaceraider.entities.enemies;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.spaceraider.entities.Player;
 import com.spaceraider.entities.SpaceObject;
 import com.spaceraider.entities.enums.EnemyType;
@@ -28,6 +29,7 @@ public class StandardEnemy extends SpaceObject implements Enemy {
     private Player player;
     private float dirX,dirY;
     private int speed;
+    private Rectangle rect ;
 
     public StandardEnemy(Player player) {
         initialize();
@@ -40,7 +42,7 @@ public class StandardEnemy extends SpaceObject implements Enemy {
         batch = new SpriteBatch();
         texture = new Texture("core/assets/rsz_standard.png");
 
-
+        rect = new Rectangle(x,y,texture.getWidth(), texture.getHeight());
     }
 
     public StandardEnemy(float x, float y){
@@ -56,10 +58,11 @@ public class StandardEnemy extends SpaceObject implements Enemy {
         powerdown = null;
         powerup = null;
         status = Status.MOVING;
-        speed = 500;
-
+        speed = 200;
 
     }
+
+
 
     public void render(SpriteBatch batch){
         batch.begin();
@@ -90,8 +93,31 @@ public class StandardEnemy extends SpaceObject implements Enemy {
 
     public void move(float dt){
         double destinationLength = Math.sqrt(dirX * dirX + dirY * dirY);
-        x = (float) (x + (dirX * speed * dt) /destinationLength); // TODO : 1 = speed value
-        y = (float) (y + (dirY * speed * dt) / destinationLength); // TODO : 1 = speed value ==> make variable
+        x = (float) (x + (dirX * speed * dt) /destinationLength);
+        rect.setX(x);
+        y = (float) (y + (dirY * speed * dt) / destinationLength);
+        rect.setY(y);
 
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    @Override
+    public Rectangle getRectangle() {
+        return rect;
+    }
+
+    @Override
+    public void reduceHitpoints() {
+        hitpoints = hitpoints - 1;
+        if(hitpoints ==  0){
+            player.removeEnemy(this);
+        }
     }
 }

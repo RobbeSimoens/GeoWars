@@ -3,7 +3,10 @@ package com.spaceraider.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.spaceraider.game.Spaceraider;
+import com.badlogic.gdx.math.Rectangle;
+import com.spaceraider.entities.enemies.Enemy;
+
+import java.util.List;
 
 /**
  * Created by Kevin on 10/11/2016.
@@ -11,7 +14,7 @@ import com.spaceraider.game.Spaceraider;
 public class Bullet extends SpaceObject {
     private float speedX = 1000;
     private float x, y;
-    float mx, my;
+    private float mx, my;
     private static SpriteBatch batch;
     private static Texture texture;
     private boolean remove;
@@ -19,7 +22,7 @@ public class Bullet extends SpaceObject {
     float dirX;
     float dirY;
     private Player player;
-        // TRYING
+    private Rectangle rect;
 
     private float speed = 40;
 
@@ -30,6 +33,7 @@ public class Bullet extends SpaceObject {
         this.my = 1080 - mouseY;
         batch = new SpriteBatch();
         texture = new Texture("core/assets/rsz_green.png");
+        rect = new Rectangle(x,y,texture.getWidth(), texture.getHeight());
         this.player = player;
         setDirection();
 
@@ -49,13 +53,15 @@ public class Bullet extends SpaceObject {
             double destinationLength = Math.sqrt(dirX * dirX + dirY * dirY);
 
             x += (dirX * speed *dt ) / destinationLength *10;
+            rect.setX(x);
             y += (dirY * speed *dt) / destinationLength *10;
+            rect.setY(y);
 
 
     }
 
     public void update(float dt){
-
+        checkCollision();
         if(!remove) {
             bulletMove(dt);
 
@@ -69,6 +75,21 @@ public class Bullet extends SpaceObject {
                // System.out.println("Bullet removed");
             }
         }
+    }
+
+    private void checkCollision() {
+        List<Enemy> enemies = player.getEnemies();
+
+        if(enemies.size() > 0) {
+            for (int i = 0; i < enemies.size(); i++) {
+                if (rect.overlaps(enemies.get(i).getRectangle())) {
+                    player.removeBullet(this);
+                    player.reduceHitpoints(enemies.get(i));
+                }
+            }
+        }
+
+
     }
 
     public void render(SpriteBatch batch){
