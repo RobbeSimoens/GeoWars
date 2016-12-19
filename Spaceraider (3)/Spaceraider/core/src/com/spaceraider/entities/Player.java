@@ -1,18 +1,13 @@
 package com.spaceraider.entities;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.spaceraider.entities.enemies.StandardEnemy;
 import com.spaceraider.game.Spaceraider;
-import com.spaceraider.managers.GameKeys;
 
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +21,6 @@ public class Player extends SpaceObject{
     private boolean up;
     private boolean down;
     private boolean space;
-    private float timeAux;
 
 
 
@@ -79,6 +73,8 @@ public class Player extends SpaceObject{
 
     public void setSpace(boolean b){space = b; }
 
+    public void setLeftMouse(boolean b) {leftMouse = b;}
+
     public void update(float dt){
             for (int i = 0; i < bullets.size(); i++) {
 
@@ -99,34 +95,26 @@ public class Player extends SpaceObject{
         }
 
 
-            if (timeAux >= 4) { //10 seconds
-                spawn();
-                timeAux = 0;
-            } else {
-                System.out.println(timeAux);
-                timeAux += dt;
-
-        }
-
-      //  System.out.println(x + ";" + y);
+        System.out.println(x + ";" + y);
         //System.out.println(Gdx.input.getX()+ ";"+ Gdx.input.getY());
         /*Met graden de rotatie naar links of rechts gaan bepalen*/
         if(left){
-            x = x - 5; // TODO :ADJUST SPEED
+            radians += rotationSpeed * dt;
         }else if(right){
-            x = x + 5 ;
+            radians -= rotationSpeed * dt;
         }
         /*Acceleration, boost your speed*/
         if(up){
-            y = y + 5;
+            dx += MathUtils.cos(radians) * acceleration * dt;
+            dy += MathUtils.sin(radians) * acceleration * dt;
         }
         if(down){
-            y = y - 5;
+            dx -= MathUtils.cos(radians) * acceleration * dt;
+            dy -= MathUtils.sin(radians) * acceleration * dt;
         }
-        if(space){
-            //shoot();
-            //spawn();
-
+        if(leftMouse){
+            bullets.add(new Bullet(x,y,Gdx.input.getX(),Gdx.input.getY(), this));
+            enemies.add(new StandardEnemy(this)); // TODO ; make me spawn in time units !!!
         }
         /*This is for slowing down over time*/
         float vec = (float) Math.sqrt(dx*dx+dy*dy);
@@ -152,18 +140,9 @@ public class Player extends SpaceObject{
     }
 
     public void removeBullet(Bullet bullet){
-       // System.out.println(bullets);
+        System.out.println(bullets);
         bullets.remove(bullet);
-       // System.out.println(bullets);
-    }
-
-    public void shoot(){
-        bullets.add(new Bullet(x,y,Gdx.input.getX(),Gdx.input.getY(), this));
-    }
-    public void spawn(){
-
-        enemies.add(new StandardEnemy(this));
-
+        System.out.println(bullets);
     }
 
 
