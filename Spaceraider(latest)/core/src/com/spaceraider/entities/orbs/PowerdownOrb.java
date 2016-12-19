@@ -27,15 +27,16 @@ public class PowerdownOrb extends SpaceObject implements Orb { // TODO : activat
 
     @Override
     public void update(float dt) {
-        batch.begin();
-        batch.draw(texture,x,y);
-        batch.end();
+        PowerdownOrb b = new PowerdownOrb(x,y, powerdown);
+        b.render(batch);
     }
 
     @Override
     public void render(SpriteBatch batch) {
-        PowerdownOrb b = new PowerdownOrb(x,y, powerdown);
-        b.render(batch);
+
+        batch.begin();
+        batch.draw(texture,x,y);
+        batch.end();
     }
 
     @Override
