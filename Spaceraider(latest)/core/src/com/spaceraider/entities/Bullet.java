@@ -9,7 +9,7 @@ import com.spaceraider.entities.enemies.Enemy;
 import java.util.List;
 
 /**
- * Created by Kevin on 10/11/2016.
+ * Created by ERROR/Quinten on 10/11/2016.
  */
 public class Bullet extends SpaceObject {
     private float speedX = 1000;

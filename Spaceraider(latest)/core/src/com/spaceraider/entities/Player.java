@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.spaceraider.entities.enemies.*;
+import com.spaceraider.entities.enums.Powerdown;
+import com.spaceraider.entities.enums.Powerup;
 import com.spaceraider.game.Spaceraider;
 
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Created by Kevin on 9/11/2016.
+ * Created by ERR0R/Quinten on 9/11/2016.
  */
 @SuppressWarnings("InfiniteLoopStatement")
 public class Player extends SpaceObject{
@@ -21,8 +23,12 @@ public class Player extends SpaceObject{
     private boolean right;
     private boolean up;
     private boolean down;
-    private float timeAux;
     private int speed;
+    private float timeToSpawn;
+    private float timeBullet;
+    private float timePowerUp;
+    private float timePowerDown;
+    private float shootSpeed;
     private Random rand;
     private int spawntimer;
     private int spawnCounter;
@@ -48,6 +54,7 @@ public class Player extends SpaceObject{
         speed = 5;
         spawntimer = 3;
         spawnCounter = 0;
+        shootSpeed = 0.4f;
     }
 
 
@@ -89,11 +96,11 @@ public class Player extends SpaceObject{
             enemy.update(dt);
             enemy.render(batch);
         }
-            if (timeAux > spawntimer) { // SPAWNING
-                spawn();
-                timeAux = 0;
-            } else {
-                timeAux += dt;
+        if (timeToSpawn > spawntimer) { // SPAWNING
+            spawn();
+            timeToSpawn = 0;
+        } else {
+            timeToSpawn += dt;
 
         }
 
@@ -132,8 +139,20 @@ public class Player extends SpaceObject{
         bullets.remove(bullet);
     }
 
-    public void shoot(){
-        bullets.add(new Bullet(x,y,Gdx.input.getX(),Gdx.input.getY(), this));
+    public void makeBullet(){
+
+
+        bullets.add(new Bullet(x ,y ,Gdx.input.getX(),Gdx.input.getY(), this));
+
+    }
+    public void shoot(float dt){
+
+        if(timeBullet> shootSpeed){
+            makeBullet();
+            timeBullet = 0; // laat alles automatich shieten
+        }else{
+            timeBullet +=dt;
+        }
     }
     public void spawn(){
         int spawn = rand.nextInt(100);
@@ -172,6 +191,79 @@ public class Player extends SpaceObject{
 
         }
     }
+    public void PowerDown(Powerdown powerdown, float dt){
+        switch (powerdown) {
+            case INVERTED:
+                Inverted();
+                break;
+
+            case SILENCED:
+
+                break;
+            case SLOWED:
+                if (timePowerDown <= 5) {
+                    speed = speed /2;
+                    timePowerDown = 0;
+                } else {
+                    speed = 5;
+                    timePowerDown += dt;
+
+                }
+
+                break;
+        }
+    }
+
+    public void PowerUp(Powerup powerup, float dt){
+        switch (powerup){
+            case RAPIDFIRE:
+                if(timePowerUp> shootSpeed){
+                    makeBullet();
+                    timePowerUp = 0; // laat alles automatich shieten
+                }else{
+
+                    timePowerUp +=dt;
+                }
+
+                break;
+
+            case CONESHOOTING:
+
+
+                break;
+
+            case SHIELD:
+
+                break;
+
+            case NUKE:
+
+                break;
+
+
+
+        }
+
+
+
+    }
+
+    private void Inverted(){
+        if(left){
+            x = x + speed;
+        }else if(right){
+            x = x - speed ;
+        }
+        /*Acceleration, boost your speed*/
+        if(up){
+            y = y - speed;
+        }
+        if(down){
+            y = y + speed;
+        }
+
+    }
+
 
 
 
