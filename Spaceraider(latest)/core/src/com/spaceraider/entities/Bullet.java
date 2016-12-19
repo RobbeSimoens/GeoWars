@@ -3,6 +3,7 @@ package com.spaceraider.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.spaceraider.game.Spaceraider;
 
 /**
  * Created by Kevin on 10/11/2016.
@@ -14,12 +15,13 @@ public class Bullet extends SpaceObject {
     private static SpriteBatch batch;
     private static Texture texture;
     private boolean remove;
+    //private float timeSpent;
     float dirX;
     float dirY;
     private Player player;
         // TRYING
 
-    private int speed = 5;
+    private float speed = 40;
 
     public Bullet(float x, float y,float mouseX, float mouseY, Player player){ // x,y = player
         this.x = x;
@@ -27,7 +29,7 @@ public class Bullet extends SpaceObject {
         this.mx = mouseX;
         this.my = 1080 - mouseY;
         batch = new SpriteBatch();
-        texture = new Texture("core/assets/bullet.png");
+        texture = new Texture("core/assets/rsz_green.png");
         this.player = player;
         setDirection();
 
@@ -43,28 +45,28 @@ public class Bullet extends SpaceObject {
         dirY = my - y;
     }
 
-    public void move(float dt){
-        double destinationLength = Math.sqrt(dirX * dirX + dirY * dirY);
-        x = x + (dirX * speed * dt);
-        y = y + (dirY * speed * dt);
+    public void bulletMove(float dt){
+            double destinationLength = Math.sqrt(dirX * dirX + dirY * dirY);
+
+            x += (dirX * speed *dt ) / destinationLength *10;
+            y += (dirY * speed *dt) / destinationLength *10;
+
 
     }
 
     public void update(float dt){
 
         if(!remove) {
-            move(dt);
+            bulletMove(dt);
+
             // System.out.println("Bullet fired");
             // System.out.println("X is " + x + " y is " + y);
-            System.out.println("MouseX is " + mx + " MouseY is " + my);
-            Bullet b = new Bullet(x, y, Gdx.input.getX(), Gdx.input.getY(), player);
-            b.render(batch);
-            //render(,x,y);
+           // System.out.println("MouseX is " + mx + " MouseY is " + my);
         /*Bullets niet eindeloos in het spel laten*/
             if (x > Gdx.graphics.getWidth() || y > Gdx.graphics.getHeight()) {
                 remove = true;
                 player.removeBullet(this);
-                System.out.println("Bullet removed");
+               // System.out.println("Bullet removed");
             }
         }
     }
