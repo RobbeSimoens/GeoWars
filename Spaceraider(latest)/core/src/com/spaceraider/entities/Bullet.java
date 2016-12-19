@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.spaceraider.entities.Drones.Drone;
 import com.spaceraider.entities.enemies.Enemy;
 
 import java.util.List;
@@ -42,6 +43,18 @@ public class Bullet extends SpaceObject {
         // pos te berekenen / interne x/y class state var updaten.
         // en laten redrawen met nieuwe pos.
 
+
+    }
+    public Bullet(float x, float y, float mouseX, float mouseY, Drone drone) { // x,y = drone
+        this.x = x;
+        this.y = y;
+        this.mx = mouseX;
+        this.my = 1080 - mouseY;
+        batch = new SpriteBatch();
+        texture = new Texture("core/assets/rsz_green.png");
+        rect = new Rectangle(x, y, texture.getWidth(), texture.getHeight());
+        this.player = player;
+        setDirection();
 
     }
     public void setDirection(){
