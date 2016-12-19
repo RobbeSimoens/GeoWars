@@ -1,5 +1,4 @@
 package com.spaceraider.gamestates;
-import com.badlogic.gdx.Input;
 import com.spaceraider.entities.Player;
 import com.spaceraider.managers.GameKeys;
 import com.spaceraider.managers.GameStateManager;
@@ -53,7 +52,6 @@ public class PlayState extends GameState {
         player.setRight(GameKeys.isDown(GameKeys.RIGHT));
         player.setUp(GameKeys.isDown(GameKeys.UP));
         player.setDown(GameKeys.isDown(GameKeys.DOWN));
-        player.setSpace(GameKeys.isPressed(GameKeys.SPACE));
     }
 
     @Override

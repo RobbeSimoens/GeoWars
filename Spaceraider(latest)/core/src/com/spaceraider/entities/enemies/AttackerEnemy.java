@@ -1,12 +1,15 @@
 package com.spaceraider.entities.enemies;
 
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.spaceraider.entities.enums.EnemyType;
 import com.spaceraider.entities.enums.Powerdown;
 import com.spaceraider.entities.enums.Powerup;
 import com.spaceraider.entities.enums.Status;
+import com.spaceraider.entities.Player;
 
+import java.util.Random;
 
 
 /**
@@ -19,9 +22,29 @@ public class AttackerEnemy implements Enemy{
     private Powerup powerup;
     private Powerdown powerdown;
     private Status status = Status.NOTHING;
+    private Player player;
+    private static SpriteBatch batch;
+    private static Texture texture;
+    private float x,y;
+    private Random rand;
+    private float dirX,dirY;
 
-    public AttackerEnemy() {
+    public AttackerEnemy(Player player) {
+        this.player = player;
+        setDirection();
+        rand = new Random();
+        x = getRandom(1920);
+        y = getRandom(1080);
+
+        batch = new SpriteBatch();
+        texture = new Texture("core/assets/rsz_standard.png");
         initialize();
+    }
+
+    public AttackerEnemy(float x, float y)
+    {
+        this.x = x;
+        this.y = y;
     }
 
     @Override
@@ -39,9 +62,30 @@ public class AttackerEnemy implements Enemy{
     }
 
     public void render(SpriteBatch batch){
-
+        batch.begin();
+        batch.draw(texture,x,y);
+        batch.end();
     }
     public void update(float dt){
+        setDirection();
+        move(dt);
+        StandardEnemy b = new StandardEnemy(x,y);
+        b.render(batch);
+    }
+    public void setDirection(){
+        dirX = player.getX() - x;
+        dirY = player.getY() - y;
+    }
 
+    public void move(float dt){
+        double destinationLength = Math.sqrt(dirX * dirX + dirY * dirY);
+        x = x + (dirX * 1 * dt); // TODO : 1 = speed value
+        y = y + (dirY * 1 * dt); // TODO : 1 = speed value ==> make variable
+
+    }
+
+    public float getRandom(int maxval)
+    {
+        return (float) rand.nextInt(maxval);
     }
 }
