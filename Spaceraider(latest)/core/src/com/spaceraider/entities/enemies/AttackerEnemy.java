@@ -10,6 +10,7 @@ import com.spaceraider.entities.enums.EnemyType;
 import com.spaceraider.entities.enums.Powerdown;
 import com.spaceraider.entities.enums.Powerup;
 import com.spaceraider.entities.enums.Status;
+import com.spaceraider.entities.orbs.NormalOrb;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,8 +140,14 @@ public class AttackerEnemy extends SpaceObject implements Enemy{
     public void reduceHitpoints() {
         hitpoints = hitpoints - 1;
         if(hitpoints ==  0){
+            dropOrb();
             player.removeEnemy(this);
         }
+    }
+
+    @Override
+    public void dropOrb() {
+        player.addOrb(new NormalOrb(x,y));
     }
 
     public void removeBullet(EnemyBullet enemyBullet) {

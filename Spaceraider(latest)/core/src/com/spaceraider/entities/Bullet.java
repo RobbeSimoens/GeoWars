@@ -56,8 +56,6 @@ public class Bullet extends SpaceObject {
             rect.setX(x);
             y += (dirY * speed *dt) / destinationLength *10;
             rect.setY(y);
-
-
     }
 
     public void update(float dt){

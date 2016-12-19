@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.spaceraider.entities.enemies.*;
 import com.spaceraider.entities.enums.Powerdown;
 import com.spaceraider.entities.enums.Powerup;
+import com.spaceraider.entities.orbs.Orb;
 import com.spaceraider.game.Spaceraider;
 
 import java.util.ArrayList;
@@ -34,9 +35,11 @@ public class Player extends SpaceObject{
     private int spawntimer;
     private int spawnCounter;
     private Rectangle rect;
+    private int score;
 
     private List<Bullet> bullets;
     private List<Enemy> enemies;
+    private List<Orb> orbs;
 
     SpriteBatch batch = new SpriteBatch();
     Texture texture = new Texture("core/assets/rsz_playership.png");
@@ -46,6 +49,7 @@ public class Player extends SpaceObject{
         rand = new Random();
         bullets = new ArrayList<Bullet>();
         enemies = new ArrayList<Enemy>();
+        orbs = new ArrayList<Orb>();
         x = Spaceraider.WIDTH / 2;
         y = Spaceraider.HEIGHT / 2;
         batch.begin();
@@ -58,7 +62,6 @@ public class Player extends SpaceObject{
         shootSpeed = 0.4f;
         shield = 0;
     }
-
 
 
     public void setLeft(boolean b ){
@@ -81,6 +84,8 @@ public class Player extends SpaceObject{
     public void update(float dt){
 
         checkCollision();
+        checkOrbCollision();
+
             for (int i = 0; i < bullets.size(); i++) {
 
                 Bullet bullet = bullets.get(i);
@@ -98,6 +103,11 @@ public class Player extends SpaceObject{
             enemy.update(dt);
             enemy.render(batch);
         }
+
+        for (int i = 0; i < orbs.size(); i++)
+        {
+            orbs.get(i).render(batch);
+        }
         if (timeToSpawn > spawntimer) { // SPAWNING
             spawn();
             timeToSpawn = 0;
@@ -108,14 +118,18 @@ public class Player extends SpaceObject{
 
         if(left){
             x = x - speed;
+            rect.setX(x);
         }else if(right){
             x = x + speed ;
+            rect.setX(x);
         }
         if(up){
             y = y + speed;
+            rect.setY(y);
         }
         if(down){
             y = y - speed;
+            rect.setY(y);
         }
         batch.begin();
         playerSprite.draw(batch);
@@ -125,10 +139,29 @@ public class Player extends SpaceObject{
         wrap();
     }
 
+    private void checkOrbCollision() {
+        if (orbs.size() > 0)
+        {
+            for (int i = 0; i < orbs.size(); i++)
+            {
+                if (rect.overlaps(orbs.get(i).getRectangle()))
+                {
+                    System.out.println("collision with orb detected");
+                    orbs.remove(orbs.get(i));
+                    score += 10;
+                    System.out.println(score);
+                    // TODO : add powerup
+                }
+            }
+        }
+    }
+
     private void checkCollision() {
         if(enemies.size() > 0) {
             for (int i = 0; i < enemies.size(); i++) {
                 if (rect.overlaps(enemies.get(i).getRectangle())) {
+                    enemies.get(i).dropOrb();
+                    enemies.remove(enemies.get(i));
                     System.out.println("WE ARE HIT !!!!");
                     // TODO: implement een end game hier
 
@@ -294,5 +327,10 @@ public class Player extends SpaceObject{
 
     public Rectangle getRect() {
         return rect;
+    }
+
+    public void addOrb(Orb orb){
+        System.out.println("Orb spanwed");
+        orbs.add(orb);
     }
 }

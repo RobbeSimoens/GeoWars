@@ -16,4 +16,6 @@ public interface Enemy {
     float getY();
     Rectangle getRectangle();
     void reduceHitpoints();
+
+    void dropOrb();
 }
