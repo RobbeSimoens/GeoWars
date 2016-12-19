@@ -121,6 +121,7 @@ public class Player extends SpaceObject{
             for (int i = 0; i < enemies.size(); i++) {
                 if (rect.overlaps(enemies.get(i).getRectangle())) {
                     System.out.println("WE ARE HIT !!!!");
+                    // TODO: implement een end game hier
 
                 }
             }
@@ -190,7 +191,11 @@ public class Player extends SpaceObject{
         enemies.remove(enemy);
     }
 
-    public void reduceHitpoints(Enemy enemy) {
+    public void reduceEnemyHitpoints(Enemy enemy) {
         enemy.reduceHitpoints();
+    }
+
+    public Rectangle getRect() {
+        return rect;
     }
 }

@@ -4,13 +4,15 @@ package com.spaceraider.entities.enemies;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.spaceraider.entities.Player;
 import com.spaceraider.entities.SpaceObject;
 import com.spaceraider.entities.enums.EnemyType;
 import com.spaceraider.entities.enums.Powerdown;
 import com.spaceraider.entities.enums.Powerup;
 import com.spaceraider.entities.enums.Status;
-import com.spaceraider.entities.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
@@ -32,6 +34,8 @@ public class AttackerEnemy extends SpaceObject implements Enemy{
     private float dirX,dirY;
     private int speed;
     private Rectangle rect;
+    private List<EnemyBullet> bullets;
+    private float timeAux;
 
     public AttackerEnemy(Player player) {
         initialize();
@@ -40,11 +44,10 @@ public class AttackerEnemy extends SpaceObject implements Enemy{
         rand = new Random();
         x = getRandom(1920);
         y = getRandom(1080);
-
+        bullets = new ArrayList<EnemyBullet>();
         batch = new SpriteBatch();
         texture = new Texture("core/assets/rsz_attacker.png");
         rect = new Rectangle(x,y,texture.getWidth(), texture.getHeight());
-
     }
 
     public AttackerEnemy(float x, float y)
@@ -61,7 +64,7 @@ public class AttackerEnemy extends SpaceObject implements Enemy{
         powerdown = null;
         powerup = null;
         status = Status.MOVING;
-        speed = 500;
+        speed = 50;
     }
 
     @Override
@@ -75,6 +78,23 @@ public class AttackerEnemy extends SpaceObject implements Enemy{
         batch.end();
     }
     public void update(float dt){
+
+        if (timeAux > 1) {
+            shoot(this);
+            timeAux = 0;
+        } else {
+            timeAux += dt;
+        }
+
+        for (int i = 0; i < bullets.size(); i++) {
+
+            EnemyBullet bullet = bullets.get(i);
+            if(!bullet.isRemove())
+            {
+                bullet.update(dt);
+                bullet.render(batch);
+            }
+        }
         setDirection();
         move(dt);
         AttackerEnemy b = new AttackerEnemy(x,y);
@@ -106,6 +126,10 @@ public class AttackerEnemy extends SpaceObject implements Enemy{
         return y;
     }
 
+    public void shoot(AttackerEnemy shooter){
+        bullets.add(new EnemyBullet(x,y,player.getX(),player.getY(), shooter, player));
+    }
+
     @Override
     public Rectangle getRectangle() {
         return rect;
@@ -117,5 +141,9 @@ public class AttackerEnemy extends SpaceObject implements Enemy{
         if(hitpoints ==  0){
             player.removeEnemy(this);
         }
+    }
+
+    public void removeBullet(EnemyBullet enemyBullet) {
+        bullets.remove(enemyBullet);
     }
 }

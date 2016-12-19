@@ -84,7 +84,7 @@ public class Bullet extends SpaceObject {
             for (int i = 0; i < enemies.size(); i++) {
                 if (rect.overlaps(enemies.get(i).getRectangle())) {
                     player.removeBullet(this);
-                    player.reduceHitpoints(enemies.get(i));
+                    player.reduceEnemyHitpoints(enemies.get(i));
                 }
             }
         }
