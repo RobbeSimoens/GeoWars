@@ -29,6 +29,7 @@ public class Player extends SpaceObject{
     private float timePowerUp;
     private float timePowerDown;
     private float shootSpeed;
+    private int shield;
     private Random rand;
     private int spawntimer;
     private int spawnCounter;
@@ -55,6 +56,7 @@ public class Player extends SpaceObject{
         spawntimer = 3;
         spawnCounter = 0;
         shootSpeed = 0.4f;
+        shield = 0;
     }
 
 
@@ -198,7 +200,7 @@ public class Player extends SpaceObject{
                 break;
 
             case SILENCED:
-
+                //TODO make the shooting stop
                 break;
             case SLOWED:
                 if (timePowerDown <= 5) {
@@ -228,16 +230,19 @@ public class Player extends SpaceObject{
                 break;
 
             case CONESHOOTING:
-
+                //TODO Search how to make the player fire 3 bullets in different directions
 
                 break;
 
             case SHIELD:
+                shield = 2 ;
+
+
 
                 break;
 
             case NUKE:
-
+                bullets.clear();
                 break;
 
 
