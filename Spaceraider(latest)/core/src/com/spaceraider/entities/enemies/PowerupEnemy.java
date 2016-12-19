@@ -25,8 +25,10 @@ public class PowerupEnemy implements Enemy{
     private float x,y;
     private float dirX,dirY;
     private Player player;
+    private int speed;
 
     public PowerupEnemy(Player player) {
+        initialize();
         this.player = player;
         setDirection();
         rand = new Random();
@@ -35,7 +37,7 @@ public class PowerupEnemy implements Enemy{
 
         batch = new SpriteBatch();
         texture = new Texture("core/assets/rsz_powerup.png");
-        initialize();
+
     }
 
     @Override
@@ -47,6 +49,7 @@ public class PowerupEnemy implements Enemy{
         powerdown = null;
         powerup = generateRandomPowerup();
         status = Status.MOVING;
+        speed = 500;
     }
 
     private Powerup generateRandomPowerup(){
@@ -99,8 +102,8 @@ public class PowerupEnemy implements Enemy{
 
     public void move(float dt){
         double destinationLength = Math.sqrt(dirX * dirX + dirY * dirY);
-        x = x + (dirX * 1 * dt); // TODO : 1 = speed value
-        y = y + (dirY * 1 * dt); // TODO : 1 = speed value ==> make variable
+        x = (float) (x + (dirX * speed * dt) / destinationLength); // TODO : 1 = speed value
+        y = (float) (y + (dirY * speed * dt) / destinationLength); // TODO : 1 = speed value ==> make variable
 
     }
 }

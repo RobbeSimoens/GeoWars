@@ -28,8 +28,10 @@ public class AttackerEnemy implements Enemy{
     private float x,y;
     private Random rand;
     private float dirX,dirY;
+    private int speed;
 
     public AttackerEnemy(Player player) {
+        initialize();
         this.player = player;
         setDirection();
         rand = new Random();
@@ -38,7 +40,7 @@ public class AttackerEnemy implements Enemy{
 
         batch = new SpriteBatch();
         texture = new Texture("core/assets/rsz_standard.png");
-        initialize();
+
     }
 
     public AttackerEnemy(float x, float y)
@@ -55,6 +57,7 @@ public class AttackerEnemy implements Enemy{
         powerdown = null;
         powerup = null;
         status = Status.MOVING;
+        speed = 750;
     }
     @Override
     public String toString(){
@@ -79,8 +82,8 @@ public class AttackerEnemy implements Enemy{
 
     public void move(float dt){
         double destinationLength = Math.sqrt(dirX * dirX + dirY * dirY);
-        x = x + (dirX * 1 * dt); // TODO : 1 = speed value
-        y = y + (dirY * 1 * dt); // TODO : 1 = speed value ==> make variable
+        x = (float) (x + (dirX * speed * dt) / destinationLength); // TODO : 1 = speed value
+        y = (float) (y + (dirY * speed * dt)/ destinationLength); // TODO : 1 = speed value ==> make variable
 
     }
 

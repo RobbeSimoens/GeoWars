@@ -26,9 +26,11 @@ public class PowerdownEnemy implements Enemy{
     private float x,y;
     private Player player;
     private float dirX,dirY;
+    private int speed;
 
     public PowerdownEnemy(Player player) {
 
+        initialize();
         this.player = player;
         setDirection();
         rand = new Random();
@@ -37,7 +39,7 @@ public class PowerdownEnemy implements Enemy{
 
         batch = new SpriteBatch();
         texture = new Texture("core/assets/rsz_powerdown.png");
-        initialize();
+
     }
 
     public PowerdownEnemy(float x, float y){
@@ -53,6 +55,7 @@ public class PowerdownEnemy implements Enemy{
         powerup = null;
         powerdown = generateRandomPowerdown();
         status = Status.MOVING;
+        speed = 500;
     }
 
     private Powerdown generateRandomPowerdown(){
@@ -102,8 +105,8 @@ public class PowerdownEnemy implements Enemy{
 
     public void move(float dt){
         double destinationLength = Math.sqrt(dirX * dirX + dirY * dirY);
-        x = x + (dirX * 1 * dt); // TODO : 1 = speed value
-        y = y + (dirY * 1 * dt); // TODO : 1 = speed value ==> make variable
+        x = (float) (x + (dirX * speed * dt) / destinationLength); // TODO : 1 = speed value
+        y = (float) (y + (dirY * speed * dt) / destinationLength); // TODO : 1 = speed value ==> make variable
 
     }
 }

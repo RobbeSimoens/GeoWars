@@ -28,6 +28,7 @@ public class TankEnemy extends SpaceObject implements Enemy {
     private float x,y;
     private Random rand;
     private float dirX,dirY;
+    private int speed;
 
     public TankEnemy(Player player) {
         initialize();
@@ -54,6 +55,7 @@ public class TankEnemy extends SpaceObject implements Enemy {
         powerdown = null;
         powerup = null;
         status = Status.MOVING;
+        speed = 350;
     }
     @Override
     public String toString(){
@@ -84,8 +86,8 @@ public class TankEnemy extends SpaceObject implements Enemy {
 
     public void move(float dt){
         double destinationLength = Math.sqrt(dirX * dirX + dirY * dirY);
-        x = x + (dirX * 1 * dt); // TODO : 1 = speed value
-        y = y + (dirY * 1 * dt); // TODO : 1 = speed value ==> make variable
+        x = (float) (x + (dirX * speed * dt) /destinationLength); // TODO : 1 = speed value
+        y = (float) (y + (dirY * speed * dt)/ destinationLength); // TODO : 1 = speed value ==> make variable
 
     }
 
