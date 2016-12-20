@@ -2,9 +2,11 @@ package com.spaceraider.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.spaceraider.entities.Drones.Drone;
 import com.spaceraider.entities.enemies.*;
 import com.spaceraider.entities.enums.Powerdown;
 import com.spaceraider.entities.enums.Powerup;
@@ -36,6 +38,13 @@ public class Player extends SpaceObject{
     private int spawnCounter;
     private Rectangle rect;
     private int score;
+    private Drone drone;
+    private int hitpoints;
+
+    private String scoreDisplayer;
+    private String hitpointsDisplayer;
+    BitmapFont bitmapFontHitpoints;
+    BitmapFont bitmapFontScore;
 
     private List<Bullet> bullets;
     private List<Enemy> enemies;
@@ -52,6 +61,7 @@ public class Player extends SpaceObject{
         orbs = new ArrayList<Orb>();
         x = Spaceraider.WIDTH / 2;
         y = Spaceraider.HEIGHT / 2;
+        drone = new Drone(x,y,this);
         batch.begin();
         playerSprite.setPosition(x,y);
         batch.end();
@@ -61,6 +71,12 @@ public class Player extends SpaceObject{
         spawnCounter = 0;
         shootSpeed = 0.4f;
         shield = 0;
+        hitpoints = 10;
+        hitpointsDisplayer = "hitpoints:   " + hitpoints;
+        scoreDisplayer =  "score:   " +  score;
+        bitmapFontHitpoints = new BitmapFont();
+        bitmapFontScore = new BitmapFont();
+
     }
 
 
@@ -80,9 +96,23 @@ public class Player extends SpaceObject{
         down = b;
     }
 
+    public void rotateShip(){
+
+        float angle = 0;
+        float mouseX = 0;
+        float mouseY = 0;
+        mouseX = Gdx.input.getX();
+        mouseY = 677 - Gdx.input.getY();
+        angle = (float) Math.toDegrees(Math.atan2(mouseX - playerSprite.getX(),
+                mouseY - playerSprite.getY()));
+        if (angle < 0)
+            angle += 360;
+        playerSprite.setRotation(angle * -1);
+    }
+
 
     public void update(float dt){
-
+        rotateShip();
         checkCollision();
         checkOrbCollision();
 
@@ -119,19 +149,32 @@ public class Player extends SpaceObject{
         if(left){
             x = x - speed;
             rect.setX(x);
+            drone.setX(x);
         }else if(right){
             x = x + speed ;
             rect.setX(x);
+            drone.setX(x );
         }
         if(up){
             y = y + speed;
             rect.setY(y);
+            drone.setY(y);
         }
         if(down){
             y = y - speed;
             rect.setY(y);
+            drone.setY(y);
         }
+
+        drone.update(dt);
+        drone.render(batch);
+
+
         batch.begin();
+        bitmapFontHitpoints.setColor(1.0f,1.0f,1.0f,1.0f);
+        bitmapFontHitpoints.draw(batch, hitpointsDisplayer, 20, 20 );
+        bitmapFontScore.setColor(1.0f,1.0f,1.0f,1.0f);
+        bitmapFontScore.draw(batch, scoreDisplayer, 150, 20 );
         playerSprite.draw(batch);
         playerSprite.setPosition(x,y);
         batch.end();
@@ -146,9 +189,9 @@ public class Player extends SpaceObject{
             {
                 if (rect.overlaps(orbs.get(i).getRectangle()))
                 {
-                    System.out.println("collision with orb detected");
                     orbs.remove(orbs.get(i));
                     score += 10;
+                    scoreDisplayer = "score:    " + score;
                     System.out.println(score);
                     // TODO : add powerup
                 }
@@ -162,6 +205,7 @@ public class Player extends SpaceObject{
                 if (rect.overlaps(enemies.get(i).getRectangle())) {
                     enemies.get(i).dropOrb();
                     enemies.remove(enemies.get(i));
+                    reduceHitpoints();
                     System.out.println("WE ARE HIT !!!!");
                     // TODO: implement een end game hier
 
@@ -170,18 +214,31 @@ public class Player extends SpaceObject{
         }
     }
 
+    public void reduceHitpoints(){
+        if(hitpoints > 1)
+        {
+            hitpoints--;
+            hitpointsDisplayer = "hitpoints:    " + hitpoints;
+        }
+        else
+        {
+            System.out.println("Player died"); // TODO: implement dying
+        }
+
+    }
+
     public void removeBullet(Bullet bullet){
         bullets.remove(bullet);
     }
 
+    public void addDroneBullet(float x, float y){
+        bullets.add(new Bullet(x,y, 1920 - Gdx.input.getX() - 20 ,1080 - Gdx.input.getY() - 40, this)); // Minus 20 & 40 for balancing the drone position to the spaceship
+    }
+
     public void makeBullet(){
-
-
         bullets.add(new Bullet(x ,y ,Gdx.input.getX(),Gdx.input.getY(), this));
-
     }
     public void shoot(float dt){
-
         if(timeBullet> shootSpeed){
             makeBullet();
             timeBullet = 0; // laat alles automatich shieten
@@ -215,7 +272,7 @@ public class Player extends SpaceObject{
         // TODO : fix this method --> adjustSpawnTimer();
 
     }
-    public void adjustSpawnTimer(){
+    public void adjustSpawnTimer(){ // TODO : fix me
         spawnCounter ++;
         if(spawnCounter > 10)
         {
@@ -226,6 +283,7 @@ public class Player extends SpaceObject{
 
         }
     }
+
     public void PowerDown(Powerdown powerdown, float dt){
         switch (powerdown) {
             case INVERTED:
@@ -292,7 +350,6 @@ public class Player extends SpaceObject{
         }else if(right){
             x = x - speed ;
         }
-        /*Acceleration, boost your speed*/
         if(up){
             y = y - speed;
         }
@@ -301,7 +358,6 @@ public class Player extends SpaceObject{
         }
 
     }
-
 
 
 
