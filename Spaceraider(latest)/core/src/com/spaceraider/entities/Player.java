@@ -96,9 +96,23 @@ public class Player extends SpaceObject{
         down = b;
     }
 
+    public void rotateShip(){
+
+        float angle = 0;
+        float mouseX = 0;
+        float mouseY = 0;
+        mouseX = Gdx.input.getX();
+        mouseY = 677 - Gdx.input.getY();
+        angle = (float) Math.toDegrees(Math.atan2(mouseX - playerSprite.getX(),
+                mouseY - playerSprite.getY()));
+        if (angle < 0)
+            angle += 360;
+        playerSprite.setRotation(angle * -1);
+    }
+
 
     public void update(float dt){
-
+        rotateShip();
         checkCollision();
         checkOrbCollision();
 
