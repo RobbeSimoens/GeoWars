@@ -33,6 +33,8 @@ public class Player extends SpaceObject{
     private float timePowerDown;
     private float shootSpeed;
     private int shield;
+    private boolean slowed;
+    private boolean inverted;
     private Random rand;
     private int spawntimer;
     private int spawnCounter;
@@ -76,6 +78,8 @@ public class Player extends SpaceObject{
         scoreDisplayer =  "score:   " +  score;
         bitmapFontHitpoints = new BitmapFont();
         bitmapFontScore = new BitmapFont();
+        slowed = false;
+        inverted = false;
 
     }
 
@@ -115,6 +119,14 @@ public class Player extends SpaceObject{
         rotateShip();
         checkCollision();
         checkOrbCollision();
+        if (slowed == true) {
+            getSlowed(dt);
+        }
+        if (inverted == true){
+            Inverted(dt);
+        }else{
+            controls();
+        }
 
             for (int i = 0; i < bullets.size(); i++) {
 
@@ -146,25 +158,7 @@ public class Player extends SpaceObject{
 
         }
 
-        if(left){
-            x = x - speed;
-            rect.setX(x);
-            drone.setX(x);
-        }else if(right){
-            x = x + speed ;
-            rect.setX(x);
-            drone.setX(x );
-        }
-        if(up){
-            y = y + speed;
-            rect.setY(y);
-            drone.setY(y);
-        }
-        if(down){
-            y = y - speed;
-            rect.setY(y);
-            drone.setY(y);
-        }
+
 
         drone.update(dt);
         drone.render(batch);
@@ -183,21 +177,30 @@ public class Player extends SpaceObject{
     }
 
     private void checkOrbCollision() {
-        if (orbs.size() > 0)
-        {
-            for (int i = 0; i < orbs.size(); i++)
-            {
-                if (rect.overlaps(orbs.get(i).getRectangle()))
-                {
-                    orbs.remove(orbs.get(i));
-                    score += 10;
-                    scoreDisplayer = "score:    " + score;
-                    System.out.println(score);
-                    // TODO : add powerup
+        if (orbs.size() > 0) {
+            for (int i = 0; i < orbs.size(); i++) {
+                if (rect.overlaps(orbs.get(i).getRectangle())) {
+                    if (orbs.get(i).getPowerdown() == Powerdown.SLOWED) {
+                        slowed = true;
+
+
+                    } else if (orbs.get(i).getPowerdown() == Powerdown.INVERTED) {
+                        inverted = true;
+                    } else if (orbs.get(i).getPowerup() == Powerup.RAPIDFIRE) {
+
+                    }
+
+                        //TODO powerdown SILENCED , powerup : rapidfire , (coneshooting) , shield , nuke
+                        orbs.remove(orbs.get(i));
+                        score += 10;
+                        scoreDisplayer = "score:    " + score;
+                        System.out.println(score);
+
+                    }
                 }
             }
         }
-    }
+
 
     private void checkCollision() {
         if(enemies.size() > 0) {
@@ -284,41 +287,11 @@ public class Player extends SpaceObject{
         }
     }
 
-    public void PowerDown(Powerdown powerdown, float dt){
-        switch (powerdown) {
-            case INVERTED:
-                Inverted();
-                break;
 
-            case SILENCED:
-                //TODO make the shooting stop
-                break;
-            case SLOWED:
-                if (timePowerDown <= 5) {
-                    speed = speed /2;
-                    timePowerDown = 0;
-                } else {
-                    speed = 5;
-                    timePowerDown += dt;
-
-                }
-
-                break;
-        }
-    }
 
     public void PowerUp(Powerup powerup, float dt){
         switch (powerup){
-            case RAPIDFIRE:
-                if(timePowerUp> shootSpeed){
-                    makeBullet();
-                    timePowerUp = 0; // laat alles automatich shieten
-                }else{
-
-                    timePowerUp +=dt;
-                }
-
-                break;
+    
 
             case CONESHOOTING:
                 //TODO Search how to make the player fire 3 bullets in different directions
@@ -344,19 +317,95 @@ public class Player extends SpaceObject{
 
     }
 
-    private void Inverted(){
-        if(left){
-            x = x + speed;
-        }else if(right){
-            x = x - speed ;
-        }
-        if(up){
-            y = y - speed;
-        }
-        if(down){
-            y = y + speed;
-        }
+    private void Inverted(float dt) {
+        if (timePowerDown <= 5) {
+            if (left) {
+                x = x + speed;
+                rect.setX(x);
+                drone.setX(x);
+            } else if (right) {
+                x = x - speed;
+                rect.setX(x);
+                drone.setX(x);
+            }
+        /*Acceleration, boost your speed*/
+            if (up) {
+                y = y - speed;
+                rect.setY(y);
+                drone.setY(y);
+            }
+            if (down) {
+                y = y + speed;
+                rect.setY(y);
+                drone.setY(y);
+            }
+            timePowerDown +=dt;
+        }else {
 
+            if (left) {
+                x = x - speed;
+                rect.setX(x);
+            } else if (right) {
+                x = x + speed;
+                rect.setX(x);
+            }
+            if (up) {
+                y = y + speed;
+                rect.setY(y);
+            }
+            if (down) {
+                y = y - speed;
+                rect.setY(y);
+            }
+            inverted = false;
+        }
+    }
+
+    private void controls(){
+        if (left) {
+            if(left){
+                x = x - speed;
+                rect.setX(x);
+                drone.setX(x);
+            }else if(right){
+                x = x + speed ;
+                rect.setX(x);
+                drone.setX(x );
+            }
+            if(up){
+                y = y + speed;
+                rect.setY(y);
+                drone.setY(y);
+            }
+            if(down){
+                y = y - speed;
+                rect.setY(y);
+                drone.setY(y);
+            }
+        }
+    }
+    private void getSlowed(float dt) {
+        if (timePowerDown <= 5) {
+            speed = 2;
+            timePowerDown += dt;
+
+
+        } else {
+            speed = 5;
+            timePowerDown = 0;
+            slowed = false;
+            System.out.println(timePowerDown);
+        }
+    }
+
+    private void rapidFire(float dt){
+        if(timePowerUp> shootSpeed){
+            makeBullet();
+            timePowerUp = 0; // laat alles automatich shieten
+        }else{
+
+            timePowerUp +=dt;
+        }
     }
 
 
