@@ -59,13 +59,5 @@ public class NormalOrb extends SpaceObject implements Orb{
         b.render(batch);
     }
 
-    @Override
-    public Powerdown getPowerDown() {
-        return null;
-    }
 
-    @Override
-    public Powerup getPowerUp() {
-        return null;
-    }
 }

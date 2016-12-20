@@ -15,6 +15,4 @@ public interface Orb {
     Powerdown getPowerdown();
     Rectangle getRectangle();
 
-    Powerup getPowerUp();
-    Powerdown getPowerDown();
 }

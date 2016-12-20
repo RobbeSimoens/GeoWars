@@ -33,8 +33,6 @@ public class Player extends SpaceObject{
     private float timePowerDown;
     private float shootSpeed;
     private int shield;
-    private boolean slowed;
-    private boolean inverted;
     private Random rand;
     private int spawntimer;
     private int spawnCounter;
@@ -88,12 +86,7 @@ public class Player extends SpaceObject{
         rapidFire = false;
         bitmapFontHitpoints = new BitmapFont();
         bitmapFontScore = new BitmapFont();
-<<<<<<< HEAD
-=======
-        slowed = false;
-        inverted = false;
 
->>>>>>> origin/master
     }
 
 
@@ -116,7 +109,7 @@ public class Player extends SpaceObject{
     public void rotateShip(){
 
         float angle = (float) Math.toDegrees(Math.atan2((Gdx.input.getX() - 15) - playerSprite.getX(),
-                (742 - Gdx.input.getY()) - playerSprite.getY()));
+                (1080 - Gdx.input.getY()) - playerSprite.getY()));
        // if (angle < 0)
         //    angle += 360;
         playerSprite.setRotation(angle * -1);
@@ -127,7 +120,6 @@ public class Player extends SpaceObject{
         rotateShip();
         checkBulletCollision();
         checkOrbCollision();
-<<<<<<< HEAD
         checkForPowerUp(dt);
         handleBullets(dt);
         handleEnemies(dt);
@@ -135,66 +127,12 @@ public class Player extends SpaceObject{
         handleDrone(dt);
         handleInput();
         drawComponents();
-=======
-        if (slowed == true) {
-            getSlowed(dt);
-        }
-        if (inverted == true){
-            Inverted(dt);
-        }else{
-            controls();
-        }
 
-            for (int i = 0; i < bullets.size(); i++) {
-
-                Bullet bullet = bullets.get(i);
-                if(!bullet.isRemove())
-                {
-                    bullet.update(dt);
-                    bullet.render(batch);
-                }
-            }
-
-        for (int i = 0; i < enemies.size(); i++) {
-
-            Enemy enemy = enemies.get(i);
-
-            enemy.update(dt);
-            enemy.render(batch);
-        }
-
-        for (int i = 0; i < orbs.size(); i++)
-        {
-            orbs.get(i).render(batch);
-        }
-        if (timeToSpawn > spawntimer) { // SPAWNING
-            spawn();
-            timeToSpawn = 0;
-        } else {
-            timeToSpawn += dt;
-
-        }
-
-
-
-        drone.update(dt);
-        drone.render(batch);
-
-
-        batch.begin();
-        bitmapFontHitpoints.setColor(1.0f,1.0f,1.0f,1.0f);
-        bitmapFontHitpoints.draw(batch, hitpointsDisplayer, 20, 20 );
-        bitmapFontScore.setColor(1.0f,1.0f,1.0f,1.0f);
-        bitmapFontScore.draw(batch, scoreDisplayer, 150, 20 );
-        playerSprite.draw(batch);
-        playerSprite.setPosition(x,y);
-        batch.end();
->>>>>>> origin/master
         /*Wrap it all around the screen, maw je kan door het scherm vliegen en er langs de andere kant terug uit komen :)*/
         wrap();
     }
 
-<<<<<<< HEAD
+
 //<editor-fold desc="Bullets">
     private void handleBullets(float dt) {
         for (int i = 0; i < bullets.size(); i++) {
@@ -203,48 +141,10 @@ public class Player extends SpaceObject{
             if (!bullet.isRemove()) {
                 bullet.update(dt);
                 bullet.render(batch);
-=======
-    private void checkOrbCollision() {
-        if (orbs.size() > 0) {
-            for (int i = 0; i < orbs.size(); i++) {
-                if (rect.overlaps(orbs.get(i).getRectangle())) {
-                    if (orbs.get(i).getPowerdown() == Powerdown.SLOWED) {
-                        slowed = true;
-
-
-                    } else if (orbs.get(i).getPowerdown() == Powerdown.INVERTED) {
-                        inverted = true;
-                    } else if (orbs.get(i).getPowerup() == Powerup.RAPIDFIRE) {
-
-                    }
-
-                        //TODO powerdown SILENCED , powerup : rapidfire , (coneshooting) , shield , nuke
-                        orbs.remove(orbs.get(i));
-                        score += 10;
-                        scoreDisplayer = "score:    " + score;
-                        System.out.println(score);
-
-                    }
-                }
->>>>>>> origin/master
-            }
-        }
-
-
-    private void checkBulletCollision() {
-        if(enemies.size() > 0) {
-            for (int i = 0; i < enemies.size(); i++) {
-                if (rect.overlaps(enemies.get(i).getRectangle())) {
-                    enemies.get(i).dropOrb();
-                    enemies.remove(enemies.get(i));
-                    reduceHitpoints();
-                    System.out.println("WE ARE HIT !!!!");
-                    // TODO: implement een end game hier
-
-                }
             }
         }
     }
+
 
     public void removeBullet(Bullet bullet){
         bullets.remove(bullet);
@@ -258,6 +158,20 @@ public class Player extends SpaceObject{
 // </editor-fold>
 
 //<editor-fold desc="Orbs">
+private void checkBulletCollision() {
+    if(enemies.size() > 0) {
+        for (int i = 0; i < enemies.size(); i++) {
+            if (rect.overlaps(enemies.get(i).getRectangle())) {
+                enemies.get(i).dropOrb();
+                enemies.remove(enemies.get(i));
+                reduceHitpoints();
+                System.out.println("WE ARE HIT !!!!");
+                // TODO: implement een end game hier
+
+            }
+        }
+    }
+}
     private void checkOrbCollision() {
     if (orbs.size() > 0)
     {
@@ -265,11 +179,11 @@ public class Player extends SpaceObject{
         {
             if (rect.overlaps(orbs.get(i).getRectangle()))
             {
-                if(orbs.get(i).getPowerDown() == Powerdown.INVERTED) {
+                if(orbs.get(i).getPowerdown() == Powerdown.INVERTED) {
                     inverted = true;
-                }else if(orbs.get(i).getPowerDown() == Powerdown.SLOWED){
+                }else if(orbs.get(i).getPowerdown() == Powerdown.SLOWED){
                     slowed= true;
-                }else if (orbs.get(i).getPowerDown() == Powerdown.SILENCED){
+                }else if (orbs.get(i).getPowerdown() == Powerdown.SILENCED){
                     silenced = true;
                 }
 
@@ -308,7 +222,7 @@ public class Player extends SpaceObject{
 }
 
     public void addDroneBullet(float x, float y){
-        bullets.add(new Bullet(x,y, 1366 - Gdx.input.getX() - 20 ,768 - Gdx.input.getY() - 40, this)); // Minus 20 & 40 for balancing the drone position to the spaceship
+        bullets.add(new Bullet(x,y, 1920 - Gdx.input.getX() - 20 ,1080 - Gdx.input.getY() - 40, this)); // Minus 20 & 40 for balancing the drone position to the spaceship
     }
 
 
@@ -365,7 +279,7 @@ public class Player extends SpaceObject{
         }
     }
 
-<<<<<<< HEAD
+
     public List<Enemy> getEnemies(){
         return enemies;
     }
@@ -401,9 +315,6 @@ public class Player extends SpaceObject{
         }
 
     }
-=======
-
->>>>>>> origin/master
 
     public void handleInput() {
         if (left) {
@@ -430,79 +341,8 @@ public class Player extends SpaceObject{
 
 //<editor-fold desc="PowerUp/PowerDown">
 
-    public void PowerUp(Powerup powerup, float dt){
-        switch (powerup){
-<<<<<<< HEAD
-            case RAPIDFIRE:
-                if(timePowerUp> shootSpeed){
-                    makeBullet();
-                    timePowerUp = 0; // laat alles automatich shieten
-                }else{
 
-                    timePowerUp +=dt;
-                }
-                break;
-=======
-    
->>>>>>> origin/master
 
-            case CONESHOOTING:
-                //TODO Search how to make the player fire 3 bullets in different directions
-                break;
-
-            case SHIELD:
-                shield = 2 ;
-                break;
-
-            case NUKE:
-                bullets.clear();
-                break;
-        }
-    }
-
-    private void Inverted( float dt){
-        if(timePowerDown <= 5) {
-            if (left) {
-                x = x + speed;
-                rect.setX(x);
-                drone.setX(x);
-            } else if (right) {
-                x = x - speed;
-                rect.setX(x);
-                drone.setX(x);
-            }
-            if (up) {
-                y = y - speed;
-                rect.setY(y);
-                drone.setY(y);
-            }
-            if (down) {
-                y = y + speed;
-                rect.setY(y);
-                drone.setY(y);
-            }
-        }else{
-            if (left) {
-                x = x - speed;
-                rect.setX(x);
-                drone.setX(x);
-            } else if (right) {
-                x = x + speed;
-                rect.setX(x);
-                drone.setX(x);
-            }
-            if (up) {
-                y = y + speed;
-                rect.setY(y);
-                drone.setY(y);
-            }
-            if (down) {
-                y = y - speed;
-                rect.setY(y);
-                drone.setY(y);
-            }
-        }
-    }
 
     private void Slowed(float dt){
         if(timePowerDown <= 5){
@@ -515,18 +355,19 @@ public class Player extends SpaceObject{
         }
     }
 
-<<<<<<< HEAD
-    private void checkForPowerUp(float dt){
-        if(slowed == true){
-           Slowed(dt);
+
+    private void checkForPowerUp(float dt) {
+        if (slowed == true) {
+            Slowed(dt);
         }
-        if(inverted == true){
+        if (inverted == true) {
             Inverted(dt);
         }
-        if(silenced ==true){
+        if (silenced == true) {
             //Silenced(dt);
         }
-=======
+    }
+
     private void Inverted(float dt) {
         if (timePowerDown <= 5) {
             if (left) {
@@ -555,56 +396,23 @@ public class Player extends SpaceObject{
             if (left) {
                 x = x - speed;
                 rect.setX(x);
+                drone.setX(x);
             } else if (right) {
                 x = x + speed;
                 rect.setX(x);
+                drone.setX(x);
             }
             if (up) {
                 y = y + speed;
                 rect.setY(y);
+                drone.setY(y);
             }
             if (down) {
                 y = y - speed;
                 rect.setY(y);
+                drone.setY(y);
             }
             inverted = false;
-        }
-    }
-
-    private void controls(){
-        if (left) {
-            if(left){
-                x = x - speed;
-                rect.setX(x);
-                drone.setX(x);
-            }else if(right){
-                x = x + speed ;
-                rect.setX(x);
-                drone.setX(x );
-            }
-            if(up){
-                y = y + speed;
-                rect.setY(y);
-                drone.setY(y);
-            }
-            if(down){
-                y = y - speed;
-                rect.setY(y);
-                drone.setY(y);
-            }
-        }
-    }
-    private void getSlowed(float dt) {
-        if (timePowerDown <= 5) {
-            speed = 2;
-            timePowerDown += dt;
-
-
-        } else {
-            speed = 5;
-            timePowerDown = 0;
-            slowed = false;
-            System.out.println(timePowerDown);
         }
     }
 
@@ -616,7 +424,7 @@ public class Player extends SpaceObject{
 
             timePowerUp +=dt;
         }
->>>>>>> origin/master
+
     }
 // </editor-fold>
 

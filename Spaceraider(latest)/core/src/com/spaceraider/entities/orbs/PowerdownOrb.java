@@ -33,15 +33,6 @@ public class PowerdownOrb extends SpaceObject implements Orb { // TODO : activat
     }
 
     @Override
-<<<<<<< HEAD
-    public Powerdown getPowerDown() {
-        return powerdown;
-    }
-
-    @Override
-    public Powerup getPowerUp() {
-        return null;
-=======
     public Powerup getPowerup() {
         return null;
     }
@@ -49,7 +40,6 @@ public class PowerdownOrb extends SpaceObject implements Orb { // TODO : activat
     @Override
     public Powerdown getPowerdown() {
         return powerdown;
->>>>>>> origin/master
     }
 
     @Override
