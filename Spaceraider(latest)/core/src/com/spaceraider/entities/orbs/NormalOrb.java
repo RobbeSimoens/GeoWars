@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.spaceraider.entities.SpaceObject;
+import com.spaceraider.entities.enums.Powerdown;
+import com.spaceraider.entities.enums.Powerup;
 
 /**
  * Created by robbe on 12/19/2016.
@@ -44,5 +46,15 @@ public class NormalOrb extends SpaceObject implements Orb{
     {
         NormalOrb b = new NormalOrb(x,y);
         b.render(batch);
+    }
+
+    @Override
+    public Powerdown getPowerDown() {
+        return null;
+    }
+
+    @Override
+    public Powerup getPowerUp() {
+        return null;
     }
 }
