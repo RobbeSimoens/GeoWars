@@ -34,6 +34,17 @@ public class NormalOrb extends SpaceObject implements Orb{
     }
 
     @Override
+    public Powerdown getPowerdown() {
+        return null;
+    }
+
+    @Override
+    public Powerup getPowerup() {
+
+        return null;
+    }
+
+    @Override
     public Rectangle getRectangle() {
         return rect;
     }

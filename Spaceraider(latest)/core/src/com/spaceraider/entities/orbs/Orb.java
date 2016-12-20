@@ -11,6 +11,8 @@ import com.spaceraider.entities.enums.Powerup;
 public interface Orb {
     void update(float dt);
     void render(SpriteBatch batch);
+    Powerup getPowerup();
+    Powerdown getPowerdown();
     Rectangle getRectangle();
 
     Powerup getPowerUp();

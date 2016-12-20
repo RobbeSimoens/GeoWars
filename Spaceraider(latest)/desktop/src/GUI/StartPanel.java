@@ -33,15 +33,15 @@ public class StartPanel extends BackGroundPanel {
     private void actionListener() {
         buttonLogin.addActionListener(e -> {
 
-                    //echte code
-                    /*LoginPanel loginPanel = new LoginPanel(frame, database);
+                    /*//echte code
+                    LoginPanel loginPanel = new LoginPanel(frame, database);
                     frame.getContentPane().removeAll();
                     frame.getContentPane().invalidate();
                     frame.getContentPane().add(loginPanel);
                     frame.getContentPane().revalidate();
-                }); */
+                });*/
           //test
-            frame.dispose();
+           frame.dispose();
             LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
             config.title = "Space Raider";
             config.width = 1920;
