@@ -66,7 +66,7 @@ public class EnemyBullet extends SpaceObject {
     private void checkCollision() {
             if(rect.overlaps(player.getRect()))
             {
-                System.out.println("Ship hit by enemy bullet !!!!");
+                player.reduceHitpoints();
                 removeBullet();
             }
         }

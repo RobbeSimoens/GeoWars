@@ -2,6 +2,7 @@ package com.spaceraider.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -38,6 +39,12 @@ public class Player extends SpaceObject{
     private Rectangle rect;
     private int score;
     private Drone drone;
+    private int hitpoints;
+
+    private String scoreDisplayer;
+    private String hitpointsDisplayer;
+    BitmapFont bitmapFontHitpoints;
+    BitmapFont bitmapFontScore;
 
     private List<Bullet> bullets;
     private List<Enemy> enemies;
@@ -64,6 +71,11 @@ public class Player extends SpaceObject{
         spawnCounter = 0;
         shootSpeed = 0.4f;
         shield = 0;
+        hitpoints = 10;
+        hitpointsDisplayer = "hitpoints:   " + hitpoints;
+        scoreDisplayer =  "score:   " +  score;
+        bitmapFontHitpoints = new BitmapFont();
+        bitmapFontScore = new BitmapFont();
 
     }
 
@@ -145,6 +157,10 @@ public class Player extends SpaceObject{
 
 
         batch.begin();
+        bitmapFontHitpoints.setColor(1.0f,1.0f,1.0f,1.0f);
+        bitmapFontHitpoints.draw(batch, hitpointsDisplayer, 20, 20 );
+        bitmapFontScore.setColor(1.0f,1.0f,1.0f,1.0f);
+        bitmapFontScore.draw(batch, scoreDisplayer, 150, 20 );
         playerSprite.draw(batch);
         playerSprite.setPosition(x,y);
         batch.end();
@@ -159,9 +175,9 @@ public class Player extends SpaceObject{
             {
                 if (rect.overlaps(orbs.get(i).getRectangle()))
                 {
-                    System.out.println("collision with orb detected");
                     orbs.remove(orbs.get(i));
                     score += 10;
+                    scoreDisplayer = "score:    " + score;
                     System.out.println(score);
                     // TODO : add powerup
                 }
@@ -175,6 +191,7 @@ public class Player extends SpaceObject{
                 if (rect.overlaps(enemies.get(i).getRectangle())) {
                     enemies.get(i).dropOrb();
                     enemies.remove(enemies.get(i));
+                    reduceHitpoints();
                     System.out.println("WE ARE HIT !!!!");
                     // TODO: implement een end game hier
 
@@ -183,6 +200,18 @@ public class Player extends SpaceObject{
         }
     }
 
+    public void reduceHitpoints(){
+        if(hitpoints > 1)
+        {
+            hitpoints--;
+            hitpointsDisplayer = "hitpoints:    " + hitpoints;
+        }
+        else
+        {
+            System.out.println("Player died"); // TODO: implement dying
+        }
+
+    }
 
     public void removeBullet(Bullet bullet){
         bullets.remove(bullet);
