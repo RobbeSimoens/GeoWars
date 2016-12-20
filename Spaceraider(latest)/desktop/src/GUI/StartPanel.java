@@ -34,21 +34,21 @@ public class StartPanel extends BackGroundPanel {
         buttonLogin.addActionListener(e -> {
 
                     //echte code
-                    LoginPanel loginPanel = new LoginPanel(frame, database);
+                    /*LoginPanel loginPanel = new LoginPanel(frame, database);
                     frame.getContentPane().removeAll();
                     frame.getContentPane().invalidate();
                     frame.getContentPane().add(loginPanel);
                     frame.getContentPane().revalidate();
-                });
+                }); */
           //test
-           /* frame.dispose();
+            frame.dispose();
             LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
             config.title = "Space Raider";
             config.width = 1920;
             config.height = 1080;
             config.resizable = false;
             new LwjglApplication(new Spaceraider(), config);
-        });*/
+        });
 
         buttonRegister.addActionListener(e -> {
             RegisterPanel registerPanel = new RegisterPanel(frame,database);

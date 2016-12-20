@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.spaceraider.entities.Drones.Drone;
 import com.spaceraider.entities.enemies.*;
 import com.spaceraider.entities.enums.Powerdown;
 import com.spaceraider.entities.enums.Powerup;
@@ -36,6 +37,7 @@ public class Player extends SpaceObject{
     private int spawnCounter;
     private Rectangle rect;
     private int score;
+    private Drone drone;
 
     private List<Bullet> bullets;
     private List<Enemy> enemies;
@@ -52,6 +54,7 @@ public class Player extends SpaceObject{
         orbs = new ArrayList<Orb>();
         x = Spaceraider.WIDTH / 2;
         y = Spaceraider.HEIGHT / 2;
+        drone = new Drone(x,y,this);
         batch.begin();
         playerSprite.setPosition(x,y);
         batch.end();
@@ -61,6 +64,7 @@ public class Player extends SpaceObject{
         spawnCounter = 0;
         shootSpeed = 0.4f;
         shield = 0;
+
     }
 
 
@@ -119,18 +123,27 @@ public class Player extends SpaceObject{
         if(left){
             x = x - speed;
             rect.setX(x);
+            drone.setX(x);
         }else if(right){
             x = x + speed ;
             rect.setX(x);
+            drone.setX(x );
         }
         if(up){
             y = y + speed;
             rect.setY(y);
+            drone.setY(y);
         }
         if(down){
             y = y - speed;
             rect.setY(y);
+            drone.setY(y);
         }
+
+        drone.update(dt);
+        drone.render(batch);
+
+
         batch.begin();
         playerSprite.draw(batch);
         playerSprite.setPosition(x,y);
@@ -170,18 +183,19 @@ public class Player extends SpaceObject{
         }
     }
 
+
     public void removeBullet(Bullet bullet){
         bullets.remove(bullet);
     }
 
+    public void addDroneBullet(float x, float y){
+        bullets.add(new Bullet(x,y, 1920 - Gdx.input.getX() - 20 ,1080 - Gdx.input.getY() - 40, this)); // Minus 20 & 40 for balancing the drone position to the spaceship
+    }
+
     public void makeBullet(){
-
-
         bullets.add(new Bullet(x ,y ,Gdx.input.getX(),Gdx.input.getY(), this));
-
     }
     public void shoot(float dt){
-
         if(timeBullet> shootSpeed){
             makeBullet();
             timeBullet = 0; // laat alles automatich shieten
@@ -215,7 +229,7 @@ public class Player extends SpaceObject{
         // TODO : fix this method --> adjustSpawnTimer();
 
     }
-    public void adjustSpawnTimer(){
+    public void adjustSpawnTimer(){ // TODO : fix me
         spawnCounter ++;
         if(spawnCounter > 10)
         {
@@ -226,6 +240,7 @@ public class Player extends SpaceObject{
 
         }
     }
+
     public void PowerDown(Powerdown powerdown, float dt){
         switch (powerdown) {
             case INVERTED:
@@ -292,7 +307,6 @@ public class Player extends SpaceObject{
         }else if(right){
             x = x - speed ;
         }
-        /*Acceleration, boost your speed*/
         if(up){
             y = y - speed;
         }
@@ -301,7 +315,6 @@ public class Player extends SpaceObject{
         }
 
     }
-
 
 
 
