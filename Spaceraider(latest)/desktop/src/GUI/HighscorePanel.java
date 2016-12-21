@@ -1,7 +1,7 @@
 package GUI;
 
 
-//import Player.Player;
+//import SinglePlayer.SinglePlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,8 +18,8 @@ public class HighscorePanel extends BackGroundPanel {
     private JLabel scoreBoardPoints;
     private JLabel scoreBoardIcon;
     private JLabel winner;
-    //private ArrayList<Player> players = new ArrayList<>();
-    //private ArrayList<Player> scores = new ArrayList<>();
+    //private ArrayList<SinglePlayer> players = new ArrayList<>();
+    //private ArrayList<SinglePlayer> scores = new ArrayList<>();
 
 
     public HighscorePanel(JFrame frame /*SpaceRaider game*/) {
@@ -72,10 +72,10 @@ public class HighscorePanel extends BackGroundPanel {
 
     private void sortScores() {
     //    int highestScoreInLoop = 0;
-       // Player playerToRemove = null;
+       // SinglePlayer playerToRemove = null;
 
 //        for (int i = 0; i < game.getPlayers().size(); i++) {
-  //          for (/*Player player : players*/) {
+  //          for (/*SinglePlayer player : players*/) {
     //            if (/*player.getScore() > highestScoreInLoop*/) {
                    // highestScoreInLoop = player.getScore();
                 //    playerToRemove = player;
@@ -91,7 +91,7 @@ public class HighscorePanel extends BackGroundPanel {
         sortScores();
 
         int i = 0;
-     //   for (/*Player player : scores*/) {
+     //   for (/*SinglePlayer player : scores*/) {
             //scoreBoardName = new JLabel(player.getName(), SwingConstants.CENTER);
             scoreBoardName.setForeground(Color.WHITE);
             scoreBoardName.setBackground(new Color(0, 0, 0, 125));
@@ -113,7 +113,7 @@ public class HighscorePanel extends BackGroundPanel {
             add(scoreBoardIcon);
 
             if (i == 0) {
-                winner.setText("Game Over");
+                winner.setText("MultiPlayerGame Over");
             }
             i++;
         }

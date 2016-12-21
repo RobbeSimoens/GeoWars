@@ -8,11 +8,15 @@ import com.spaceraider.managers.GameStateManager;
 public abstract class GameState {
 
     protected GameStateManager gsm;
-    protected GameState(GameStateManager gsm) throws InterruptedException {
+    private java.lang.String gameMode;
+
+    protected GameState(GameStateManager gsm, java.lang.String gameMode) throws InterruptedException {
+        init(gameMode);
+        this.gameMode = gameMode;
         this.gsm = gsm;
-        init();
+
     }
-    public abstract void init() throws InterruptedException;
+    public abstract void init(String gameMode) throws InterruptedException;
     public abstract void update(float dt);
     public abstract void draw();
     public abstract void handleInput();
