@@ -39,7 +39,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player{" +
+        return "SinglePlayer{" +
                 "email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +

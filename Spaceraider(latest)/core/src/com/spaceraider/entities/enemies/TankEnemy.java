@@ -3,13 +3,13 @@ package com.spaceraider.entities.enemies;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.spaceraider.entities.Player;
 import com.spaceraider.entities.SpaceObject;
 import com.spaceraider.entities.enums.EnemyType;
 import com.spaceraider.entities.enums.Powerdown;
 import com.spaceraider.entities.enums.Powerup;
 import com.spaceraider.entities.enums.Status;
 import com.spaceraider.entities.orbs.NormalOrb;
+import com.spaceraider.entities.player.Player;
 
 import java.util.Random;
 

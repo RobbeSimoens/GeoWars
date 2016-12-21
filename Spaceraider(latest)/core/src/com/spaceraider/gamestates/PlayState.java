@@ -1,36 +1,44 @@
 package com.spaceraider.gamestates;
-import com.spaceraider.entities.Player;
+
+import com.spaceraider.game.MultiPlayerGame;
+import com.spaceraider.game.SinglePlayerGame;
 import com.spaceraider.managers.GameKeys;
 import com.spaceraider.managers.GameStateManager;
+import com.spaceraider.game.Game;
 
 /**
  * Created by Kevin on 9/11/2016.
  */
 public class PlayState extends GameState {
-
-    private Player player;
     private float timeAux;
+    private String gameMode;
+    private Game game;
 
-    public PlayState(GameStateManager gsm) throws InterruptedException {
-        super(gsm);
-
+    public PlayState(GameStateManager gsm, String gameMode) throws InterruptedException {
+        super(gsm, gameMode);
+        this.gameMode = gameMode;
+        this.gsm = gsm;
     }
 
     @Override
-    public void init() throws InterruptedException {
-        player = new Player();
+    public void init(String gameMode) throws InterruptedException {
+        System.out.println(gameMode);
+        if(gameMode.equals("singleplayer"))
+        {
+            game = new SinglePlayerGame();
+        }
+        else
+        {
+            game = new MultiPlayerGame();
+        }
 
 
     }
 
     @Override
     public void update(float dt) {
-        handleInput();
-        player.update(dt);
-        player.shoot(dt);
-
-
-
+            handleInput();
+            game.update(dt);
     }
 
 
@@ -43,11 +51,14 @@ public class PlayState extends GameState {
 
     @Override
     public void handleInput() {
-        /*Todo Uit te breiden met schieten, etc etc*/
-        player.setLeft(GameKeys.isDown(GameKeys.LEFT));
-        player.setRight(GameKeys.isDown(GameKeys.RIGHT));
-        player.setUp(GameKeys.isDown(GameKeys.UP));
-        player.setDown(GameKeys.isDown(GameKeys.DOWN));
+        if(gameMode.equals("singleplayer"))
+        {
+            game.setLeft(GameKeys.isDown(GameKeys.LEFT));
+            game.setRight(GameKeys.isDown(GameKeys.RIGHT));
+            game.setUp(GameKeys.isDown(GameKeys.UP));
+            game.setDown(GameKeys.isDown(GameKeys.DOWN));
+        }
+
     }
 
     @Override

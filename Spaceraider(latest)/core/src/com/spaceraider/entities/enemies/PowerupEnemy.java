@@ -3,7 +3,7 @@ package com.spaceraider.entities.enemies;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.spaceraider.entities.Player;
+import com.spaceraider.entities.player.Player;
 import com.spaceraider.entities.SpaceObject;
 import com.spaceraider.entities.enums.EnemyType;
 import com.spaceraider.entities.enums.Powerdown;

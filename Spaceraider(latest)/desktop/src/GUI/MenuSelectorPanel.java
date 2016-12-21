@@ -3,7 +3,6 @@ package GUI;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.spaceraider.game.Spaceraider;
-import com.spaceraider.game.desktop.DesktopLauncher;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,7 +38,7 @@ public class MenuSelectorPanel extends BackGroundPanel {
             config.width = 1920;
             config.height = 1080;
             config.resizable = false;
-            new LwjglApplication(new Spaceraider(), config);
+            new LwjglApplication(new Spaceraider("singleplayer"), config);
 
         });
 
@@ -50,7 +49,7 @@ public class MenuSelectorPanel extends BackGroundPanel {
             config.width = 1920;
             config.height = 1080;
             config.resizable = false;
-            new LwjglApplication(new Spaceraider(), config);
+            new LwjglApplication(new Spaceraider("multiplayer"), config);
 
         });
 
@@ -61,7 +60,7 @@ public class MenuSelectorPanel extends BackGroundPanel {
             config.width = 1920;
             config.height = 1080;
             config.resizable = false;
-            new LwjglApplication(new Spaceraider(), config);
+            new LwjglApplication(new Spaceraider("singleplayer"), config);
         });
 
         buttonHighscores.addActionListener(e -> {
@@ -86,7 +85,7 @@ public class MenuSelectorPanel extends BackGroundPanel {
     private void initComponents() {
         buttonCampaign = new JButton("Campaign");
         buttonCampaign.setBounds((int) (width / 2) - (160 / 2), (int) (height / 2) - 150, 160, 50);
-        buttonMultiplayer = new JButton("Multiplayer");
+        buttonMultiplayer = new JButton("MultiPlayer");
         buttonMultiplayer.setBounds((int) (width / 2) - (160 / 2), (int) (height / 2) -75, 160, 50);
         buttonHighscores = new JButton("Highscores");
         buttonHighscores.setBounds((int) (width / 2) - (160 / 2), (int) (height / 2) +75, 160, 50);
