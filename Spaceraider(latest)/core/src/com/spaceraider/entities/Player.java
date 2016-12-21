@@ -46,6 +46,8 @@ public class Player extends SpaceObject{
     private boolean nuke;
     private boolean silenced;
 
+
+
     private String scoreDisplayer;
     private String hitpointsDisplayer;
     BitmapFont bitmapFontHitpoints;
@@ -66,7 +68,7 @@ public class Player extends SpaceObject{
         orbs = new ArrayList<Orb>();
         x = Spaceraider.WIDTH / 2;
         y = Spaceraider.HEIGHT / 2;
-        drone = new Drone(x,y,this);
+        drone = new Drone(x,y,this, playerSprite);
         batch.begin();
         playerSprite.setPosition(x,y);
         batch.end();
@@ -106,15 +108,6 @@ public class Player extends SpaceObject{
         down = b;
     }
 
-    public void rotateShip(){
-
-        float angle = (float) Math.toDegrees(Math.atan2((Gdx.input.getX() - 15) - playerSprite.getX(),
-                (1080 - Gdx.input.getY()) - playerSprite.getY()));
-       // if (angle < 0)
-        //    angle += 360;
-        playerSprite.setRotation(angle * -1);
-    }
-
 
     public void update(float dt){
         rotateShip();
@@ -127,6 +120,7 @@ public class Player extends SpaceObject{
         handleDrone(dt);
         handleInput();
         drawComponents();
+
 
         /*Wrap it all around the screen, maw je kan door het scherm vliegen en er langs de andere kant terug uit komen :)*/
         wrap();
@@ -222,8 +216,9 @@ private void checkBulletCollision() {
 }
 
     public void addDroneBullet(float x, float y){
-        bullets.add(new Bullet(x,y, 1920 - Gdx.input.getX() - 20 ,1080 - Gdx.input.getY() - 40, this)); // Minus 20 & 40 for balancing the drone position to the spaceship
+        bullets.add(new Bullet(x,y, 1366 - Gdx.input.getX() - 20 ,768 - Gdx.input.getY() - 40, this)); // Minus 20 & 40 for balancing the drone position to the spaceship
     }
+
 
 
 
@@ -337,13 +332,18 @@ private void checkBulletCollision() {
             drone.setY(y);
         }
     }
+
+    public void rotateShip(){
+
+        float angle = (float) Math.toDegrees(Math.atan2((Gdx.input.getX() - 15) - playerSprite.getX(),
+                (742 - Gdx.input.getY()) - playerSprite.getY()));
+        if (angle < 0)
+            angle += 360;
+        playerSprite.setRotation(angle * -1);
+    }
 // </editor-fold>
 
 //<editor-fold desc="PowerUp/PowerDown">
-
-
-
-
     private void Slowed(float dt){
         if(timePowerDown <= 5){
             speed= 2;
