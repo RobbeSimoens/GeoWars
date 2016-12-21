@@ -1,9 +1,15 @@
 package Database;
 
 
+import GUI.HighscorePanel;
+import Player.Player;
+
 import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by qmann on 7/11/2016.
@@ -126,7 +132,53 @@ public class Database {
         }
         return available;
     }
+    public Map<String,Integer> getHighscores(){
+        String query = "SELECT Username, Score FROM User ORDER BY Score DESC";
+        Map<String,Integer> highscore = new HashMap<String,Integer>();
+        try{
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            //System.out.println(resultSet);
+            while (resultSet.next()){
+                highscore.put(resultSet.getString("Username"),resultSet.getInt("Score"));
+            }
+            resultSet.close();
 
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return highscore;
+    }
+    public void updateHighscore(int userId,int score){
+        String query = "UPDATE User SET SCORE = ? where UserID = ?";
+        try{
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,score);
+            preparedStatement.setInt(2,userId);
+            preparedStatement.execute();
+            preparedStatement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public Map<String,Integer> getHighscoreUser(int userID){
+        String query = "SELECT Score FROM User WHERE UserID = ?";
+        Map<String,Integer> highscore = new HashMap<String,Integer>();
+        try{
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,userID);
+            resultSet = preparedStatement.executeQuery();
+            //System.out.println(resultSet);
+            while (resultSet.next()){
+                highscore.put(resultSet.getString("Username"),resultSet.getInt("Score"));
+            }
+            resultSet.close();
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return highscore;
+    }
 
 
 }
