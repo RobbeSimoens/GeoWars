@@ -23,14 +23,14 @@ public class Database {
     public Database() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://172.21.18.24:3306/Spaceraider", "root", "resultSet123");
+            connection = DriverManager.getConnection("jdbc:mysql://172.21.18.24:3306/Spaceraider", "Kevin", "resultSet123");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void addUser(String email,String username,String password) { // TODO : prevent sql injection
-        String query = "INSERT INTO user(email,username, password) VALUES(?,?,?)";
+        String query = "INSERT INTO User(Email,Username, Password) VALUES(?,?,?)";
         System.out.println(checkUserAvailable(username));
 
             try {
@@ -49,7 +49,7 @@ public class Database {
     }
     public boolean getUsername(String username) { // TODO : prevent sql injection
         boolean login = false;
-       String query = "SELECT username FROM user WHERE username = ?";
+       String query = "SELECT Username FROM User WHERE Username = ?";
 
 
         try {
@@ -59,7 +59,7 @@ public class Database {
 
             while (resultSet.next()) {
 
-                String dbuserName = resultSet.getString("username");
+                String dbuserName = resultSet.getString("Username");
 
                 if(dbuserName.equals(username)){
                     System.out.println("OK");
@@ -82,7 +82,7 @@ public class Database {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                String dbpassword = resultSet.getString("password");
+                String dbpassword = resultSet.getString("Password");
                 if(dbpassword.equals(password)){
 
                 login = true;
@@ -97,7 +97,7 @@ public class Database {
     }
 
     public boolean checkUserAvailable(String username){
-        String query = "SELECT username FROM user WHERE username = ?";
+        String query = "SELECT Username FROM User WHERE Username = ?";
         boolean available = true;
 
         try {
@@ -115,7 +115,7 @@ public class Database {
         return available;
     }
     public boolean checkEmailAvailable(String email){
-        String query = "SELECT email FROM user WHERE email = ?";
+        String query = "SELECT Email FROM User WHERE Email = ?";
         boolean available = true;
 
         try {
