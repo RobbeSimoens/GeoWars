@@ -71,7 +71,7 @@ public class SinglePlayerGame extends Game {
         bitmapFontHitpoints = new BitmapFont();
         bitmapFontScore = new BitmapFont();
 
-        spawntimer = 3;
+        spawntimer = 3f;
         spawnCounter = 0;
         shield = 0;
     }
@@ -146,7 +146,7 @@ public class SinglePlayerGame extends Game {
         }
 
         adjustSpawnTimer();
-        enemies.add(new PowerdownEnemy(player));
+
 
     }
 
@@ -216,7 +216,7 @@ public class SinglePlayerGame extends Game {
     public void adjustSpawnTimer() {
         spawnCounter++;
         if (spawnCounter > 10f) {
-            if (spawntimer > 0.5f) {
+            if (spawntimer > 1f) {
                 spawntimer =  spawntimer - 0.5f;
             }
 
