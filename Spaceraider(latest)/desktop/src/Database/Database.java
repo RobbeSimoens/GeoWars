@@ -13,7 +13,6 @@ import java.util.Map;
 
 /**
  * Created by qmanna on 7/11/2016.
- * test
  */
 public class Database {
     private Connection connection;
