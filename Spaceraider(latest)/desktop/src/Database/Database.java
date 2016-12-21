@@ -23,7 +23,7 @@ public class Database {
     public Database() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/space raider", "root", "");
+            connection = DriverManager.getConnection("jdbc:mysql://172.21.18.24:3306/Spaceraider", "root", "resultSet123");
         } catch (Exception e) {
             e.printStackTrace();
         }
