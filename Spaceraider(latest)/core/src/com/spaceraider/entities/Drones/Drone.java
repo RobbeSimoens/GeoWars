@@ -65,7 +65,7 @@ public class Drone extends SpaceObject{
         setAngle(angle);
         setX(circleX);
         setY(circleY);
-        System.out.println(centerX + " " + centerY);
+
     }
 
 

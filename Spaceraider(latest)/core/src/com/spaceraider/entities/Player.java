@@ -34,8 +34,8 @@ public class Player extends SpaceObject {
     private float shootSpeed;
     private int shield;
     private Random rand;
-    private int spawntimer;
-    private int spawnCounter;
+    private float spawntimer;
+    private float spawnCounter;
     private Rectangle rect;
     private int score;
     private Drone drone;
@@ -74,7 +74,7 @@ public class Player extends SpaceObject {
         speed = 5;
         spawntimer = 3;
         spawnCounter = 0;
-        shootSpeed = 0.4f;
+        shootSpeed = 2.0f;
         shield = 0;
         hitpoints = 10;
         hitpointsDisplayer = "hitpoints:   " + hitpoints;
@@ -240,8 +240,7 @@ public class Player extends SpaceObject {
     }
 
     private void spawn() {
-        enemies.add(new PowerupEnemy(this));
-        /*
+
         int spawn = rand.nextInt(100);
         if(spawn < 60 )
         {
@@ -263,16 +262,16 @@ public class Player extends SpaceObject {
         {
             enemies.add(new PowerupEnemy(this));
         }
-*/
-        // TODO : fix this method --> adjustSpawnTimer();
+
+        adjustSpawnTimer();
 
     }
 
     public void adjustSpawnTimer() { // TODO : fix me
         spawnCounter++;
-        if (spawnCounter > 10) {
-            if (spawntimer > 0.5) {
-                spawntimer = (int) (spawntimer - 0.5);
+        if (spawnCounter > 10f) {
+            if (spawntimer > 0.5f) {
+                spawntimer =  spawntimer - 0.5f;
             }
 
         }
@@ -433,8 +432,9 @@ public class Player extends SpaceObject {
 
     private void rapidFireInc(float dt) {
         if (timePowerUp <= 5) {
-            shootSpeed = 0.2f;
+            shootSpeed = 0.4f;
             if (timeBullet > shootSpeed) {
+
                 makeBullet();
                 timeBullet = 0; // laat alles automatich shieten
             } else {
@@ -444,7 +444,7 @@ public class Player extends SpaceObject {
             timePowerUp += dt;
 
         } else {
-            shootSpeed = 0.4f;
+            shootSpeed = 2.0f;
             timePowerUp = 0;
             rapidFire = false;
         }
@@ -453,7 +453,10 @@ public class Player extends SpaceObject {
 
     private void nukeMe() {
 
-        enemies.clear();
+       for(int i = 0; i <enemies.size();i++){
+           enemies.get(i).dropOrb();
+           enemies.remove(enemies.get(i));
+       }
         nuke = false;
 
 
