@@ -45,6 +45,27 @@ public class Database {
 
 
     }
+
+    public int getId(String username)
+    {
+        String query = "SELECT UserID FROM User WHERE Username = ?";
+        int id = -1;
+
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,username);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+
+                id = resultSet.getInt("UserID");
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return id;
+    }
     public boolean getUsername(String username) { // TODO : prevent sql injection
         boolean login = false;
        String query = "SELECT Username FROM User WHERE Username = ?";

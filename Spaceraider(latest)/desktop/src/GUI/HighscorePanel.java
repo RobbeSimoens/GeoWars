@@ -18,11 +18,15 @@ public class HighscorePanel extends BackGroundPanel {
     private JButton goToStart;
     private Database dbInstance;
     private List<UserScore> highscores;
+    private String username;
+    private int id;
 
     private JLabel[] lblNames = new JLabel[10];     // FIXME: constante van die 10 maken
     private JLabel[] lblScores = new JLabel[10];
 
-    public HighscorePanel(JFrame frame) {
+    public HighscorePanel(JFrame frame, String username, int id) {
+        this.id = id;
+        this.username = username;
         dbInstance = new Database();
         highscores = dbInstance.getHighscores();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -67,7 +71,7 @@ public class HighscorePanel extends BackGroundPanel {
 
     private void actionListener() {
         goToStart.addActionListener(e -> {
-            MenuSelectorPanel menuPanel = new MenuSelectorPanel(frame);
+            MenuSelectorPanel menuPanel = new MenuSelectorPanel(frame, username , id);
             frame.getContentPane().removeAll();
             frame.getContentPane().invalidate();
             frame.getContentPane().add(menuPanel);

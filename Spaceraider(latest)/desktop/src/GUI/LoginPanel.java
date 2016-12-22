@@ -4,10 +4,8 @@ package GUI;
 
 import Database.Database;
 
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class LoginPanel extends BackGroundPanel {
     private JButton LoginButton;
@@ -51,7 +49,9 @@ public class LoginPanel extends BackGroundPanel {
             boolean playersInDatabase = database.getUsername(insertusername);
             boolean passwordInDatabase = database.getPassword(insertusername, insertpassword);
             if(playersInDatabase && passwordInDatabase){
-                MenuSelectorPanel menuSelectorPanel = new MenuSelectorPanel(frame);
+                int id = database.getId(insertusername);
+                System.out.println(insertusername);
+                MenuSelectorPanel menuSelectorPanel = new MenuSelectorPanel(frame, insertusername, id);
                 frame.getContentPane().removeAll();
                 frame.getContentPane().invalidate();
                 frame.getContentPane().add(menuSelectorPanel);

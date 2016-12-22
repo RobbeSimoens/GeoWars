@@ -37,8 +37,11 @@ public class SinglePlayerGame extends Game {
 
     private String scoreDisplayer;
     private String hitpointsDisplayer;
+    private String showUser;
     private BitmapFont bitmapFontHitpoints;
     private BitmapFont bitmapFontScore;
+    private BitmapFont bitmapFontUser;
+    private String username;
 
     private float timeToSpawn;
     private float spawntimer;
@@ -48,14 +51,15 @@ public class SinglePlayerGame extends Game {
 
     private Sprite playerSprite;
 
-    public SinglePlayerGame() throws InterruptedException {
+    public SinglePlayerGame(String username, int id) throws InterruptedException {
         super();
+        this.username = username;
         init();
 
     }
 
     private void init() throws InterruptedException {
-        player = new SinglePlayer(this); // TODO: refactor into init
+        player = new SinglePlayer(this);
         enemies = new ArrayList<Enemy>();
         orbs = new ArrayList<Orb>();
 
@@ -71,13 +75,18 @@ public class SinglePlayerGame extends Game {
 
         hitpointsDisplayer = "hitpoints:   " + player.getHitpoints();
         scoreDisplayer =  "score:   " +  score;
+        showUser = "User : " + username;
 
         bitmapFontHitpoints = new BitmapFont();
         bitmapFontScore = new BitmapFont();
+        bitmapFontUser = new BitmapFont();
 
         spawntimer = 3f;
         spawnCounter = 0;
         shield = 0;
+
+
+
     }
 
     @Override
@@ -355,10 +364,12 @@ public class SinglePlayerGame extends Game {
 
     public void drawComponents() {
         batch.begin();
+        bitmapFontUser.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        bitmapFontUser.draw(batch, showUser, 20, 20);
         bitmapFontHitpoints.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-        bitmapFontHitpoints.draw(batch, hitpointsDisplayer, 20, 20);
+        bitmapFontHitpoints.draw(batch, hitpointsDisplayer, 150, 20);
         bitmapFontScore.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-        bitmapFontScore.draw(batch, scoreDisplayer, 150, 20);
+        bitmapFontScore.draw(batch, scoreDisplayer, 320, 20);
         playerSprite.draw(batch);
         playerSprite.setPosition(player.getX(), player.getY());
         batch.end();

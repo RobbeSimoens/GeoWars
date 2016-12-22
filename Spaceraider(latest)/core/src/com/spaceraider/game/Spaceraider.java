@@ -16,12 +16,16 @@ public class Spaceraider extends ApplicationAdapter {
     public static OrthographicCamera cam;
 	private String gameMode;
     private GameStateManager gsm;
+	private int id;
+	private String username;
 
 	SpriteBatch batch;
 	Texture img;
 
-	public Spaceraider(String gameMode) {
+	public Spaceraider(String gameMode, String username , int id) {
 		this.gameMode = gameMode;
+		this.username = username;
+		this.id = id;
 
 		if (gameMode.equals("multiplayer"))
 		{
@@ -40,7 +44,7 @@ public class Spaceraider extends ApplicationAdapter {
 
 	    Gdx.input.setInputProcessor(new GameInputProcessor());
 		try {
-			gsm = new GameStateManager(gameMode);
+			gsm = new GameStateManager(gameMode, username, id);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

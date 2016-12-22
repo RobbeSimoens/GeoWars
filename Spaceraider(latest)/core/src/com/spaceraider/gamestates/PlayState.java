@@ -13,19 +13,24 @@ public class PlayState extends GameState {
     private float timeAux;
     private String gameMode;
     private Game game;
+    private String username;
+    private int id;
 
-    public PlayState(GameStateManager gsm, String gameMode) throws InterruptedException {
-        super(gsm, gameMode);
+    public PlayState(GameStateManager gsm, String gameMode, String username , int id) throws InterruptedException {
+        super(gsm, gameMode, username , id);
+        this.id = id;
+        this.username = username;
         this.gameMode = gameMode;
         this.gsm = gsm;
     }
 
     @Override
-    public void init(String gameMode) throws InterruptedException {
+    public void init(String gameMode, String username, int id) throws InterruptedException {
         System.out.println(gameMode);
         if(gameMode.equals("singleplayer"))
         {
-            game = new SinglePlayerGame();
+            System.out.println(username + " " + id);
+            game = new SinglePlayerGame(username, id);
         }
         else
         {

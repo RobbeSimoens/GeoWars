@@ -1,6 +1,5 @@
 package GUI;
 
-import Database.Database;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.spaceraider.game.Spaceraider;
@@ -18,8 +17,12 @@ public class MenuSelectorPanel extends BackGroundPanel {
     private JFrame frame;
     private double width;
     private double height;
+    private String username;
+    private int id;
 
-    public MenuSelectorPanel(JFrame frame) {
+    public MenuSelectorPanel(JFrame frame, String username , int id) {
+        this.id = id;
+        this.username = username;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = screenSize.getWidth();
         height = screenSize.getHeight();
@@ -39,7 +42,7 @@ public class MenuSelectorPanel extends BackGroundPanel {
             config.width = 1920;
             config.height = 1080;
             config.resizable = false;
-            new LwjglApplication(new Spaceraider("singleplayer"), config);
+            new LwjglApplication(new Spaceraider("singleplayer", username, id), config);
 
         });
 
@@ -50,7 +53,7 @@ public class MenuSelectorPanel extends BackGroundPanel {
             config.width = 1920;
             config.height = 1080;
             config.resizable = false;
-            new LwjglApplication(new Spaceraider("multiplayer"), config);
+            new LwjglApplication(new Spaceraider("multiplayer", username, id), config);
 
         });
 
@@ -61,11 +64,11 @@ public class MenuSelectorPanel extends BackGroundPanel {
             config.width = 1920;
             config.height = 1080;
             config.resizable = false;
-            new LwjglApplication(new Spaceraider("singleplayer"), config);
+            new LwjglApplication(new Spaceraider("singleplayer", username, id), config);
         });
 
         buttonHighscores.addActionListener(e -> {
-            HighscorePanel highscoresPanel = new HighscorePanel(frame);
+            HighscorePanel highscoresPanel = new HighscorePanel(frame, username , id);
             frame.getContentPane().removeAll();
             frame.getContentPane().invalidate();
             frame.getContentPane().add(highscoresPanel);

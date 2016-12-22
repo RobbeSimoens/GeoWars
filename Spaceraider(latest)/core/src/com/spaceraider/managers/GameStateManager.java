@@ -12,18 +12,19 @@ public class GameStateManager {
     public static final int MENU = 0;
     public static final int PLAY = 69;
 
-    public GameStateManager(String gameMode) throws InterruptedException {
-        setGameState(PLAY, gameMode);
+
+    public GameStateManager(String gameMode, String username , int id) throws InterruptedException {
+        setGameState(PLAY, gameMode, username, id);
     }
 
-    public void setGameState(int state, String gameMode) throws InterruptedException {
+    public void setGameState(int state, String gameMode, String username , int id) throws InterruptedException {
         if(gameState != null) gameState.dispose();
         switch (state){
             case MENU:
                 //switch to menu state
                 break;
             case PLAY:
-                gameState = new PlayState(this, gameMode);
+                gameState = new PlayState(this, gameMode, username, id);
                 break;
         }
     }
