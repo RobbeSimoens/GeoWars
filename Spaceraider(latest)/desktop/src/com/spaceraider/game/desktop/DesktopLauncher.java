@@ -11,6 +11,6 @@ public class DesktopLauncher {
 		config.width = 1920;
 		config.height = 1080;
 		config.resizable = false;
-		new LwjglApplication(new Spaceraider("singleplayer", "desktoplauncher", 1), config);
+		new LwjglApplication(new Spaceraider("singleplayer", new LwjglApplicationConfiguration(),"desktoplauncher", 1), config);
 	}
 }

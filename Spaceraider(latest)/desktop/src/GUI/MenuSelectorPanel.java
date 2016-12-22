@@ -42,7 +42,7 @@ public class MenuSelectorPanel extends BackGroundPanel {
             config.width = 1920;
             config.height = 1080;
             config.resizable = false;
-            new LwjglApplication(new Spaceraider("singleplayer", username, id), config);
+            new LwjglApplication(new Spaceraider("singleplayer", config, username, id), config);
 
         });
 
@@ -53,7 +53,7 @@ public class MenuSelectorPanel extends BackGroundPanel {
             config.width = 1920;
             config.height = 1080;
             config.resizable = false;
-            new LwjglApplication(new Spaceraider("multiplayer", username, id), config);
+            new LwjglApplication(new Spaceraider("multiplayer", config, username, id), config);
 
         });
 
@@ -64,7 +64,7 @@ public class MenuSelectorPanel extends BackGroundPanel {
             config.width = 1920;
             config.height = 1080;
             config.resizable = false;
-            new LwjglApplication(new Spaceraider("singleplayer", username, id), config);
+            new LwjglApplication(new Spaceraider("singleplayer", config,  username, id), config);
         });
 
         buttonHighscores.addActionListener(e -> {

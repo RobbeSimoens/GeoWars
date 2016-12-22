@@ -1,5 +1,6 @@
 package com.spaceraider.managers;
 
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.spaceraider.gamestates.GameState;
 import com.spaceraider.gamestates.PlayState;
 
@@ -13,18 +14,18 @@ public class GameStateManager {
     public static final int PLAY = 69;
 
 
-    public GameStateManager(String gameMode, String username , int id) throws InterruptedException {
-        setGameState(PLAY, gameMode, username, id);
+    public GameStateManager(String gameMode, LwjglApplicationConfiguration config, String username , int id) throws InterruptedException {
+        setGameState(PLAY, gameMode, config, username, id);
     }
 
-    public void setGameState(int state, String gameMode, String username , int id) throws InterruptedException {
+    public void setGameState(int state, String gameMode, LwjglApplicationConfiguration config, String username , int id) throws InterruptedException {
         if(gameState != null) gameState.dispose();
         switch (state){
             case MENU:
                 //switch to menu state
                 break;
             case PLAY:
-                gameState = new PlayState(this, gameMode, username, id);
+                gameState = new PlayState(this, gameMode, config , username, id);
                 break;
         }
     }
