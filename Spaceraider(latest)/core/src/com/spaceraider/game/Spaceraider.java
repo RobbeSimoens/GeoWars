@@ -65,12 +65,7 @@ public class Spaceraider extends ApplicationAdapter {
 
         GameKeys.update();
 	}
-	
-	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
-	}
+
 	public void resize(int width, int height){}
 	public void pause(){}
 	public void resume(){}

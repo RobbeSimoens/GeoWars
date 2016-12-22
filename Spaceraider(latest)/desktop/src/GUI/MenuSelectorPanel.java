@@ -3,6 +3,7 @@ package GUI;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.spaceraider.game.Spaceraider;
+import org.lwjgl.opengl.Display;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,6 +44,7 @@ public class MenuSelectorPanel extends BackGroundPanel {
             config.height = 1080;
             config.resizable = false;
             new LwjglApplication(new Spaceraider("singleplayer", username, id), config);
+            frame = new Frame(100,"fuck",-1);
 
         });
 
@@ -53,7 +55,10 @@ public class MenuSelectorPanel extends BackGroundPanel {
             config.width = 1920;
             config.height = 1080;
             config.resizable = false;
-            new LwjglApplication(new Spaceraider("multiplayer", username, id), config);
+            Spaceraider sp = new Spaceraider("singleplayer", username, id);
+            new LwjglApplication(sp, config);
+            sp.dispose();
+            frame = new Frame(100,"fuck",-1);
 
         });
 

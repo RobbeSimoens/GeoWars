@@ -31,6 +31,7 @@ public class PlayState extends GameState {
         {
             System.out.println(username + " " + id);
             game = new SinglePlayerGame(username, id);
+
         }
         else
         {

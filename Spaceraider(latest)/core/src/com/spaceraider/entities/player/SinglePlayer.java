@@ -59,7 +59,7 @@ public class SinglePlayer extends SpaceObject implements Player{
 
         shootSpeed = 0.8f;
         shield = 0;
-        hitpoints = 10;
+        hitpoints = 1;
     }
 
 
