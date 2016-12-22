@@ -1,5 +1,9 @@
 package com.spaceraider.game;
 
+import Database.Database;
+import GUI.AfterGamePanel;
+import GUI.Frame;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,6 +13,8 @@ import com.spaceraider.entities.enums.Powerup;
 import com.spaceraider.entities.orbs.Orb;
 import com.spaceraider.entities.player.SinglePlayer;
 
+import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -18,6 +24,8 @@ import java.util.Random;
  */
 public class SinglePlayerGame extends Game {
     private SinglePlayer player;
+    private AfterGamePanel afterGamePanel;
+    
 
     private List<Enemy> enemies;
     private List<Orb> orbs;
@@ -42,6 +50,8 @@ public class SinglePlayerGame extends Game {
     private BitmapFont bitmapFontScore;
     private BitmapFont bitmapFontUser;
     private String username;
+    private Frame frame ;
+    private int id;
 
     private float timeToSpawn;
     private float spawntimer;
@@ -53,6 +63,7 @@ public class SinglePlayerGame extends Game {
 
     public SinglePlayerGame(String username, int id) throws InterruptedException {
         super();
+        this.id = id;
         this.username = username;
         init();
 
@@ -254,7 +265,9 @@ public class SinglePlayerGame extends Game {
         }
         else
         {
-            System.out.println("Player died"); // TODO: implement dying
+
+           //frame=new Frame(score,username,id);
+
         }
 
     }
