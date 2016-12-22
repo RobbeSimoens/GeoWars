@@ -50,7 +50,11 @@ public class SinglePlayerGame extends Game {
 
     public SinglePlayerGame() throws InterruptedException {
         super();
+        init();
 
+    }
+
+    private void init() throws InterruptedException {
         player = new SinglePlayer(this); // TODO: refactor into init
         enemies = new ArrayList<Enemy>();
         orbs = new ArrayList<Orb>();
@@ -107,7 +111,14 @@ public class SinglePlayerGame extends Game {
 
     private void handleOrbs(float dt) {
         for (int i = 0; i < orbs.size(); i++) {
-            orbs.get(i).render(batch);
+            orbs.get(i).checkLifetime(dt);
+            if(orbs.get(i).isExpired())
+            {
+                orbs.remove(orbs.get(i));
+                System.out.println("orb expired");
+            }
+            else{orbs.get(i).render(batch);}
+
         }
     }
 
@@ -201,7 +212,6 @@ public class SinglePlayerGame extends Game {
                     orbs.remove(orbs.get(i));
                     score += 10;
                     scoreDisplayer = "score:    " + score;
-                    System.out.println(score);
                     // TODO : add powerup
                 }
             }

@@ -14,5 +14,7 @@ public interface Orb {
     Powerup getPowerup();
     Powerdown getPowerdown();
     Rectangle getRectangle();
+    void checkLifetime(float dt);
+    boolean isExpired();
 
 }

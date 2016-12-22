@@ -16,10 +16,15 @@ public class NormalOrb extends SpaceObject implements Orb{
     private static SpriteBatch batch;
     private static Texture texture;
     private Rectangle rect;
+    private float lifetime;
+    private float timeAlive;
+    private boolean expired;
 
     public NormalOrb(float x, float y) {
         this.x = x;
         this.y = y;
+        lifetime = 5f;
+        expired = false;
         batch = new SpriteBatch();
         texture = new Texture("core/assets/rsz_normal-orb.png");
         rect = new Rectangle(x,y,texture.getWidth(), texture.getHeight());
@@ -28,9 +33,12 @@ public class NormalOrb extends SpaceObject implements Orb{
     }
 
     public void render(SpriteBatch batch){
-        batch.begin();
-        batch.draw(texture,x,y);
-        batch.end();
+        if(!expired) {
+            batch.begin();
+            batch.draw(texture,x,y);
+            batch.end();
+        }
+
     }
 
     @Override
@@ -44,9 +52,28 @@ public class NormalOrb extends SpaceObject implements Orb{
         return null;
     }
 
+
     @Override
     public Rectangle getRectangle() {
         return rect;
+    }
+
+    @Override
+    public void checkLifetime(float dt) {
+        if(lifetime >= timeAlive)
+        {
+            timeAlive += dt;
+        }
+        else
+        {
+            expired = true;
+        }
+
+    }
+
+    @Override
+    public boolean isExpired() {
+        return expired;
     }
 
     public Rectangle getRect(){

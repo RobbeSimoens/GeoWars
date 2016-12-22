@@ -17,9 +17,15 @@ public class PowerdownOrb extends SpaceObject implements Orb { // TODO : activat
     private Rectangle rect;
     private Powerdown powerdown;
 
+    private float timeAlive;
+    private float lifetime;
+    private boolean expired;
+
     public PowerdownOrb(float x, float y, Powerdown powerdown) {
         this.x = x;
         this.y = y;
+        lifetime = 5;
+        expired = false;
         this.powerdown = powerdown;
         batch = new SpriteBatch();
         texture = new Texture("core/assets/rsz_powerdown-orb.png");
@@ -53,5 +59,23 @@ public class PowerdownOrb extends SpaceObject implements Orb { // TODO : activat
     @Override
     public Rectangle getRectangle() {
         return rect;
+    }
+
+
+    @Override
+    public void checkLifetime(float dt) {
+        if(lifetime >= timeAlive)
+        {
+            timeAlive += dt;
+        }
+        else
+        {
+            expired = true;
+        }
+    }
+
+    @Override
+    public boolean isExpired() {
+        return expired;
     }
 }
