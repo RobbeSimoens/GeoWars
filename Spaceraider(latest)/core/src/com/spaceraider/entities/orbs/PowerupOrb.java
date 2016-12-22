@@ -17,9 +17,15 @@ public class PowerupOrb extends SpaceObject implements Orb {
     private Rectangle rect;
     private Powerup powerup;
 
+    private float timeAlive;
+    private float lifetime;
+    private boolean expired;
+
     public PowerupOrb(float x, float y, Powerup powerup) {
         this.x = x;
         this.y = y;
+        lifetime  = 5;
+        expired = false;
         this.powerup = powerup;
         batch = new SpriteBatch();
         texture = new Texture("core/assets/rsz_powerup-orb.png");
@@ -45,6 +51,23 @@ public class PowerupOrb extends SpaceObject implements Orb {
     @Override
     public Rectangle getRectangle() {
         return rect;
+    }
+
+    @Override
+    public void checkLifetime(float dt) {
+        if(lifetime >= timeAlive)
+        {
+            timeAlive += dt;
+        }
+        else
+        {
+            expired = true;
+        }
+    }
+
+    @Override
+    public boolean isExpired() {
+        return expired;
     }
 
 
