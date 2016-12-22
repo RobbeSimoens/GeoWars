@@ -47,7 +47,9 @@ public class HighscorePanel extends BackGroundPanel {
             lblScores[i] = new JLabel();
 
             lblNames[i].setBounds(50, 50 * (i+1), 320, 50);
+            lblNames[i].setFont(new Font("Serif",Font.BOLD,50));
             lblScores[i].setBounds(450, 50 * (i+1), 320, 50);
+            lblScores[i].setFont(new Font("Serif",Font.BOLD,50));
         }
     }
 
