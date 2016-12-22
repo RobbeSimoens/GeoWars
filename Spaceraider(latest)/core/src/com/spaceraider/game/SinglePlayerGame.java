@@ -1,5 +1,6 @@
 package com.spaceraider.game;
 
+
 import Database.Database;
 import GUI.AfterGamePanel;
 import GUI.Frame;
@@ -24,8 +25,9 @@ import java.util.Random;
  */
 public class SinglePlayerGame extends Game {
     private SinglePlayer player;
+    private Database database;
     private AfterGamePanel afterGamePanel;
-    
+
 
     private List<Enemy> enemies;
     private List<Orb> orbs;
@@ -265,8 +267,11 @@ public class SinglePlayerGame extends Game {
         }
         else
         {
-
-           //frame=new Frame(score,username,id);
+            database = new Database();
+            if(database.getHighscoreUser(id) < score){
+                database.updateHighscore(id,score);
+            }
+            System.out.println("game ended");
 
         }
 

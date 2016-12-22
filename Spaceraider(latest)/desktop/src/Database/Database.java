@@ -185,17 +185,17 @@ public class Database {
         }
     }
 
-    // FIXME: ook niet beter met UserScore ? (ook al is geen list nodig hier)
-    public Map<String,Integer> getHighscoreUser(int userID){
+    // FIXME: ??? $profit$ ???
+    public int getHighscoreUser(int userID){
         String query = "SELECT Score FROM User WHERE UserID = ?";
-        Map<String,Integer> highscore = new HashMap<String,Integer>();
+        int highscore = -1;
         try{
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,userID);
             resultSet = preparedStatement.executeQuery();
-            //System.out.println(resultSet);
+
             while (resultSet.next()){
-                highscore.put(resultSet.getString("Username"),resultSet.getInt("Score"));
+                highscore = resultSet.getInt("Score");
             }
             resultSet.close();
 

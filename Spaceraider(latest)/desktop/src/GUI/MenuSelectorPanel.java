@@ -56,9 +56,9 @@ public class MenuSelectorPanel extends BackGroundPanel {
             config.height = 1080;
             config.resizable = false;
             Spaceraider sp = new Spaceraider("singleplayer", username, id);
-            new LwjglApplication(sp, config);
-            sp.dispose();
-            frame = new Frame(100,"fuck",-1);
+            LwjglApplication game =new LwjglApplication(sp, config);
+
+
 
         });
 
@@ -69,7 +69,7 @@ public class MenuSelectorPanel extends BackGroundPanel {
             config.width = 1920;
             config.height = 1080;
             config.resizable = false;
-            new LwjglApplication(new Spaceraider("singleplayer", username, id), config);
+            new LwjglApplication(new Spaceraider("multiplayer", username, id), config);
         });
 
         buttonHighscores.addActionListener(e -> {
