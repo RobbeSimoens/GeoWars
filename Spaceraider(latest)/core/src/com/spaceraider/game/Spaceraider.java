@@ -2,7 +2,6 @@ package com.spaceraider.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,16 +18,14 @@ public class Spaceraider extends ApplicationAdapter {
     private GameStateManager gsm;
 	private int id;
 	private String username;
-	private LwjglApplicationConfiguration config;
 
 	SpriteBatch batch;
 	Texture img;
 
-	public Spaceraider(String gameMode, LwjglApplicationConfiguration config, String username , int id) {
+	public Spaceraider(String gameMode, String username , int id) {
 		this.gameMode = gameMode;
 		this.username = username;
 		this.id = id;
-		this.config = config;
 
 		if (gameMode.equals("multiplayer"))
 		{
@@ -47,7 +44,7 @@ public class Spaceraider extends ApplicationAdapter {
 
 	    Gdx.input.setInputProcessor(new GameInputProcessor());
 		try {
-			gsm = new GameStateManager(gameMode, config, username, id);
+			gsm = new GameStateManager(gameMode, username, id);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

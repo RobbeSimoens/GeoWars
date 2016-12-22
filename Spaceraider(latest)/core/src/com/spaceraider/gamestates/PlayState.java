@@ -1,6 +1,5 @@
 package com.spaceraider.gamestates;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.spaceraider.game.MultiPlayerGame;
 import com.spaceraider.game.SinglePlayerGame;
 import com.spaceraider.managers.GameKeys;
@@ -17,8 +16,8 @@ public class PlayState extends GameState {
     private String username;
     private int id;
 
-    public PlayState(GameStateManager gsm, String gameMode, LwjglApplicationConfiguration config, String username , int id) throws InterruptedException {
-        super(gsm, gameMode, config,  username , id);
+    public PlayState(GameStateManager gsm, String gameMode, String username , int id) throws InterruptedException {
+        super(gsm, gameMode, username , id);
         this.id = id;
         this.username = username;
         this.gameMode = gameMode;
@@ -26,12 +25,12 @@ public class PlayState extends GameState {
     }
 
     @Override
-    public void init(String gameMode, LwjglApplicationConfiguration config, String username, int id) throws InterruptedException {
+    public void init(String gameMode, String username, int id) throws InterruptedException {
         System.out.println(gameMode);
         if(gameMode.equals("singleplayer"))
         {
             System.out.println(username + " " + id);
-            game = new SinglePlayerGame(config, username, id);
+            game = new SinglePlayerGame(username, id);
         }
         else
         {

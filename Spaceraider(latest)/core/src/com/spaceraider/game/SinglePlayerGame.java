@@ -1,6 +1,5 @@
 package com.spaceraider.game;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -49,14 +48,11 @@ public class SinglePlayerGame extends Game {
     private int spawnCounter;
     private int shield;
 
-    private LwjglApplicationConfiguration config;
-
 
     private Sprite playerSprite;
 
-    public SinglePlayerGame(LwjglApplicationConfiguration config, String username, int id) throws InterruptedException {
+    public SinglePlayerGame(String username, int id) throws InterruptedException {
         super();
-        this.config = config;
         this.username = username;
         init();
 
