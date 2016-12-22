@@ -1,5 +1,6 @@
 package GUI;
 
+import Database.Database;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.spaceraider.game.Spaceraider;
@@ -64,11 +65,14 @@ public class MenuSelectorPanel extends BackGroundPanel {
         });
 
         buttonHighscores.addActionListener(e -> {
-         //   HighscoresPanel highscoresPanel = new HighScoresPanel(frame);
+            HighscorePanel highscoresPanel = new HighscorePanel(frame);
             frame.getContentPane().removeAll();
             frame.getContentPane().invalidate();
-           // frame.getContentPane().add(highscoresPanel);
+            frame.getContentPane().add(highscoresPanel);
             frame.getContentPane().revalidate();
+            /*Database db = new Database();
+            //db.updateHighscore(1,500);
+            //var scores = db.getHighscores();*/
 
         });
 

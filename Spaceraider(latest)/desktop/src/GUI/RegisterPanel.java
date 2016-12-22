@@ -56,7 +56,7 @@ public class RegisterPanel extends BackGroundPanel {
                     JOptionPane.showMessageDialog(null, "Username is in use");
                 }
                 else{
-                    database.addUser(insertemail,insertName, insertPassword);
+                    database.addUser(insertemail,insertName, insertPassword,0);
                     LoginPanel loginPanel = new LoginPanel(frame,database);
                     frame.getContentPane().removeAll();
                     frame.getContentPane().invalidate();
