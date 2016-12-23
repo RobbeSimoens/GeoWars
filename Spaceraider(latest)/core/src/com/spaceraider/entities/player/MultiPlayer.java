@@ -57,11 +57,14 @@ public class MultiPlayer extends SpaceObject implements Player{
     private List<Bullet> bullets;
     private List<Enemy> enemies;
     private List<Orb> orbs;
+    private List<String> spawnList;
 
-    BitmapFont bitmapFontScore;
+    private BitmapFont bitmapFontScore;
     private String scoreDisplayer;
     private String hitpointsDisplayer;
-    BitmapFont bitmapFontHitpoints;
+    private BitmapFont bitmapFontHitpoints;
+    private String shieldDisplayer;
+    private BitmapFont bitmapFontShield;
 
     private int score;
 
@@ -71,7 +74,8 @@ public class MultiPlayer extends SpaceObject implements Player{
     SpriteBatch batch = new SpriteBatch();
     Texture texture = new Texture("core/assets/rsz_playership.png");
     Sprite playerSprite = new Sprite(texture);
-
+    private float timePowerUp;
+    private float timePowerDown;
 
 
     public MultiPlayer(MultiPlayerGame game, float x , float y, String side) throws InterruptedException {
@@ -80,12 +84,17 @@ public class MultiPlayer extends SpaceObject implements Player{
         bullets = new ArrayList<Bullet>();
         enemies = new ArrayList<Enemy>();
         orbs = new ArrayList<Orb>();
+        spawnList = new ArrayList<String>();
+
+        spawnList.add("powerdown");
+        spawnList.add("tank");
+        spawnList.add("tank");
 
         rand = new Random();
 
         this.x = x;
         this.y = y;
-        drone = new Drone(x,y,this);
+        drone = new Drone(x,y,this, game);
         batch.begin();
         playerSprite.setPosition(x,y);
         batch.end();
@@ -94,13 +103,21 @@ public class MultiPlayer extends SpaceObject implements Player{
 
         hitpoints = 10;
 
-        bitmapFontHitpoints = new BitmapFont();
+        bitmapFontScore = new BitmapFont();
         hitpointsDisplayer = "hitpoints:   " + hitpoints;
         scoreDisplayer = "score:    " + score;
-        bitmapFontScore = new BitmapFont();
+        shieldDisplayer = "shield:      " + shield;
+        bitmapFontHitpoints= new BitmapFont();
+        bitmapFontShield = new BitmapFont();
 
         spawntimer = 3;
         spawnCounter = 0;
+
+        silenced=false;
+        nuke=false;
+        slowed=false;
+        inverted=false;
+        rapidFire = false;
 
         shootSpeed = 0.4f;
         shield = 0;
@@ -135,6 +152,8 @@ public class MultiPlayer extends SpaceObject implements Player{
         checkOrbCollision();
         handleOrbs(dt);
         checkEnemyCollision();
+        handleDrone(dt);
+        checkForPowers(dt);
         wrap(side);
     }
 
@@ -147,14 +166,13 @@ public class MultiPlayer extends SpaceObject implements Player{
                     reduceHitpoints();
                     System.out.println("WE ARE HIT !!!!");
                     // TODO: implement een end game hier
-
                 }
             }
         }
     }
 
     private void handleEnemies(float dt) {
-        if (true) { // !nuke
+        if (!nuke) { // !nuke
             for (int i = 0; i < enemies.size(); i++) {
 
                 Enemy enemy = enemies.get(i);
@@ -166,8 +184,31 @@ public class MultiPlayer extends SpaceObject implements Player{
     }
 
     public void handleSpawn(float dt){
+
         if (timeToSpawn > spawntimer) { // SPAWNING
-            spawn();
+            for (String toSpawn : spawnList) {
+
+                if(toSpawn.equals("standard"))
+                {
+                    enemies.add(new StandardEnemy(this, side));
+                }
+                else if(toSpawn.equals("tank"))
+                {
+                    enemies.add(new TankEnemy(this, side));
+                }
+                else if(toSpawn.equals("powerup"))
+                {
+                    enemies.add(new PowerupEnemy(this, side));
+                }
+                else if (toSpawn.equals("powerdown"))
+                {
+                    enemies.add(new PowerdownEnemy(this, side));
+                }
+                else
+                {
+                    enemies.add(new AttackerEnemy(this, side));
+                }
+            }
             timeToSpawn = 0;
         } else {
             timeToSpawn += dt;
@@ -205,6 +246,7 @@ public class MultiPlayer extends SpaceObject implements Player{
                         nuke = true;
                     } else if (orbs.get(i).getPowerup() == Powerup.SHIELD) {
                         shield = 2;
+                        shieldDisplayer = "shield:  " + shield;
                     }
 
                     orbs.remove(orbs.get(i));
@@ -218,31 +260,11 @@ public class MultiPlayer extends SpaceObject implements Player{
     }
 
     public void spawn(){
-        int spawn = rand.nextInt(100);
-        if(spawn < 60 )
-        {
-            enemies.add(new StandardEnemy(this, side));
-        }
-        else if (spawn < 70)
-        {
-            enemies.add(new TankEnemy(this, side));
-        }
-        else if (spawn < 80)
-        {
-            enemies.add(new AttackerEnemy(this, side));
-        }
-        else if (spawn < 90)
-        {
-            enemies.add(new PowerdownEnemy(this, side));
-        }
-        else
-        {
-            enemies.add(new PowerupEnemy(this, side));
-        }
+
     }
 
     public void handleInput(){
-        if (true) { //TODO :  IMPLEMENT INVERTED HERE
+        if (!inverted) { //TODO :  IMPLEMENT INVERTED HERE
             if (left) {
                 x = x - speed;
                 rect.setX(x);
@@ -266,8 +288,8 @@ public class MultiPlayer extends SpaceObject implements Player{
     }
 
     public void shoot(float dt) {
-        if (true) { // !rapidfire
-            if (true) { // !silenced
+        if (!rapidFire) { // !rapidfire
+            if (!silenced) { // !silenced
                 if (timeBullet > shootSpeed) {
                     makeBullet();
                     timeBullet = 0; // laat alles automatich shieten
@@ -290,6 +312,8 @@ public class MultiPlayer extends SpaceObject implements Player{
             bitmapFontHitpoints.draw(batch, hitpointsDisplayer, 20, 20);
             bitmapFontScore.setColor(1.0f, 1.0f, 1.0f, 1.0f);
             bitmapFontScore.draw(batch, scoreDisplayer, 150, 20);
+            bitmapFontShield.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+            bitmapFontShield.draw(batch, shieldDisplayer, 320, 20);
         }
         else
         {
@@ -297,6 +321,8 @@ public class MultiPlayer extends SpaceObject implements Player{
             bitmapFontHitpoints.draw(batch, hitpointsDisplayer, Gdx.graphics.getWidth()/ 2 + 20, 20);
             bitmapFontScore.setColor(1.0f, 1.0f, 1.0f, 1.0f);
             bitmapFontScore.draw(batch, scoreDisplayer, Gdx.graphics.getWidth()/2 + 150, 20);
+            bitmapFontShield.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+            bitmapFontShield.draw(batch, shieldDisplayer, Gdx.graphics.getWidth()/ 2 + 320, 20);
         }
 
         batch.end();
@@ -304,6 +330,108 @@ public class MultiPlayer extends SpaceObject implements Player{
 
     private void makeBullet() {
         bullets.add(new Bullet(x, y, Gdx.input.getX(), Gdx.input.getY(), this, game, side));
+    }
+    private void Slowed(float dt) {
+        if (timePowerDown <= 5) {
+            speed = 2;
+            timePowerDown += dt;
+        } else {
+            speed = 5;
+            timePowerDown = 0;
+            slowed = false;
+        }
+    }
+
+
+    private void checkForPowers(float dt) {
+        if (slowed == true) {
+            Slowed(dt);
+        }
+        if (inverted == true) {
+            Inverted(dt);
+        }
+        if (silenced == true) {
+            Silenced(dt);
+        }
+        if (rapidFire == true) {
+            rapidFireInc(dt);
+        }
+        if (nuke == true) {
+            nukeMe();
+        }
+    }
+
+    private void Inverted(float dt) {
+        if (timePowerDown <= 5) {
+            if (left) {
+                x = x + speed;
+                rect.setX(x);
+                drone.setX(x);
+            } else if (right) {
+                x = x - speed;
+                rect.setX(x);
+                drone.setX(x);
+            }
+
+            if (up) {
+                y = y - speed;
+                rect.setY(y);
+                drone.setY(y);
+            }
+            if (down) {
+                y = y + speed;
+                rect.setY(y);
+                drone.setY(y);
+            }
+            timePowerDown += dt;
+        } else {
+             handleInput();
+            timePowerDown = 0;
+            inverted = false;
+
+        }
+
+    }
+
+    private void Silenced(float dt) {
+        if (timePowerDown <= 5) {
+
+            timePowerDown += dt;
+        } else {
+            shoot(dt);
+            timePowerDown = 0;
+            silenced = false;
+        }
+
+    }
+
+
+    private void rapidFireInc(float dt) {
+        if (timePowerUp <= 5) {
+            shootSpeed = 0.2f;
+            if (timeBullet > shootSpeed) {
+                makeBullet();
+                timeBullet = 0; // laat alles automatich shieten
+            } else {
+
+                timeBullet += dt;
+            }
+            timePowerUp += dt;
+
+        } else {
+            shootSpeed = 0.4f;
+            timePowerUp = 0;
+            rapidFire = false;
+        }
+
+    }
+
+    private void nukeMe() {
+
+        enemies.clear();
+        nuke = false;
+
+
     }
 
     public void rotateShip() {
@@ -315,14 +443,19 @@ public class MultiPlayer extends SpaceObject implements Player{
         playerSprite.setRotation(angle * -1);
     }
 
+    public void handleDrone(float dt){
+        drone.update(dt);
+        drone.render(batch);
+    }
+
     @Override
     public void removeBullet(Bullet bullet) {
-
+        bullets.remove(bullet);
     }
 
     @Override
     public void addDroneBullet(float x, float y) {
-
+        bullets.add(new Bullet(x, y, 1920 - Gdx.input.getX() - 20, 1080 - Gdx.input.getY() - 40, this, game, side)); // Minus 20 & 40 for balancing the drone position to the spaceship
     }
 
     @Override
@@ -342,12 +475,21 @@ public class MultiPlayer extends SpaceObject implements Player{
 
     @Override
     public void reduceHitpoints() {
-        if (hitpoints > 1) {
-            hitpoints--;
-            hitpointsDisplayer = "hitpoints:    " + hitpoints;
-        } else {
-            System.out.println("Player died"); // TODO: implement dying
+        if(shield == 0)
+        {
+            if (hitpoints > 1) {
+                hitpoints--;
+                hitpointsDisplayer = "hitpoints:    " + hitpoints;
+            } else {
+                System.out.println("Player died"); // TODO: implement dying
+            }
         }
+        else
+        {
+            shield--;
+            shieldDisplayer = "shield:      " + shield;
+        }
+
 
     }
 
@@ -368,12 +510,14 @@ public class MultiPlayer extends SpaceObject implements Player{
 
     @Override
     public Sprite getPlayerSprite() {
-        return null;
+        return playerSprite;
     }
 
     public List<Enemy> getEnemies(){
         return enemies;
     }
+
+
 
 
     // TODO : refactor under here

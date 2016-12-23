@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.spaceraider.entities.Bullet;
 import com.spaceraider.entities.SpaceObject;
 import com.spaceraider.entities.player.Player;
+import com.spaceraider.game.Game;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class Drone extends SpaceObject {
     private Player player;
     private Sprite playerSprite;
     private float angle;
+    private Game game;
     SpriteBatch batch = new SpriteBatch();
     Texture texture = new Texture("core/assets/rsz_drone.png");
 
@@ -39,6 +42,23 @@ public class Drone extends SpaceObject {
         this.shootSpeed = 0.8F;
         this.player = player;
     }
+    public Drone(float x, float y, Player player, Game game) throws InterruptedException {
+        this.playerSprite = player.getPlayerSprite();
+        this.bullets = new ArrayList();
+        this.angle = 2.0F;
+        this.x = x - 15.0F;
+        this.y = y - 15.0F;
+        this.batch.begin();
+        this.batch.end();
+        this.speed = 5;
+        this.shootSpeed = 0.8F;
+        this.player = player;
+        this.game = game;
+    }
+
+
+
+
 
     public void update(float dt) {
         this.shoot(dt);
@@ -77,6 +97,10 @@ public class Drone extends SpaceObject {
         this.setAngle(angle);
         this.setX(circleX);
         this.setY(circleY);
+    }
+
+    public Game getGame() {
+        return game;
     }
 
     public float getAngle() {

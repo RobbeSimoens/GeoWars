@@ -46,9 +46,11 @@ public class SinglePlayerGame extends Game {
     private String scoreDisplayer;
     private String hitpointsDisplayer;
     private String showUser;
+    private String shieldDisplayer;
     private BitmapFont bitmapFontHitpoints;
     private BitmapFont bitmapFontScore;
     private BitmapFont bitmapFontUser;
+    private BitmapFont bitmapFontShield;
     private String username;
     private Frame frame ;
     private int id;
@@ -84,17 +86,21 @@ public class SinglePlayerGame extends Game {
         inverted=false;
         rapidFire = false;
 
+        spawntimer = 3f;
+        spawnCounter = 0;
+        shield = 0;
+
         hitpointsDisplayer = "hitpoints:   " + player.getHitpoints();
         scoreDisplayer =  "score:   " +  score;
         showUser = "User : " + username;
+        shieldDisplayer = "shield: " + shield;
 
         bitmapFontHitpoints = new BitmapFont();
         bitmapFontScore = new BitmapFont();
         bitmapFontUser = new BitmapFont();
+        bitmapFontShield = new BitmapFont();
 
-        spawntimer = 3f;
-        spawnCounter = 0;
-        shield = 0;
+
 
 
 
@@ -227,6 +233,7 @@ public class SinglePlayerGame extends Game {
                         nuke = true;
                     } else if (orbs.get(i).getPowerup() == Powerup.SHIELD) {
                         shield = 2;
+                        shieldDisplayer = "Shield:  " + shield;
                     }
 
                     orbs.remove(orbs.get(i));
@@ -258,20 +265,29 @@ public class SinglePlayerGame extends Game {
     }
 
     public void reduceHitpoints(){
-        if(player.getHitpoints() > 1)
+        if(shield == 0)
         {
-            player.reduceHitpoints();
-            hitpointsDisplayer = "hitpoints:    " + player.getHitpoints();
+            if(player.getHitpoints() > 1)
+            {
+                player.reduceHitpoints();
+                hitpointsDisplayer = "hitpoints:    " + player.getHitpoints();
+            }
+            else
+            {
+                database = new Database();
+                if(database.getHighscoreUser(id) < score){
+                    database.updateHighscore(id,score);
+                }
+                System.out.println("game ended");
+
+            }
         }
         else
         {
-            database = new Database();
-            if(database.getHighscoreUser(id) < score){
-                database.updateHighscore(id,score);
-            }
-            System.out.println("game ended");
-
+            shield--;
+            shieldDisplayer = "shield:      " + shield;
         }
+
 
     }
 
@@ -290,9 +306,6 @@ public class SinglePlayerGame extends Game {
         }
         if (nuke) {
             nukeMe();
-        }
-        if (shield == 2) {
-
         }
     }
 
@@ -386,6 +399,8 @@ public class SinglePlayerGame extends Game {
         bitmapFontHitpoints.draw(batch, hitpointsDisplayer, 150, 20);
         bitmapFontScore.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         bitmapFontScore.draw(batch, scoreDisplayer, 320, 20);
+        bitmapFontShield.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        bitmapFontShield.draw(batch, shieldDisplayer, 480, 20);
         playerSprite.draw(batch);
         playerSprite.setPosition(player.getX(), player.getY());
         batch.end();

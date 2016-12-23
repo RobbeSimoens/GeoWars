@@ -28,6 +28,7 @@ public class PlayState extends GameState {
     public void init(String gameMode, String username, int id) throws InterruptedException {
         if(gameMode.equals("singleplayer"))
         {
+
             game = new SinglePlayerGame(username, id);
 
         }

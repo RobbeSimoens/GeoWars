@@ -62,7 +62,7 @@ public class TankEnemy extends SpaceObject implements Enemy {
         }
 
         batch = new SpriteBatch();
-        texture = new Texture("core/assets/rsz_standard.png");
+        texture = new Texture("core/assets/rsz_tank.png");
         rect = new Rectangle(x,y,texture.getWidth(), texture.getHeight());
     }
 

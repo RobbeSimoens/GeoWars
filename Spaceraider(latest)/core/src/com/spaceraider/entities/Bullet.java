@@ -46,6 +46,8 @@ public class Bullet extends SpaceObject {
     }
 
     public Bullet(float x, float y, float mouseX, float mouseY, Drone drone) { // x,y = drone
+        this.game = drone.getGame();
+
         this.x = x;
         this.y = y;
         this.mx = mouseX;
@@ -93,7 +95,7 @@ public class Bullet extends SpaceObject {
             bulletMove(dt);
             if(side.equals("left"))
             {
-                if (x > Gdx.graphics.getWidth() / 2 || y > Gdx.graphics.getHeight()) {
+                if (x > Gdx.graphics.getWidth() / 2 - 27 || y > Gdx.graphics.getHeight()) {
                     remove = true;
                     player.removeBullet(this);
                 }
@@ -140,7 +142,6 @@ public class Bullet extends SpaceObject {
         if(enemies.size() > 0) {
             for (int i = 0; i < enemies.size(); i++) {
                 if (rect.overlaps(enemies.get(i).getRectangle())) {
-                    System.out.println("hit !");
                     player.removeBullet(this);
                     player.reduceEnemyHitpoints(enemies.get(i));
                 }
