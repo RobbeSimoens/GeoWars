@@ -76,8 +76,11 @@ public class MultiPlayer extends SpaceObject implements Player{
     private BitmapFont bitmapFontHitpoints;
     private String shieldDisplayer;
     private String creditDisplayer;
+    private String controlsDisplayer;
     private BitmapFont bitmapFontShield;
     private BitmapFont bitmapFontCredit;
+    private BitmapFont bitmapFontControls;
+
 
     private int score;
     private int credit;
@@ -123,6 +126,7 @@ public class MultiPlayer extends SpaceObject implements Player{
         shieldDisplayer = "shield:      " + shield;
         creditDisplayer = "credit:      " + credit;
 
+        bitmapFontControls = new BitmapFont();
         bitmapFontHitpoints= new BitmapFont();
         bitmapFontCredit = new BitmapFont();
         bitmapFontShield = new BitmapFont();
@@ -410,6 +414,18 @@ public class MultiPlayer extends SpaceObject implements Player{
 
         if(side.equals("left"))
         {
+            controlsDisplayer = "Controls : \n" +
+                    "ZQSD: move \n" +
+                    "F1: standard \n" +
+                    "F2: tank \n" +
+                    "F3: attacker \n" +
+                    "F4: powerdown \n" +
+                    "F5: powerup \n" +
+                    "F6: slow \n" +
+                    "F7: invert \n" +
+                    "F8: silence";
+            bitmapFontControls.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+            bitmapFontControls.draw(batch, controlsDisplayer, 10, 1050);
             bitmapFontHitpoints.setColor(1.0f, 1.0f, 1.0f, 1.0f);
             bitmapFontHitpoints.draw(batch, hitpointsDisplayer, 20, 20);
             bitmapFontScore.setColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -421,6 +437,18 @@ public class MultiPlayer extends SpaceObject implements Player{
         }
         else
         {
+            controlsDisplayer = "Controls : \n" +
+                    "arrow keys: move \n" +
+                    "num_1: standard \n" +
+                    "num_2: tank \n" +
+                    "num_3: attacker \n" +
+                    "num_4: powerdown \n" +
+                    "num_5: powerup \n" +
+                    "num_6: slow \n" +
+                    "num_7: invert \n" +
+                    "num_8: silence";
+            bitmapFontControls.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+            bitmapFontControls.draw(batch, controlsDisplayer, 975, 1050);
             bitmapFontHitpoints.setColor(1.0f, 1.0f, 1.0f, 1.0f);
             bitmapFontHitpoints.draw(batch, hitpointsDisplayer, Gdx.graphics.getWidth()/ 2 + 20, 20);
             bitmapFontScore.setColor(1.0f, 1.0f, 1.0f, 1.0f);
