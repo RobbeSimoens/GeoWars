@@ -43,6 +43,7 @@ public class MultiPlayer extends SpaceObject implements Player{
     public boolean spawnInverted;
     public boolean spawnSlow;
     public boolean spawnSilenced;
+    private boolean spawned;
 
     private String side;
 
@@ -73,9 +74,12 @@ public class MultiPlayer extends SpaceObject implements Player{
     private String hitpointsDisplayer;
     private BitmapFont bitmapFontHitpoints;
     private String shieldDisplayer;
+    private String creditDisplayer;
     private BitmapFont bitmapFontShield;
+    private BitmapFont bitmapFontCredit;
 
     private int score;
+    private int credit;
 
 
     MultiPlayerGame game;
@@ -95,9 +99,8 @@ public class MultiPlayer extends SpaceObject implements Player{
         orbs = new ArrayList<Orb>();
         spawnList = new ArrayList<String>();
 
-        spawnList.add("powerdown");
-        spawnList.add("spawnTank");
-        spawnList.add("spawnTank");
+        spawnList.add("tank");
+
 
         rand = new Random();
 
@@ -111,16 +114,21 @@ public class MultiPlayer extends SpaceObject implements Player{
         speed = 5;
 
         hitpoints = 10;
+        credit = 0;
 
         bitmapFontScore = new BitmapFont();
         hitpointsDisplayer = "hitpoints:   " + hitpoints;
         scoreDisplayer = "score:    " + score;
         shieldDisplayer = "shield:      " + shield;
+        creditDisplayer = "credit:      " + credit;
+
         bitmapFontHitpoints= new BitmapFont();
+        bitmapFontCredit = new BitmapFont();
         bitmapFontShield = new BitmapFont();
 
         spawntimer = 3;
         spawnCounter = 0;
+
 
         silenced=false;
         nuke=false;
@@ -130,7 +138,11 @@ public class MultiPlayer extends SpaceObject implements Player{
 
         shootSpeed = 0.4f;
         shield = 0;
+        spawned = false;
 
+    }
+    public void addToSpawnList(String enemytoSpawn){
+        spawnList.add(enemytoSpawn);
     }
     public void setSpawnStandard(boolean b) {spawnStandard = b;}
 
@@ -210,13 +222,14 @@ public class MultiPlayer extends SpaceObject implements Player{
     public void handleSpawn(float dt){
 
         if (timeToSpawn > spawntimer) { // SPAWNING
+            spawned = false;
             for (String toSpawn : spawnList) {
 
-                if(toSpawn.equals("spawnStandard"))
+                if(toSpawn.equals("standard"))
                 {
                     enemies.add(new StandardEnemy(this, side));
                 }
-                else if(toSpawn.equals("spawnTank"))
+                else if(toSpawn.equals("tank"))
                 {
                     enemies.add(new TankEnemy(this, side));
                 }
@@ -275,6 +288,8 @@ public class MultiPlayer extends SpaceObject implements Player{
 
                     orbs.remove(orbs.get(i));
                     score += 10;
+                    credit += 1;
+                    creditDisplayer = "credit:      " + credit;
                     scoreDisplayer = "score:    " + score;
                     System.out.println(score);
                     // TODO : add powerup
@@ -283,12 +298,9 @@ public class MultiPlayer extends SpaceObject implements Player{
         }
     }
 
-    public void spawn(){
-
-    }
 
     public void handleInput(){
-        if (!spawnInverted) { //TODO :  IMPLEMENT INVERTED HERE
+        if (!inverted) { //TODO :  IMPLEMENT INVERTED HERE
             if (left) {
                 x = x - speed;
                 rect.setX(x);
@@ -308,6 +320,51 @@ public class MultiPlayer extends SpaceObject implements Player{
                 rect.setY(y);
                 drone.setY(y);
             }
+        }
+        if(!spawned)
+        {
+            if(spawnAttacker && credit >= 10 ){
+                credit = credit -10;
+                game.spawn("attacker", side);
+                spawned = true;
+            }
+            else if(spawnStandard && credit >= 7){
+                credit = credit -7;
+                game.spawn("standard", side);
+                spawned = true;
+            }
+            else if(spawnTank && credit >= 15){
+                credit = credit -15;
+                game.spawn("tank", side);
+                spawned = true;
+            }
+            else if(spawnPowerdownenemy && credit >= 13){
+                credit = credit -13;
+                game.spawn("powerdown", side);
+                spawned = true;
+            }
+            else if(spawnPowerupenemy && credit >= 5){
+                credit = credit - 5;
+                game.spawn("powerup", side);
+                spawned = true;
+            }
+            else if(spawnSlow && credit >= 20){
+                credit = credit - 20;
+                game.spawn("slow", side);
+                spawned = true;
+            }
+            else if(spawnInverted && credit >= 20){
+                credit = credit - 20;
+                game.spawn("inverted", side);
+                spawned = true;
+            }
+            else if(spawnSilenced && credit >= 20){
+                credit = credit - 20;
+                game.spawn("silenced", side);
+                spawned = true;
+            }
+            creditDisplayer = "credit:      " + credit;
+
         }
     }
 
@@ -338,6 +395,8 @@ public class MultiPlayer extends SpaceObject implements Player{
             bitmapFontScore.draw(batch, scoreDisplayer, 150, 20);
             bitmapFontShield.setColor(1.0f, 1.0f, 1.0f, 1.0f);
             bitmapFontShield.draw(batch, shieldDisplayer, 320, 20);
+            bitmapFontCredit.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+            bitmapFontCredit.draw(batch, creditDisplayer, 480, 20);
         }
         else
         {
@@ -347,6 +406,8 @@ public class MultiPlayer extends SpaceObject implements Player{
             bitmapFontScore.draw(batch, scoreDisplayer, Gdx.graphics.getWidth()/2 + 150, 20);
             bitmapFontShield.setColor(1.0f, 1.0f, 1.0f, 1.0f);
             bitmapFontShield.draw(batch, shieldDisplayer, Gdx.graphics.getWidth()/ 2 + 320, 20);
+            bitmapFontCredit.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+            bitmapFontCredit.draw(batch, creditDisplayer, Gdx.graphics.getWidth()/ 2 + 480, 20);
         }
 
         batch.end();
@@ -541,7 +602,9 @@ public class MultiPlayer extends SpaceObject implements Player{
         return enemies;
     }
 
+    public void addPowerDown(String powerdown) {
 
+    }
 
 
     // TODO : refactor under here

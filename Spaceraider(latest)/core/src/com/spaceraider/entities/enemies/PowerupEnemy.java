@@ -54,11 +54,11 @@ public class PowerupEnemy extends SpaceObject implements Enemy{
         if(side.equals("left"))
         {
             x = getRandom(960);
-            y = getRandom(540);
+            y = getRandom(1080);
         }
         else{
             x = getRandom(960) + 960;
-            y = getRandom(540) + 540;
+            y = getRandom(1080);
         }
 
         batch = new SpriteBatch();

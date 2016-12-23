@@ -70,24 +70,24 @@ public class PlayState extends GameState {
             game.getPlayer1().setUp(GameKeys.isDown(GameKeys.UP));
             game.getPlayer1().setDown(GameKeys.isDown(GameKeys.DOWN));
 
-            game.getPlayer1().setSpawnAttacker(GameKeys.isDown(GameKeys.NUMPAD_1));
+            game.getPlayer1().setSpawnStandard(GameKeys.isDown(GameKeys.NUMPAD_1));
             game.getPlayer1().setSpawnAttacker(GameKeys.isDown(GameKeys.NUMPAD_2));
-            game.getPlayer1().setSpawnAttacker(GameKeys.isDown(GameKeys.NUMPAD_3));
-            game.getPlayer1().setSpawnAttacker(GameKeys.isDown(GameKeys.NUMPAD_4));
-            game.getPlayer1().setSpawnAttacker(GameKeys.isDown(GameKeys.NUMPAD_5));
-            game.getPlayer1().setSpawnAttacker(GameKeys.isDown(GameKeys.NUMPAD_6));
-            game.getPlayer1().setSpawnAttacker(GameKeys.isDown(GameKeys.NUMPAD_7));
-            game.getPlayer1().setSpawnAttacker(GameKeys.isDown(GameKeys.NUMPAD_8));
+            game.getPlayer1().setSpawnTank(GameKeys.isDown(GameKeys.NUMPAD_3));
+            game.getPlayer1().setSpawnPowerupenemy(GameKeys.isDown(GameKeys.NUMPAD_4));
+            game.getPlayer1().setSpawnPowerdownenemy(GameKeys.isDown(GameKeys.NUMPAD_5));
+            game.getPlayer1().setSpawnSlow(GameKeys.isDown(GameKeys.NUMPAD_6));
+            game.getPlayer1().setSpawnInverted(GameKeys.isDown(GameKeys.NUMPAD_7));
+            game.getPlayer1().setSpawnSilenced(GameKeys.isDown(GameKeys.NUMPAD_8));
 
 
-            game.getPlayer2().setSpawnAttacker(GameKeys.isDown(GameKeys.F1));
+            game.getPlayer2().setSpawnStandard(GameKeys.isDown(GameKeys.F1));
             game.getPlayer2().setSpawnAttacker(GameKeys.isDown(GameKeys.F2));
-            game.getPlayer2().setSpawnAttacker(GameKeys.isDown(GameKeys.F3));
-            game.getPlayer2().setSpawnAttacker(GameKeys.isDown(GameKeys.F4));
-            game.getPlayer2().setSpawnAttacker(GameKeys.isDown(GameKeys.F5));
-            game.getPlayer2().setSpawnAttacker(GameKeys.isDown(GameKeys.F6));
-            game.getPlayer2().setSpawnAttacker(GameKeys.isDown(GameKeys.F7));
-            game.getPlayer2().setSpawnAttacker(GameKeys.isDown(GameKeys.F8));
+            game.getPlayer2().setSpawnTank(GameKeys.isDown(GameKeys.F3));
+            game.getPlayer2().setSpawnPowerupenemy(GameKeys.isDown(GameKeys.F4));
+            game.getPlayer2().setSpawnPowerdownenemy(GameKeys.isDown(GameKeys.F5));
+            game.getPlayer2().setSpawnSlow(GameKeys.isDown(GameKeys.F6));
+            game.getPlayer2().setSpawnInverted(GameKeys.isDown(GameKeys.F7));
+            game.getPlayer2().setSpawnSilenced(GameKeys.isDown(GameKeys.F8));
 
 
             game.getPlayer2().setLeft(GameKeys.isDown(GameKeys.Q));

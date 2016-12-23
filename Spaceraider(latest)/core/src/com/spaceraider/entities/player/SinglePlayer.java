@@ -29,9 +29,9 @@ public class SinglePlayer extends SpaceObject implements Player{
     private float shootSpeed;
     private int shield;
 
-    private Rectangle rect; // STAYS
+    private Rectangle rect;
     private Drone drone;
-    private int hitpoints; // STAYS
+    private int hitpoints;
 
 
     private List<Bullet> bullets;
@@ -109,7 +109,6 @@ public class SinglePlayer extends SpaceObject implements Player{
                     game.reduceHitpoints(); // !!!!!
                     System.out.println("WE ARE HIT !!!!");
                     // TODO: implement een end game hier
-
                 }
             }
         }

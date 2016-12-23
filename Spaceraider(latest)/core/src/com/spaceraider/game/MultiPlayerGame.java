@@ -46,6 +46,47 @@ public class MultiPlayerGame extends Game{
         }
     }
 
+    public void spawn(String enemy, String side){
+        MultiPlayer playerToAdd = null;
+
+        if(side.equals("left")){playerToAdd = getPlayer2();}
+        else {playerToAdd = getPlayer1();}
+
+        switch(enemy)
+        {
+            case "standard":
+                playerToAdd.addToSpawnList("standard");
+                break;
+
+            case "tank":
+                playerToAdd.addToSpawnList("tank");
+                break;
+
+            case "attacker":
+                playerToAdd.addToSpawnList("attacker");
+                break;
+
+            case "powerup":
+                playerToAdd.addToSpawnList("powerup");
+                break;
+
+            case "powerdown":
+                playerToAdd.addToSpawnList("powerdown");
+                break;
+
+            case "slow":
+                playerToAdd.addPowerDown("slow");
+                break;
+
+            case "inverted":
+                playerToAdd.addPowerDown("inverted");
+                break;
+            case "silenced":
+                playerToAdd.addPowerDown("silenced");
+                break;
+        }
+    }
+
     @Override
     public boolean isMultiplayer() {
         return true;
