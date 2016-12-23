@@ -3,8 +3,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.spaceraider.game.Spaceraider;
 
-import java.awt.event.MouseEvent;
-
 /**
  * Created by Kevin on 9/11/2016.
  */
@@ -32,6 +30,24 @@ public class SpaceObject {
         if(x > Spaceraider.WIDTH) x = 0;
         if(y < 0) y = Spaceraider.HEIGHT;
         if(y > Spaceraider.HEIGHT) y = 0;
+    }
+
+    protected void wrap(String side)
+    {
+        if (side.equals("left"))
+        {
+            if(x < 0) x = Spaceraider.WIDTH / 2;
+            if(x > Spaceraider.WIDTH / 2) x = 0;
+            if(y < 0) y = Spaceraider.HEIGHT;
+            if(y > Spaceraider.HEIGHT) y = 0;
+        }
+        else
+        {
+            if(x < Spaceraider.WIDTH / 2) x = Spaceraider.WIDTH;
+            if(x > Spaceraider.WIDTH) x = Spaceraider.WIDTH / 2;
+            if(y < 0) y = Spaceraider.HEIGHT;
+            if(y > Spaceraider.HEIGHT) y = 0;
+        }
     }
 
 
