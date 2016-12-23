@@ -1,6 +1,7 @@
 package com.spaceraider.game;
 
 import com.spaceraider.entities.enemies.Enemy;
+import com.spaceraider.entities.player.MultiPlayer;
 
 import java.util.List;
 
@@ -20,7 +21,17 @@ public abstract class Game {
         return null;
     };
 
+    public MultiPlayer getPlayer1(){
+        return null;
+    }
 
+    public MultiPlayer getPlayer2(){
+        return null;
+    }
+
+    public boolean isMultiplayer(){
+        return false;
+    }
 
     public void setLeft(boolean b ){
         left = b;

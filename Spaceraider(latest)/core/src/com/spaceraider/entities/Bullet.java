@@ -27,6 +27,7 @@ public class Bullet extends SpaceObject {
     private Player player;
     private Rectangle rect;
     private Game game;
+    private String side;
 
     private float speed = 40;
 
@@ -41,14 +42,9 @@ public class Bullet extends SpaceObject {
         rect = new Rectangle(x,y,texture.getWidth(), texture.getHeight());
         this.player = player;
         setDirection();
-
-        // dit was constructor.
-        // nu: om de zoveel ms moet je aan bullet vragen om zijn NIEUWE
-        // pos te berekenen / interne x/y class state var updaten.
-        // en laten redrawen met nieuwe pos.
-
-
+        side = null;
     }
+
     public Bullet(float x, float y, float mouseX, float mouseY, Drone drone) { // x,y = drone
         this.x = x;
         this.y = y;
@@ -57,10 +53,25 @@ public class Bullet extends SpaceObject {
         batch = new SpriteBatch();
         texture = new Texture("core/assets/rsz_green.png");
         rect = new Rectangle(x, y, texture.getWidth(), texture.getHeight());
-        this.player = player;
         setDirection();
+        side = null;
 
     }
+    public Bullet(float x, float y, float mouseX, float mouseY, Player player, Game game, String side){ // x,y = player
+        this.game = game;
+        this.side = side;
+        this.x = x;
+        this.y = y;
+        this.mx = mouseX;
+        this.my = 1080 - mouseY;
+        batch = new SpriteBatch();
+        texture = new Texture("core/assets/rsz_green.png");
+        rect = new Rectangle(x,y,texture.getWidth(), texture.getHeight());
+        this.player = player;
+        setDirection();
+    }
+
+
     public void setDirection(){
         dirX = mx - x;
         dirY = my - y;
@@ -77,24 +88,55 @@ public class Bullet extends SpaceObject {
 
     public void update(float dt){
         checkCollision();
-        if(!remove) {
+        if(side != null)
+        {
             bulletMove(dt);
-
-            // System.out.println("Bullet fired");
-            // System.out.println("X is " + x + " y is " + y);
-           // System.out.println("MouseX is " + mx + " MouseY is " + my);
-        /*Bullets niet eindeloos in het spel laten*/
-            if (x > Gdx.graphics.getWidth() || y > Gdx.graphics.getHeight()) {
-                remove = true;
-                player.removeBullet(this);
-               // System.out.println("Bullet removed");
+            if(side.equals("left"))
+            {
+                if (x > Gdx.graphics.getWidth() / 2 || y > Gdx.graphics.getHeight()) {
+                    remove = true;
+                    player.removeBullet(this);
+                }
+            }
+            else
+            {
+                if (x <  Gdx.graphics.getWidth() / 2  || y > Gdx.graphics.getHeight()) {
+                    remove = true;
+                    player.removeBullet(this);
+                }
             }
         }
+        else{
+            if(!remove) {
+                bulletMove(dt);
+
+                if (x > Gdx.graphics.getWidth() || y > Gdx.graphics.getHeight()) {
+                    remove = true;
+                    player.removeBullet(this);
+                }
+            }
+        }
+
+    }
+
+    public void update(float dt, String side)
+    {
+
     }
 
     private void checkCollision() {
-        List<Enemy> enemies = game.getEnemies();
 
+        if (!game.isMultiplayer())
+        {
+            loopOverEnemies(game.getEnemies());
+        }
+        else { // SORRY FOR THIS
+            loopOverEnemies(game.getPlayer1().getEnemies());
+            loopOverEnemies(game.getPlayer2().getEnemies());
+        }
+    }
+
+    public void loopOverEnemies(List<Enemy> enemies){
         if(enemies.size() > 0) {
             for (int i = 0; i < enemies.size(); i++) {
                 if (rect.overlaps(enemies.get(i).getRectangle())) {
@@ -104,8 +146,6 @@ public class Bullet extends SpaceObject {
                 }
             }
         }
-
-
     }
 
     public void render(SpriteBatch batch){

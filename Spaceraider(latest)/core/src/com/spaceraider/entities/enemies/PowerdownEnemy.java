@@ -3,13 +3,13 @@ package com.spaceraider.entities.enemies;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.spaceraider.entities.player.Player;
 import com.spaceraider.entities.SpaceObject;
 import com.spaceraider.entities.enums.EnemyType;
 import com.spaceraider.entities.enums.Powerdown;
 import com.spaceraider.entities.enums.Powerup;
 import com.spaceraider.entities.enums.Status;
 import com.spaceraider.entities.orbs.PowerdownOrb;
+import com.spaceraider.entities.player.Player;
 
 import java.util.Random;
 
@@ -46,6 +46,26 @@ public class PowerdownEnemy extends SpaceObject implements Enemy{
 
         rect = new Rectangle(x, y , texture.getWidth(), texture.getHeight());
 
+    }
+
+    public PowerdownEnemy (Player player, String side) {
+        initialize();
+        this.player = player;
+        setDirection();
+        rand = new Random();
+        if(side.equals("left"))
+        {
+            x = getRandom(960);
+            y = getRandom(540);
+        }
+        else{
+            x = getRandom(960) + 960;
+            y = getRandom(540) + 540;
+        }
+
+        batch = new SpriteBatch();
+        texture = new Texture("core/assets/rsz_powerdown.png");
+        rect = new Rectangle(x,y,texture.getWidth(), texture.getHeight());
     }
 
     public PowerdownEnemy(float x, float y){

@@ -26,10 +26,8 @@ public class PlayState extends GameState {
 
     @Override
     public void init(String gameMode, String username, int id) throws InterruptedException {
-        System.out.println(gameMode);
         if(gameMode.equals("singleplayer"))
         {
-            System.out.println(username + " " + id);
             game = new SinglePlayerGame(username, id);
 
         }
@@ -63,6 +61,18 @@ public class PlayState extends GameState {
             game.setRight(GameKeys.isDown(GameKeys.RIGHT));
             game.setUp(GameKeys.isDown(GameKeys.UP));
             game.setDown(GameKeys.isDown(GameKeys.DOWN));
+        }
+        else if(gameMode.equals("multiplayer"))
+        {
+            game.getPlayer1().setLeft(GameKeys.isDown(GameKeys.LEFT));
+            game.getPlayer1().setRight(GameKeys.isDown(GameKeys.RIGHT));
+            game.getPlayer1().setUp(GameKeys.isDown(GameKeys.UP));
+            game.getPlayer1().setDown(GameKeys.isDown(GameKeys.DOWN));
+
+            game.getPlayer2().setLeft(GameKeys.isDown(GameKeys.Q));
+            game.getPlayer2().setRight(GameKeys.isDown(GameKeys.D));
+            game.getPlayer2().setDown(GameKeys.isDown(GameKeys.S));
+            game.getPlayer2().setUp(GameKeys.isDown(GameKeys.Z));
         }
 
     }

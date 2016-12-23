@@ -46,6 +46,26 @@ public class StandardEnemy extends SpaceObject implements Enemy {
         rect = new Rectangle(x,y,texture.getWidth(), texture.getHeight());
     }
 
+    public StandardEnemy (Player player, String side) {
+        initialize();
+        this.player = player;
+        setDirection();
+        rand = new Random();
+        if(side.equals("left"))
+        {
+            x = getRandom(960);
+            y = getRandom(540);
+        }
+        else{
+            x = getRandom(960) + 960;
+            y = getRandom(540) + 540;
+        }
+
+        batch = new SpriteBatch();
+        texture = new Texture("core/assets/rsz_standard.png");
+        rect = new Rectangle(x,y,texture.getWidth(), texture.getHeight());
+    }
+
     public StandardEnemy(float x, float y){
         this.x = x;
         this.y = y;

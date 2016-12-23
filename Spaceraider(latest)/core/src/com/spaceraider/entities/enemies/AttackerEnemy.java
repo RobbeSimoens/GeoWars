@@ -51,6 +51,28 @@ public class AttackerEnemy extends SpaceObject implements Enemy{
         rect = new Rectangle(x,y,texture.getWidth(), texture.getHeight());
     }
 
+    public AttackerEnemy(Player player, String side) {
+        initialize();
+        this.player = player;
+        setDirection();
+        rand = new Random();
+        if(side.equals("left"))
+        {
+            x = getRandom(960);
+            y = getRandom(540);
+        }
+        else{
+            x = getRandom(960) + 960;
+            y = getRandom(540) + 540;
+        }
+        bullets = new ArrayList<EnemyBullet>();
+        batch = new SpriteBatch();
+        texture = new Texture("core/assets/rsz_attacker.png");
+        rect = new Rectangle(x,y,texture.getWidth(), texture.getHeight());
+    }
+
+
+
     public AttackerEnemy(float x, float y)
     {
         this.x = x;

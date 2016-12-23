@@ -57,7 +57,7 @@ public class MenuSelectorPanel extends BackGroundPanel {
             config.width = 1920;
             config.height = 1080;
             config.resizable = false;
-            Spaceraider sp = new Spaceraider("singleplayer", username, id);
+            Spaceraider sp = new Spaceraider("multiplayer", username, id);
             LwjglApplication game =new LwjglApplication(sp, config);
 
 
