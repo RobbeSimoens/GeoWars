@@ -51,6 +51,8 @@ public class SinglePlayerGame extends Game {
     private BitmapFont bitmapFontScore;
     private BitmapFont bitmapFontUser;
     private BitmapFont bitmapFontShield;
+    private BitmapFont bitmapFontMultiplier;
+    private String multiplierDisplayer;
     private String username;
     private Frame frame ;
     private int id;
@@ -62,6 +64,10 @@ public class SinglePlayerGame extends Game {
 
 
     private Sprite playerSprite;
+
+
+
+
 
     public SinglePlayerGame(String username, int id) throws InterruptedException {
         super();
@@ -80,6 +86,7 @@ public class SinglePlayerGame extends Game {
         playerSprite = player.getPlayerSprite();
         rand = new Random();
 
+
         silenced=false;
         nuke=false;
         slowed=false;
@@ -94,7 +101,9 @@ public class SinglePlayerGame extends Game {
         scoreDisplayer =  "score:   " +  score;
         showUser = "User : " + username;
         shieldDisplayer = "shield: " + shield;
+        multiplierDisplayer = "multiplier:      " + player.getMultiplier();
 
+        bitmapFontMultiplier = new BitmapFont();
         bitmapFontHitpoints = new BitmapFont();
         bitmapFontScore = new BitmapFont();
         bitmapFontUser = new BitmapFont();
@@ -237,12 +246,19 @@ public class SinglePlayerGame extends Game {
                     }
 
                     orbs.remove(orbs.get(i));
-                    score += 10;
+                    setMultiplier();
+                    score += 10 * player.getMultiplier();
                     scoreDisplayer = "score:    " + score;
+                    multiplierDisplayer="multiplier:        " + player.getMultiplier();
                     // TODO : add powerup
                 }
             }
         }
+    }
+
+    private void setMultiplier() {
+        player.setMultiplier();
+
     }
 
     public void addOrb(Orb orb){
@@ -393,6 +409,8 @@ public class SinglePlayerGame extends Game {
 
     public void drawComponents() {
         batch.begin();
+        bitmapFontMultiplier.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        bitmapFontMultiplier.draw(batch, multiplierDisplayer, 640, 20);
         bitmapFontUser.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         bitmapFontUser.draw(batch, showUser, 20, 20);
         bitmapFontHitpoints.setColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -413,4 +431,6 @@ public class SinglePlayerGame extends Game {
     public boolean isSilenced() {
         return silenced;
     }
+
+
 }

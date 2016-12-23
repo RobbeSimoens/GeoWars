@@ -29,10 +29,16 @@ public class SinglePlayer extends SpaceObject implements Player{
     private float shootSpeed;
     private int shield;
 
+
+
+
     private Rectangle rect;
     private Drone drone;
     private int hitpoints;
 
+
+
+    private float multiplier;
 
     private List<Bullet> bullets;
 
@@ -55,7 +61,7 @@ public class SinglePlayer extends SpaceObject implements Player{
         batch.end();
         rect = new Rectangle(x,y,texture.getWidth(),texture.getHeight());
         speed = 5;
-
+        multiplier = 0f;
 
         shootSpeed = 0.8f;
         shield = 0;
@@ -75,7 +81,7 @@ public class SinglePlayer extends SpaceObject implements Player{
 
 
     public void update(float dt){
-        checkBulletCollision();
+        checkEnemyCollision();
         rotateShip();
         shoot(dt);          // IMPLEMENT Q METHOD
         handleBullets(dt);
@@ -97,7 +103,7 @@ public class SinglePlayer extends SpaceObject implements Player{
             }
         }
     }
-    private void checkBulletCollision() {
+    private void checkEnemyCollision() {
 
         List<Enemy> enemies = game.getEnemies();
 
@@ -106,9 +112,10 @@ public class SinglePlayer extends SpaceObject implements Player{
                 if (rect.overlaps(enemies.get(i).getRectangle())) {
                     enemies.get(i).dropOrb();
                     game.removeEnemy(enemies.get(i));
-                    game.reduceHitpoints(); // !!!!!
+                    game.reduceHitpoints();
+                    multiplier = 0;
                     System.out.println("WE ARE HIT !!!!");
-                    // TODO: implement een end game hier
+
                 }
             }
         }
@@ -129,6 +136,7 @@ public class SinglePlayer extends SpaceObject implements Player{
     public void reduceEnemyHitpoints(Enemy enemy){
         game.reduceEnemyHitpoints(enemy);
     }
+
 
 
 
@@ -260,6 +268,15 @@ public SpriteBatch getBatch() {
 
     public void setTimeBullet(float timeBullet) {
         this.timeBullet = timeBullet;
+    }
+
+    public float getMultiplier() {
+        return multiplier;
+    }
+
+    @Override
+    public void setMultiplier() {
+        multiplier++;
     }
 
     // </editor-fold>
