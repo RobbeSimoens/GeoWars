@@ -6,6 +6,8 @@ import com.spaceraider.managers.GameKeys;
 import com.spaceraider.managers.GameStateManager;
 import com.spaceraider.game.Game;
 
+import java.io.IOException;
+
 /**
  * Created by Kevin on 9/11/2016.
  */
@@ -16,7 +18,7 @@ public class PlayState extends GameState {
     private String username;
     private int id;
 
-    public PlayState(GameStateManager gsm, String gameMode, String username , int id) throws InterruptedException {
+    public PlayState(GameStateManager gsm, String gameMode, String username , int id) throws InterruptedException, IOException {
         super(gsm, gameMode, username , id);
         this.id = id;
         this.username = username;
@@ -25,7 +27,7 @@ public class PlayState extends GameState {
     }
 
     @Override
-    public void init(String gameMode, String username, int id) throws InterruptedException {
+    public void init(String gameMode, String username, int id) throws InterruptedException, IOException {
         System.out.println(gameMode);
         if(gameMode.equals("singleplayer"))
         {

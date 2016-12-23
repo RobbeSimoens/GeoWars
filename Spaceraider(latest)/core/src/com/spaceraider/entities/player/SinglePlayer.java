@@ -108,6 +108,7 @@ public class SinglePlayer extends SpaceObject implements Player{
                     game.removeEnemy(enemies.get(i));
                     game.reduceHitpoints(); // !!!!!
                     System.out.println("WE ARE HIT !!!!");
+                    break;      // hit by one or more bullets? one is enough to die...
                     // TODO: implement een end game hier
 
                 }

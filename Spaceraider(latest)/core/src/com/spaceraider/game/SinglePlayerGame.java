@@ -1,6 +1,7 @@
 package com.spaceraider.game;
 
 
+import com.spaceraider.GUI.RunSpaceRaider;
 import com.spaceraider.desktop.*;
 import com.spaceraider.Database.*;
 import com.spaceraider.GUI.AfterGamePanel;
@@ -17,6 +18,8 @@ import com.spaceraider.entities.player.SinglePlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static com.badlogic.gdx.Gdx.app;
 
 /**
  * Created by robbe on 12/21/2016.
@@ -50,7 +53,6 @@ public class SinglePlayerGame extends Game {
     private BitmapFont bitmapFontScore;
     private BitmapFont bitmapFontUser;
     private String username;
-    private Frame frame ;
     private int id;
 
     private float timeToSpawn;
@@ -177,8 +179,6 @@ public class SinglePlayerGame extends Game {
         }
 
         adjustSpawnTimer();
-
-
     }
 
     public void removeEnemy(Enemy enemy) {
@@ -258,21 +258,27 @@ public class SinglePlayerGame extends Game {
     }
 
     public void reduceHitpoints(){
-        if(player.getHitpoints() > 1)
+        if(player.getHitpoints() > 0)
         {
             player.reduceHitpoints();
             hitpointsDisplayer = "hitpoints:    " + player.getHitpoints();
         }
         else
         {
+            // KB: Is this supposed to happen now already??
             database = new Database();
             if(database.getHighscoreUser(id) < score){
                 database.updateHighscore(id,score);
             }
-            System.out.println("game ended");
+            // app.exit();      broken? zal wellicht de hele java applicatie afsluiten; stop method zal main thread joinen en
+            // is dus wat ik hier nodig heb
+            app.exit();
 
+            afterGamePanel = new AfterGamePanel(RunSpaceRaider.frame,username,id,score);
+            afterGamePanel.setVisible(true);
+            RunSpaceRaider.frame.getContentPane().add(afterGamePanel);
+            RunSpaceRaider.frame.setVisible(true);
         }
-
     }
 
     private void checkForPowers(float dt) {

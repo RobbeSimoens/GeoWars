@@ -43,8 +43,13 @@ public class MenuSelectorPanel extends BackGroundPanel {
             config.width = 1920;
             config.height = 1080;
             config.resizable = false;
+            config.forceExit = false;
             new LwjglApplication(new Spaceraider("singleplayer", username, id), config);
-            frame = new Frame(100,"fuck",-1);
+            // frame = new Frame(100,"fuck",-1);
+
+
+            //afterGamePanel.setVisible(true);
+            System.out.println("game ended");
 
         });
 

@@ -31,7 +31,7 @@ public class AfterGamePanel extends BackGroundPanel {
         this.frame=frame;
         initComponents();
         addComponents();
-        actionListener();
+        //actionListener();
     }
 
     private void actionListener() {
@@ -70,10 +70,6 @@ public class AfterGamePanel extends BackGroundPanel {
         logo = new JLabel();
         logo.setBounds((int) (width / 2) - (400 / 2), 25, 600, 200);
         logo.setText(String.valueOf(finalScore));
-    }
-
-    public void setFrame(Frame frame){
-        this.frame = frame;
     }
 
 }

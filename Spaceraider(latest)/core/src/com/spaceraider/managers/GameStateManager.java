@@ -3,6 +3,8 @@ package com.spaceraider.managers;
 import com.spaceraider.gamestates.GameState;
 import com.spaceraider.gamestates.PlayState;
 
+import java.io.IOException;
+
 /**
  * Created by Kevin on 9/11/2016.
  */
@@ -13,11 +15,11 @@ public class GameStateManager {
     public static final int PLAY = 69;
 
 
-    public GameStateManager(String gameMode, String username , int id) throws InterruptedException {
+    public GameStateManager(String gameMode, String username , int id) throws InterruptedException, IOException {
         setGameState(PLAY, gameMode, username, id);
     }
 
-    public void setGameState(int state, String gameMode, String username , int id) throws InterruptedException {
+    public void setGameState(int state, String gameMode, String username , int id) throws InterruptedException, IOException {
         if(gameState != null) gameState.dispose();
         switch (state){
             case MENU:

@@ -10,6 +10,8 @@ import com.spaceraider.managers.GameInputProcessor;
 import com.spaceraider.managers.GameKeys;
 import com.spaceraider.managers.GameStateManager;
 
+import java.io.IOException;
+
 public class Spaceraider extends ApplicationAdapter {
     public static int WIDTH;
     public static int HEIGHT;
@@ -47,6 +49,8 @@ public class Spaceraider extends ApplicationAdapter {
 			gsm = new GameStateManager(gameMode, username, id);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
 		}
 		batch = new SpriteBatch();
 		img = new Texture("core/assets/background.jpg");

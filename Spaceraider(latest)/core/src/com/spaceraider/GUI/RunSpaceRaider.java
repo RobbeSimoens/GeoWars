@@ -17,10 +17,11 @@ public class RunSpaceRaider extends Application {
     }
 
     private MusicPlayer player;
+    public static Frame frame;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Frame frame = new Frame();
+        frame = new Frame();
         primaryStage.hide();
         player = new MusicPlayer();
         player.playMusic();
