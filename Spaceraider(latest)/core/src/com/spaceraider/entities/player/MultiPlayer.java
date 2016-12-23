@@ -46,6 +46,7 @@ public class MultiPlayer extends SpaceObject implements Player{
     private boolean spawned;
 
     private String side;
+    private String powerDown;
 
     private int speed;
     private float timeBullet;
@@ -99,7 +100,7 @@ public class MultiPlayer extends SpaceObject implements Player{
         orbs = new ArrayList<Orb>();
         spawnList = new ArrayList<String>();
 
-        spawnList.add("tank");
+        // spawnList.add("standard");
 
 
         rand = new Random();
@@ -114,7 +115,7 @@ public class MultiPlayer extends SpaceObject implements Player{
         speed = 5;
 
         hitpoints = 10;
-        credit = 0;
+        credit = 100;
 
         bitmapFontScore = new BitmapFont();
         hitpointsDisplayer = "hitpoints:   " + hitpoints;
@@ -139,6 +140,7 @@ public class MultiPlayer extends SpaceObject implements Player{
         shootSpeed = 0.4f;
         shield = 0;
         spawned = false;
+        powerDown = "";
 
     }
     public void addToSpawnList(String enemytoSpawn){
@@ -183,7 +185,8 @@ public class MultiPlayer extends SpaceObject implements Player{
         shoot(dt);
         handleBullets(dt);
         rotateShip();
-        handleSpawn(dt);
+        handleSpawnEnemy(dt);
+        handleSpawnPowerdown(dt);
         handleEnemies(dt);
         checkOrbCollision();
         handleOrbs(dt);
@@ -219,7 +222,7 @@ public class MultiPlayer extends SpaceObject implements Player{
         }
     }
 
-    public void handleSpawn(float dt){
+    public void handleSpawnEnemy(float dt){
 
         if (timeToSpawn > spawntimer) { // SPAWNING
             spawned = false;
@@ -251,6 +254,24 @@ public class MultiPlayer extends SpaceObject implements Player{
             timeToSpawn += dt;
         }
     }
+    public void handleSpawnPowerdown(float dt){
+        if (timeToSpawn > spawntimer) {
+            spawned = false;
+            if(powerDown.equals("slow")){
+                Slowed(dt);
+            }else if(powerDown.equals("silenced")){
+                Silenced(dt);
+            }else{
+                Inverted(dt);
+            }
+            timeToSpawn = 0;
+        }else {
+            timeToSpawn += dt;
+        }
+
+
+
+    }
     private void handleBullets(float dt) {
         for (int i = 0; i < bullets.size(); i++) {
 
@@ -272,7 +293,7 @@ public class MultiPlayer extends SpaceObject implements Player{
             for (int i = 0; i < orbs.size(); i++) {
                 if (rect.overlaps(orbs.get(i).getRectangle())) {
                     if (orbs.get(i).getPowerdown() == Powerdown.INVERTED) {
-                        spawnInverted = true;
+                        inverted = true;
                     } else if (orbs.get(i).getPowerdown() == Powerdown.SLOWED) {
                         slowed = true;
                     } else if (orbs.get(i).getPowerdown() == Powerdown.SILENCED) {
@@ -432,7 +453,7 @@ public class MultiPlayer extends SpaceObject implements Player{
         if (slowed == true) {
             Slowed(dt);
         }
-        if (spawnInverted == true) {
+        if (inverted == true) {
             Inverted(dt);
         }
         if (silenced == true) {
@@ -470,9 +491,9 @@ public class MultiPlayer extends SpaceObject implements Player{
             }
             timePowerDown += dt;
         } else {
-             handleInput();
+            handleInput();
             timePowerDown = 0;
-            spawnInverted = false;
+            inverted = false;
 
         }
 
@@ -603,188 +624,21 @@ public class MultiPlayer extends SpaceObject implements Player{
     }
 
     public void addPowerDown(String powerdown) {
-
+      powerDown = powerdown;
     }
 
+    public void setSlowed(boolean slowed) {
+        this.slowed = slowed;
+    }
 
+    public void setInverted(boolean inverted) {
+        this.inverted = inverted;
+    }
+
+    public void setSilenced(boolean silenced) {
+        this.silenced = silenced;
+    }
     // TODO : refactor under here
-
-
-
-     /*
-
-    public void rotateShip(){
-
-        float angle = (float) Math.toDegrees(Math.atan2((Gdx.input.getX() - 15) - playerSprite.getX(),
-                (1080 - Gdx.input.getY()) - playerSprite.getY()));
-        // if (angle < 0)
-        //    angle += 360;
-        playerSprite.setRotation(angle * -1);
-    }
-
-
-    public void update(float dt){
-        rotateShip();
-        shoot(dt);          // IMPLEMENT Q METHOD
-        handleBullets(dt);
-        handleDrone(dt);
-
-        // Wrap it all around the screen, maw je kan door het scherm vliegen en er langs de andere kant terug uit komen :)
-        wrap();
-    }
-
-
-    //<editor-fold desc="Bullets">
-    private void handleBullets(float dt) {
-        for (int i = 0; i < bullets.size(); i++) {
-            Bullet bullet = bullets.get(i);
-            if (!bullet.isRemove()) {
-                bullet.update(dt);
-                bullet.render(batch);
-            }
-        }
-    }
-
-
-    public void addOrb(Orb orb){
-        game.addOrb(orb);
-    }
-
-    public void removeEnemy(Enemy enemy)
-    {
-        game.removeEnemy(enemy);
-    }
-
-
-    @Override
-    public void reduceEnemyHitpoints(Enemy enemy){
-        game.reduceHitpoints();
-    }
-
-
-
-    public void removeBullet(Bullet bullet){
-        bullets.remove(bullet);
-    }
-
-    public void makeBullet(){
-        bullets.add(new Bullet(x ,y ,Gdx.input.getX(),Gdx.input.getY(), this, game));
-    }
-
-
-// </editor-fold>
-
-//<editor-fold desc="Orbs">
-
-
-// </editor-fold>
-
-    //<editor-fold desc="Drone">
-    public void handleDrone(float dt) {
-        drone.update(dt);
-        drone.render(batch);
-    }
-
-    public void addDroneBullet(float x, float y){
-        bullets.add(new Bullet(x,y, 1920 - Gdx.input.getX() - 20 ,1080 - Gdx.input.getY() - 40, this, game)); // Minus 20 & 40 for balancing the drone position to the spaceship
-    }
-
-    public void reduceHitpoints(){
-        hitpoints--;
-    }
-
-
-// </editor-fold>
-
-//<editor-fold desc="Enemies">
-
-
-
-// </editor-fold>
-
-    //<editor-fold desc="SinglePlayer">
-    public void shoot(float dt){
-        if(timeBullet> shootSpeed){
-            makeBullet();
-            timeBullet = 0; // laat alles automatich shieten
-        }else{
-            timeBullet +=dt;
-        }
-    }
-
-
-
-
-// </editor-fold>
-
-//<editor-fold desc="PowerUp/PowerDown">
-
-
-
-
-    // </editor-fold>
-
-    //<editor-fold desc="Generics">
-    public SpriteBatch getBatch() {
-        return batch;
-    }
-
-    public void setX(float x){
-        this.x = x;
-    }
-
-    public int getSpeed(){
-        return speed;
-    }
-
-    public Drone getDrone(){
-        return drone;
-    }
-
-    public void setY(float y){
-        this.y = y;
-    }
-
-    public int getHitpoints()
-    {
-        return hitpoints;
-    }
-
-    public void setHitpoints (int hitpoints){
-        this.hitpoints = hitpoints;
-    }
-
-    public Sprite getPlayerSprite() {
-        return playerSprite;
-    }
-
-    public void setSpeed(int speed)
-    {
-        this.speed = speed;
-    }
-
-    public float getShootSpeed() {
-        return shootSpeed;
-    }
-
-    public void setShootSpeed(float shootSpeed) {
-        this.shootSpeed = shootSpeed;
-    }
-
-    public float getX(){
-        return x;
-    }
-
-    public float getY(){
-        return y;
-    }
-
-    public Rectangle getRect() {
-        return rect;
-    }
-    */
-
-// </editor-fold>
 
     }
 

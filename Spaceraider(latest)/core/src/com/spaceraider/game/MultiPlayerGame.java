@@ -75,14 +75,14 @@ public class MultiPlayerGame extends Game{
                 break;
 
             case "slow":
-                playerToAdd.addPowerDown("slow");
+                playerToAdd.setSlowed(true);
                 break;
 
             case "inverted":
-                playerToAdd.addPowerDown("inverted");
+                playerToAdd.setInverted(true);
                 break;
             case "silenced":
-                playerToAdd.addPowerDown("silenced");
+                playerToAdd.setSilenced(true);
                 break;
         }
     }
