@@ -1,4 +1,4 @@
-package GUI;
+package com.spaceraider.GUI;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -56,7 +56,7 @@ public class MenuSelectorPanel extends BackGroundPanel {
             config.height = 1080;
             config.resizable = false;
             Spaceraider sp = new Spaceraider("singleplayer", username, id);
-            LwjglApplication game =new LwjglApplication(sp, config);
+            LwjglApplication game = new LwjglApplication(sp, config);
 
 
 
@@ -78,7 +78,7 @@ public class MenuSelectorPanel extends BackGroundPanel {
             frame.getContentPane().invalidate();
             frame.getContentPane().add(highscoresPanel);
             frame.getContentPane().revalidate();
-            /*Database db = new Database();
+            /*com.spaceraider.Database db = new com.spaceraider.Database();
             //db.updateHighscore(1,500);
             //var scores = db.getHighscores();*/
 

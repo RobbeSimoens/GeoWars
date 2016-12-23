@@ -1,10 +1,10 @@
 package com.spaceraider.game;
 
 
-import Database.Database;
-import GUI.AfterGamePanel;
-import GUI.Frame;
-import com.badlogic.gdx.Gdx;
+import com.spaceraider.desktop.*;
+import com.spaceraider.Database.*;
+import com.spaceraider.GUI.AfterGamePanel;
+import com.spaceraider.GUI.Frame;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,8 +14,6 @@ import com.spaceraider.entities.enums.Powerup;
 import com.spaceraider.entities.orbs.Orb;
 import com.spaceraider.entities.player.SinglePlayer;
 
-import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -88,7 +86,7 @@ public class SinglePlayerGame extends Game {
 
         hitpointsDisplayer = "hitpoints:   " + player.getHitpoints();
         scoreDisplayer =  "score:   " +  score;
-        showUser = "User : " + username;
+        showUser = "com.spaceraider.User : " + username;
 
         bitmapFontHitpoints = new BitmapFont();
         bitmapFontScore = new BitmapFont();

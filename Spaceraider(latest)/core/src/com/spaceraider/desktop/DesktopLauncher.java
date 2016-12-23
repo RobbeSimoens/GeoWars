@@ -1,4 +1,4 @@
-package com.spaceraider.game.desktop;
+package com.spaceraider.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;

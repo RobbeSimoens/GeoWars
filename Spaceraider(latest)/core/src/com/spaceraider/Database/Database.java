@@ -1,4 +1,4 @@
-package Database;
+package com.spaceraider.Database;
 
 
 import java.sql.*;

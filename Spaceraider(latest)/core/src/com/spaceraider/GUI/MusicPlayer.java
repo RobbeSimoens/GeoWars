@@ -1,4 +1,4 @@
-package GUI;
+package com.spaceraider.GUI;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;

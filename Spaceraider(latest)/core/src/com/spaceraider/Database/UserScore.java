@@ -1,4 +1,4 @@
-package Database;
+package com.spaceraider.Database;
 
 /**
  * Created by Kevin on 22/12/2016.

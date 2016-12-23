@@ -1,15 +1,15 @@
-package Player;
+package com.spaceraider.User;
 
 /**
  * Created by qmann on 8/11/2016.
  */
-public class Player {
+public class User {
     private String email;
     private String username;
     private String password;
     private long score;
 
-    public Player(String email, String username, String password) {
+    public User(String email, String username, String password) {
         this.username = username;
         this.password = password;
         this.email = email;

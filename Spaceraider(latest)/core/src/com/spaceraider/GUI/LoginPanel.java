@@ -1,14 +1,14 @@
-package GUI;
+package com.spaceraider.GUI;
 
-//import Database.Database;
+//import com.spaceraider.Database.com.spaceraider.Database;
 
-import Database.Database;
+import com.spaceraider.Database.Database;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class RegisterPanel extends BackGroundPanel {
-    private JButton registerButton;
+public class LoginPanel extends BackGroundPanel {
+    private JButton LoginButton;
     private JButton backButton;
     private JFrame frame;
     private double width;
@@ -17,12 +17,11 @@ public class RegisterPanel extends BackGroundPanel {
     private JLabel passwordLabel;
     private JTextField username;
     private JPasswordField password;
-    private JTextField email;
-    private JLabel emailLabel;
     private JLabel logo;
-    private Database database;
+    private Database database = new Database();
 
-    public RegisterPanel(JFrame frame,Database database) {
+
+    public LoginPanel(JFrame frame ,Database database) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = screenSize.getWidth();
         height = screenSize.getHeight();
@@ -44,60 +43,53 @@ public class RegisterPanel extends BackGroundPanel {
             frame.getContentPane().revalidate();
         });
 
-        registerButton.addActionListener(e -> {
-            String insertemail = email.getText();
-            String insertName = username.getText();
-            String insertPassword = new String(password.getPassword());
-            if (!database.checkEmailAvailable(insertemail)) {
-
-                JOptionPane.showMessageDialog(null, "Email is in use");
-            }else{
-                if(!database.checkUserAvailable(insertName)){
-                    JOptionPane.showMessageDialog(null, "Username is in use");
-                }
-                else{
-                    database.addUser(insertemail,insertName, insertPassword,0);
-                    LoginPanel loginPanel = new LoginPanel(frame,database);
-                    frame.getContentPane().removeAll();
-                    frame.getContentPane().invalidate();
-                    frame.getContentPane().add(loginPanel);
-                    frame.getContentPane().revalidate();
-                }
-
+        LoginButton.addActionListener(e -> {
+            String insertusername = username.getText();
+            String insertpassword = new String(password.getPassword());
+            boolean playersInDatabase = database.getUsername(insertusername);
+            boolean passwordInDatabase = database.getPassword(insertusername, insertpassword);
+            if(playersInDatabase && passwordInDatabase){
+                int id = database.getId(insertusername);
+                System.out.println(insertusername);
+                MenuSelectorPanel menuSelectorPanel = new MenuSelectorPanel(frame, insertusername, id);
+                frame.getContentPane().removeAll();
+                frame.getContentPane().invalidate();
+                frame.getContentPane().add(menuSelectorPanel);
+                frame.getContentPane().revalidate();
             }
-
+            else{
+                JOptionPane.showMessageDialog(null, "Username or password are incorrect");
+            }
 
         });
     }
 
     private void addComponents() {
         add(backButton);
-        add(registerButton);
+        add(LoginButton);
         add(label);
         add(passwordLabel);
         add(username);
         add(password);
         add(logo);
-        add(email);
-        add(emailLabel);
     }
 
     private void initComponents() {
         backButton = new JButton("Back");
         backButton.setBounds((int) (width / 2) - (160 / 2) + 120, (int) (height / 2)+200, 160, 50);
-        registerButton = new JButton("Register");
-        registerButton.setBounds((int) (width / 2) - (160 / 2) - 120, (int) (height / 2) + 200, 160, 50);
+        LoginButton = new JButton("Login");
+        LoginButton.setBounds((int) (width / 2) - (160 / 2) - 120, (int) (height / 2)+200, 160, 50);
         label = new JLabel("", SwingConstants.CENTER);
         label.setOpaque(true);
         label.setBackground(new Color(0, 0, 0, 200));
-        label.setText("Enter your new username:");
+        label.setText("Enter your username:");
         label.setBounds((int) (width / 3) - (160 / 2), (int) (height / 2) - 100, 420, 50);
         label.setFont(new Font("Verdana", 1, 20));
         label.setForeground(Color.white);
         passwordLabel = new JLabel("",SwingConstants.CENTER);
         passwordLabel.setOpaque(true);
         passwordLabel.setBackground(new Color(0, 0, 0, 200));
-        passwordLabel.setText("Enter your new password:");
+        passwordLabel.setText("Enter your password:");
         passwordLabel.setBounds((int) (width / 3) - (160 / 2), (int) (height / 2), 420, 50);
         passwordLabel.setFont(new Font("Verdana", 1, 20));
         passwordLabel.setForeground(Color.white);
@@ -108,15 +100,6 @@ public class RegisterPanel extends BackGroundPanel {
         logo = new JLabel();
         logo.setBounds((int) (width / 2) - (400 / 2), 25, 600, 200);
         logo.setIcon(new ImageIcon("src/resources/arcade-font-writer.png"));
-        emailLabel = new JLabel("",SwingConstants.CENTER);
-        emailLabel.setOpaque(true);
-        emailLabel.setBackground(new Color(0, 0, 0, 200));
-        emailLabel.setText("Enter your email-address:");
-        emailLabel.setBounds((int) (width / 3) - (160 / 2), (int) (height / 2)-200, 420, 50);
-        emailLabel.setFont(new Font("Verdana", 1, 20));
-        emailLabel.setForeground(Color.white);
-        email = new JTextField();
-        email.setBounds((int) (width / 2) + 30, (int) (height / 2) - 200, 300, 50);
     }
 
 }

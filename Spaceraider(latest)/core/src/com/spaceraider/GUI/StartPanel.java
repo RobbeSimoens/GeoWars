@@ -1,6 +1,6 @@
-package GUI;
+package com.spaceraider.GUI;
 
-import Database.Database;
+import com.spaceraider.Database.Database;
 
 import javax.swing.*;
 import java.awt.*;
