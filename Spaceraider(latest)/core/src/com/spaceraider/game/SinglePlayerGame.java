@@ -1,21 +1,19 @@
 package com.spaceraider.game;
 
 
-import Database.Database;
-import GUI.AfterGamePanel;
-import GUI.Frame;
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.spaceraider.Database.Database;
+import com.spaceraider.GUI.AfterGamePanel;
+import com.spaceraider.GUI.Frame;
 import com.spaceraider.entities.enemies.*;
 import com.spaceraider.entities.enums.Powerdown;
 import com.spaceraider.entities.enums.Powerup;
 import com.spaceraider.entities.orbs.Orb;
 import com.spaceraider.entities.player.SinglePlayer;
 
-import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

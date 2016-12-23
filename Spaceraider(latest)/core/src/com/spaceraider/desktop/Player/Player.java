@@ -1,4 +1,4 @@
-package Player;
+package com.spaceraider.desktop.Player;
 
 /**
  * Created by qmann on 8/11/2016.

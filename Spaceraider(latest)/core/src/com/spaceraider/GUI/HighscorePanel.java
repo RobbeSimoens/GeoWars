@@ -1,10 +1,12 @@
-package GUI;
+package com.spaceraider.GUI;
 
 
 //import SinglePlayer.SinglePlayer;
 
-import Database.Database;
-import Database.UserScore;
+
+
+import com.spaceraider.Database.Database;
+import com.spaceraider.Database.UserScore;
 
 import javax.swing.*;
 import java.awt.*;

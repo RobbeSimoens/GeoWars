@@ -1,9 +1,11 @@
-package GUI;
+package com.spaceraider.GUI;
+
+
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.spaceraider.game.Spaceraider;
-import org.lwjgl.opengl.Display;
+
 
 import javax.swing.*;
 import java.awt.*;

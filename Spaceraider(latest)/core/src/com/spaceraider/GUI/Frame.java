@@ -1,4 +1,6 @@
-package GUI;
+package com.spaceraider.GUI;
+
+
 
 import javax.swing.*;
 

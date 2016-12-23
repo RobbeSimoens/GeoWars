@@ -1,11 +1,9 @@
-package Database;
+package com.spaceraider.Database;
 
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 // FIXME: beter singleton? thread safe? ... nu elke keer instance maken om te gebruiken, dodgy
 /**
