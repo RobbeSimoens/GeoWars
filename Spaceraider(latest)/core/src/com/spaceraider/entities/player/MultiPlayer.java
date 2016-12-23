@@ -35,6 +35,15 @@ public class MultiPlayer extends SpaceObject implements Player{
     private boolean up;
     private boolean down;
 
+    public boolean spawnStandard;
+    public boolean spawnTank;
+    public boolean spawnAttacker;
+    public boolean spawnPowerupenemy;
+    public boolean spawnPowerdownenemy;
+    public boolean spawnInverted;
+    public boolean spawnSlow;
+    public boolean spawnSilenced;
+
     private String side;
 
     private int speed;
@@ -87,8 +96,8 @@ public class MultiPlayer extends SpaceObject implements Player{
         spawnList = new ArrayList<String>();
 
         spawnList.add("powerdown");
-        spawnList.add("tank");
-        spawnList.add("tank");
+        spawnList.add("spawnTank");
+        spawnList.add("spawnTank");
 
         rand = new Random();
 
@@ -116,13 +125,28 @@ public class MultiPlayer extends SpaceObject implements Player{
         silenced=false;
         nuke=false;
         slowed=false;
-        inverted=false;
+        inverted =false;
         rapidFire = false;
 
         shootSpeed = 0.4f;
         shield = 0;
 
     }
+    public void setSpawnStandard(boolean b) {spawnStandard = b;}
+
+    public void setSpawnTank(boolean b) {spawnTank = b;}
+
+    public void setSpawnAttacker(boolean b) {spawnAttacker = b;}
+
+    public void setSpawnPowerupenemy(boolean b) {spawnPowerupenemy = b;}
+
+    public void setSpawnPowerdownenemy(boolean b) {spawnPowerdownenemy = b;}
+
+    public void setSpawnInverted(boolean b) {spawnInverted = b;    }
+
+    public void setSpawnSlow(boolean b) {spawnSlow = b;    }
+
+    public void setSpawnSilenced(boolean b) {spawnSilenced = b;}
 
     public void setLeft(boolean b) {
         left = b;
@@ -188,11 +212,11 @@ public class MultiPlayer extends SpaceObject implements Player{
         if (timeToSpawn > spawntimer) { // SPAWNING
             for (String toSpawn : spawnList) {
 
-                if(toSpawn.equals("standard"))
+                if(toSpawn.equals("spawnStandard"))
                 {
                     enemies.add(new StandardEnemy(this, side));
                 }
-                else if(toSpawn.equals("tank"))
+                else if(toSpawn.equals("spawnTank"))
                 {
                     enemies.add(new TankEnemy(this, side));
                 }
@@ -235,7 +259,7 @@ public class MultiPlayer extends SpaceObject implements Player{
             for (int i = 0; i < orbs.size(); i++) {
                 if (rect.overlaps(orbs.get(i).getRectangle())) {
                     if (orbs.get(i).getPowerdown() == Powerdown.INVERTED) {
-                        inverted = true;
+                        spawnInverted = true;
                     } else if (orbs.get(i).getPowerdown() == Powerdown.SLOWED) {
                         slowed = true;
                     } else if (orbs.get(i).getPowerdown() == Powerdown.SILENCED) {
@@ -264,7 +288,7 @@ public class MultiPlayer extends SpaceObject implements Player{
     }
 
     public void handleInput(){
-        if (!inverted) { //TODO :  IMPLEMENT INVERTED HERE
+        if (!spawnInverted) { //TODO :  IMPLEMENT INVERTED HERE
             if (left) {
                 x = x - speed;
                 rect.setX(x);
@@ -347,7 +371,7 @@ public class MultiPlayer extends SpaceObject implements Player{
         if (slowed == true) {
             Slowed(dt);
         }
-        if (inverted == true) {
+        if (spawnInverted == true) {
             Inverted(dt);
         }
         if (silenced == true) {
@@ -387,7 +411,7 @@ public class MultiPlayer extends SpaceObject implements Player{
         } else {
              handleInput();
             timePowerDown = 0;
-            inverted = false;
+            spawnInverted = false;
 
         }
 

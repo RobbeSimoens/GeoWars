@@ -70,10 +70,32 @@ public class PlayState extends GameState {
             game.getPlayer1().setUp(GameKeys.isDown(GameKeys.UP));
             game.getPlayer1().setDown(GameKeys.isDown(GameKeys.DOWN));
 
+            game.getPlayer1().setSpawnAttacker(GameKeys.isDown(GameKeys.NUMPAD_1));
+            game.getPlayer1().setSpawnAttacker(GameKeys.isDown(GameKeys.NUMPAD_2));
+            game.getPlayer1().setSpawnAttacker(GameKeys.isDown(GameKeys.NUMPAD_3));
+            game.getPlayer1().setSpawnAttacker(GameKeys.isDown(GameKeys.NUMPAD_4));
+            game.getPlayer1().setSpawnAttacker(GameKeys.isDown(GameKeys.NUMPAD_5));
+            game.getPlayer1().setSpawnAttacker(GameKeys.isDown(GameKeys.NUMPAD_6));
+            game.getPlayer1().setSpawnAttacker(GameKeys.isDown(GameKeys.NUMPAD_7));
+            game.getPlayer1().setSpawnAttacker(GameKeys.isDown(GameKeys.NUMPAD_8));
+
+
+            game.getPlayer2().setSpawnAttacker(GameKeys.isDown(GameKeys.F1));
+            game.getPlayer2().setSpawnAttacker(GameKeys.isDown(GameKeys.F2));
+            game.getPlayer2().setSpawnAttacker(GameKeys.isDown(GameKeys.F3));
+            game.getPlayer2().setSpawnAttacker(GameKeys.isDown(GameKeys.F4));
+            game.getPlayer2().setSpawnAttacker(GameKeys.isDown(GameKeys.F5));
+            game.getPlayer2().setSpawnAttacker(GameKeys.isDown(GameKeys.F6));
+            game.getPlayer2().setSpawnAttacker(GameKeys.isDown(GameKeys.F7));
+            game.getPlayer2().setSpawnAttacker(GameKeys.isDown(GameKeys.F8));
+
+
             game.getPlayer2().setLeft(GameKeys.isDown(GameKeys.Q));
             game.getPlayer2().setRight(GameKeys.isDown(GameKeys.D));
             game.getPlayer2().setDown(GameKeys.isDown(GameKeys.S));
             game.getPlayer2().setUp(GameKeys.isDown(GameKeys.Z));
+
+
         }
 
     }

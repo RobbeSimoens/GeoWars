@@ -14,38 +14,46 @@ public abstract class Game {
     public boolean up;
     public boolean down;
 
+
+
+
+
+
     public void update(float dt) {
     }
 
-    public List<Enemy> getEnemies(){
-        return null;
-    };
-
-    public MultiPlayer getPlayer1(){
+    public List<Enemy> getEnemies() {
         return null;
     }
 
-    public MultiPlayer getPlayer2(){
+
+    public MultiPlayer getPlayer1() {
         return null;
     }
 
-    public boolean isMultiplayer(){
+    public MultiPlayer getPlayer2() {
+        return null;
+    }
+
+    public boolean isMultiplayer() {
         return false;
     }
 
-    public void setLeft(boolean b ){
+    public void setLeft(boolean b) {
         left = b;
     }
 
-    public void setRight(boolean b){
+    public void setRight(boolean b) {
         right = b;
     }
 
-    public void setUp(boolean b ){
+    public void setUp(boolean b) {
         up = b;
     }
 
-    public void setDown(boolean b){
+    public void setDown(boolean b) {
         down = b;
     }
+
+
 }

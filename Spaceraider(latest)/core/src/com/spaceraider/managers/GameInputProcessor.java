@@ -45,6 +45,54 @@ public class GameInputProcessor extends InputAdapter {
         if(k == Input.Keys.D){
             GameKeys.setKey(GameKeys.D, true);
         }
+        if(k == Input.Keys.F1){
+            GameKeys.setKey(GameKeys.F1,true);
+        }
+        if(k == Input.Keys.F2){
+            GameKeys.setKey(GameKeys.F2,true);
+        }
+        if(k == Input.Keys.F3){
+            GameKeys.setKey(GameKeys.F3,true);
+        }
+        if(k == Input.Keys.F4){
+            GameKeys.setKey(GameKeys.F4,true);
+        }
+        if(k == Input.Keys.F5){
+            GameKeys.setKey(GameKeys.F5,true);
+        }
+        if(k == Input.Keys.F6){
+            GameKeys.setKey(GameKeys.F6,true);
+        }
+        if(k == Input.Keys.F7){
+            GameKeys.setKey(GameKeys.F7,true);
+        }
+        if(k == Input.Keys.F8){
+            GameKeys.setKey(GameKeys.F8,true);
+        }
+        if(k ==Input.Keys.NUMPAD_1){
+            GameKeys.setKey(GameKeys.NUMPAD_1,true);
+        }
+        if(k ==Input.Keys.NUMPAD_2){
+            GameKeys.setKey(GameKeys.NUMPAD_2,true);
+        }
+        if(k ==Input.Keys.NUMPAD_3){
+            GameKeys.setKey(GameKeys.NUMPAD_3,true);
+        }
+        if(k ==Input.Keys.NUMPAD_4){
+            GameKeys.setKey(GameKeys.NUMPAD_4,true);
+        }
+        if(k ==Input.Keys.NUMPAD_5){
+            GameKeys.setKey(GameKeys.NUMPAD_5,true);
+        }
+        if(k ==Input.Keys.NUMPAD_6){
+            GameKeys.setKey(GameKeys.NUMPAD_6,true);
+        }
+        if(k ==Input.Keys.NUMPAD_7){
+            GameKeys.setKey(GameKeys.NUMPAD_7,true);
+        }
+        if(k ==Input.Keys.NUMPAD_8){
+            GameKeys.setKey(GameKeys.NUMPAD_8,true);
+        }
 
 
         return true;
@@ -88,6 +136,55 @@ public class GameInputProcessor extends InputAdapter {
         if(k == Input.Keys.D){
             GameKeys.setKey(GameKeys.D, false);
         }
+        if(k == Input.Keys.F1){
+            GameKeys.setKey(GameKeys.F1,true);
+        }
+        if(k == Input.Keys.F2){
+            GameKeys.setKey(GameKeys.F2,true);
+        }
+        if(k == Input.Keys.F3){
+            GameKeys.setKey(GameKeys.F3,true);
+        }
+        if(k == Input.Keys.F4){
+            GameKeys.setKey(GameKeys.F4,true);
+        }
+        if(k == Input.Keys.F5){
+            GameKeys.setKey(GameKeys.F5,true);
+        }
+        if(k == Input.Keys.F6){
+            GameKeys.setKey(GameKeys.F6,true);
+        }
+        if(k == Input.Keys.F7){
+            GameKeys.setKey(GameKeys.F7,true);
+        }
+        if(k == Input.Keys.F8){
+            GameKeys.setKey(GameKeys.F8,true);
+        }
+        if(k ==Input.Keys.NUMPAD_1){
+            GameKeys.setKey(GameKeys.NUMPAD_1,true);
+        }
+        if(k ==Input.Keys.NUMPAD_2){
+            GameKeys.setKey(GameKeys.NUMPAD_2,true);
+        }
+        if(k ==Input.Keys.NUMPAD_3){
+            GameKeys.setKey(GameKeys.NUMPAD_3,true);
+        }
+        if(k ==Input.Keys.NUMPAD_4){
+            GameKeys.setKey(GameKeys.NUMPAD_4,true);
+        }
+        if(k ==Input.Keys.NUMPAD_5){
+            GameKeys.setKey(GameKeys.NUMPAD_5,true);
+        }
+        if(k ==Input.Keys.NUMPAD_6){
+            GameKeys.setKey(GameKeys.NUMPAD_6,true);
+        }
+        if(k ==Input.Keys.NUMPAD_7){
+            GameKeys.setKey(GameKeys.NUMPAD_7,true);
+        }
+        if(k ==Input.Keys.NUMPAD_8){
+            GameKeys.setKey(GameKeys.NUMPAD_8,true);
+        }
+
 
         return true;
     }
