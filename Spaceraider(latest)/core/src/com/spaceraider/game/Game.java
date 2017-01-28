@@ -55,6 +55,4 @@ public abstract class Game {
         down = b;
     }
 
-
-
 }

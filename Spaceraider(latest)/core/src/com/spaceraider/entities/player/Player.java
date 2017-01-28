@@ -10,7 +10,6 @@ import com.spaceraider.entities.orbs.Orb;
  * Created by robbe on 12/21/2016.
  */
 public interface Player {
-    void setMultiplier();
     void removeBullet(Bullet bullet);
     void addDroneBullet(float x, float y);
     float getX();

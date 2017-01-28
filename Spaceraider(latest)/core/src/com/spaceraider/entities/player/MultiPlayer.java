@@ -52,9 +52,6 @@ public class MultiPlayer extends SpaceObject implements Player{
     private float timeBullet;
 
 
-
-
-    private float multiplier;
     private float shootSpeed;
     private int shield;
 
@@ -74,8 +71,6 @@ public class MultiPlayer extends SpaceObject implements Player{
     private List<String> spawnList;
 
     private BitmapFont bitmapFontScore;
-    private BitmapFont bitmapFontMultiplier;
-    private String multiplierDisplayer;
     private String scoreDisplayer;
     private String hitpointsDisplayer;
     private BitmapFont bitmapFontHitpoints;
@@ -108,11 +103,11 @@ public class MultiPlayer extends SpaceObject implements Player{
         orbs = new ArrayList<Orb>();
         spawnList = new ArrayList<String>();
 
-        spawnList.add("standard");
+        // spawnList.add("standard");
 
 
         rand = new Random();
-        multiplier = 0;
+
         this.x = x;
         this.y = y;
         drone = new Drone(x,y,this, game);
@@ -130,9 +125,7 @@ public class MultiPlayer extends SpaceObject implements Player{
         scoreDisplayer = "score:    " + score;
         shieldDisplayer = "shield:      " + shield;
         creditDisplayer = "credit:      " + credit;
-        multiplierDisplayer = "multiplier:      " + multiplier;
 
-        bitmapFontMultiplier = new BitmapFont();
         bitmapFontControls = new BitmapFont();
         bitmapFontHitpoints= new BitmapFont();
         bitmapFontCredit = new BitmapFont();
@@ -157,8 +150,6 @@ public class MultiPlayer extends SpaceObject implements Player{
     public void addToSpawnList(String enemytoSpawn){
         spawnList.add(enemytoSpawn);
     }
-
-
     public void setSpawnStandard(boolean b) {spawnStandard = b;}
 
     public void setSpawnTank(boolean b) {spawnTank = b;}
@@ -216,7 +207,6 @@ public class MultiPlayer extends SpaceObject implements Player{
                     enemies.get(i).dropOrb();
                     enemies.remove(enemies.get(i));
                     reduceHitpoints();
-                    multiplier = 0;
                     System.out.println("WE ARE HIT !!!!");
                     // TODO: implement een end game hier
                 }
@@ -322,12 +312,10 @@ public class MultiPlayer extends SpaceObject implements Player{
                     }
 
                     orbs.remove(orbs.get(i));
-                    setMultiplier();
-                    score += 10 * multiplier;
+                    score += 10;
                     credit += 1;
                     creditDisplayer = "credit:      " + credit;
                     scoreDisplayer = "score:    " + score;
-                    multiplierDisplayer="multiplier:        " + multiplier;
                     System.out.println(score);
                     // TODO : add powerup
                 }
@@ -436,8 +424,6 @@ public class MultiPlayer extends SpaceObject implements Player{
                     "F6: slow \n" +
                     "F7: invert \n" +
                     "F8: silence";
-            bitmapFontMultiplier.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-            bitmapFontMultiplier.draw(batch, multiplierDisplayer, 640, 20);
             bitmapFontControls.setColor(1.0f, 1.0f, 1.0f, 1.0f);
             bitmapFontControls.draw(batch, controlsDisplayer, 10, 1050);
             bitmapFontHitpoints.setColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -461,8 +447,6 @@ public class MultiPlayer extends SpaceObject implements Player{
                     "num_6: slow \n" +
                     "num_7: invert \n" +
                     "num_8: silence";
-            bitmapFontMultiplier.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-            bitmapFontMultiplier.draw(batch, multiplierDisplayer, Gdx.graphics.getWidth() /2 + 640, 20);
             bitmapFontControls.setColor(1.0f, 1.0f, 1.0f, 1.0f);
             bitmapFontControls.draw(batch, controlsDisplayer, 975, 1050);
             bitmapFontHitpoints.setColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -599,11 +583,6 @@ public class MultiPlayer extends SpaceObject implements Player{
     }
 
     @Override
-    public void setMultiplier() {
-        multiplier++;
-    }
-
-    @Override
     public void removeBullet(Bullet bullet) {
         bullets.remove(bullet);
     }
@@ -687,7 +666,6 @@ public class MultiPlayer extends SpaceObject implements Player{
     public void setSilenced(boolean silenced) {
         this.silenced = silenced;
     }
-
     // TODO : refactor under here
 
     }
